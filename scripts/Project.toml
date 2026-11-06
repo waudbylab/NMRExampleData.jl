@@ -1,0 +1,13 @@
+[deps]
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
+NMRExampleData = "7d9aae8f-5363-4264-a191-4b2c0b96bceb"
+NMRTools = "c2839fe3-f1de-42fc-897f-c1b0e8db4db6"
+Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
+SHA = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+TOML = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
+
+[sources]
+NMRExampleData = {path = ".."}
+
+[compat]
+julia = "1.11"

@@ -1,0 +1,44 @@
+name: Release
+# Release the example data whenever datasets/ changes on main: see scripts/release.jl.
+on:
+  push:
+    branches: [main]
+    paths: ['datasets/**']
+  # to retry by hand from the Actions tab, after a failure
+  workflow_dispatch:
+
+# one release at a time, each seeing the commits of the one before
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write   # upload the release, push Artifacts.toml and Project.toml
+  actions: write    # let julia-actions/cache delete its old caches
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      # the latest main rather than the commit that triggered the run, so a queued run
+      # sees the release before it. Full history to find the last release. No LFS here:
+      # release.jl fetches only the datasets that changed.
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+          lfs: false
+      - uses: julia-actions/setup-julia@v3
+        with:
+          version: '1'
+      - uses: julia-actions/cache@v3
+      - name: Release
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          julia scripts/release.jl --yes
+        env:
+          # for the release and the comment that asks Registrator to register. If
+          # Registrator ignores comments made with the workflow's own token, add a personal
+          # access token as the secret RELEASE_TOKEN and it is used instead.
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}

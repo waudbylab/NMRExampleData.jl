@@ -1,0 +1,28 @@
+# One line, shown in the menu, in the form
+# <protein> <dims> <nuclei> <experiment> (<field> MHz, <temperature> K), with the 1H
+# Larmor frequency rounded to 50 MHz, e.g. "CALR 2D 1H,15N hetNOE (600 MHz, 298 K)".
+title = ""
+
+# The experiment folder to load, or a list of folders for a series, in order: loading
+# the dataset returns one spectrum, or a vector of them in this order.
+# Leave empty if the dataset is used as a whole folder.
+spectrum = ""
+
+# Optional: concentrations, temperature, field, anything a reader should know.
+description = ""
+
+# Who to credit, shown whenever the data are loaded: "Name <email>" or "Name", e.g.
+# ["Chris Waudby <c.waudby@ucl.ac.uk>", "A. Person"].
+credit = []
+
+# Optional: a paper to cite when using these data, with its DOI.
+citation = ""
+
+# The licence the data are released under: "CC BY 4.0", "None", or another licence.
+licence = "CC BY 4.0"
+
+# Optional: where the original data lives, for maintainers. Not shown to users.
+source = ""
+
+# Optional: other names for the same data.
+aliases = []

@@ -1,0 +1,27 @@
+name: Check data
+# On a pull request that changes datasets/, check the changed datasets and say what merging
+# it would release: see scripts/release.jl. Nothing is uploaded.
+on:
+  pull_request:
+    paths: ['datasets/**']
+
+permissions:
+  actions: write    # let julia-actions/cache delete its old caches
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      # full history to find the last release. No LFS here: release.jl fetches only the
+      # datasets that changed.
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          lfs: false
+      - uses: julia-actions/setup-julia@v3
+        with:
+          version: '1'
+      - uses: julia-actions/cache@v3
+      - name: Check and preview the release
+        run: julia scripts/release.jl --dry-run

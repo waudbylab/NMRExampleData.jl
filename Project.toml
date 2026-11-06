@@ -1,0 +1,21 @@
+name = "NMRExampleData"
+uuid = "7d9aae8f-5363-4264-a191-4b2c0b96bceb"
+version = "0.1.0"
+authors = ["Chris Waudby"]
+
+[deps]
+Artifacts = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
+LazyArtifacts = "4af54fe1-eca0-43a8-85a7-787d91b784e3"
+TOML = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
+
+[compat]
+Artifacts = "1"
+LazyArtifacts = "1"
+TOML = "1"
+julia = "1.10"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]

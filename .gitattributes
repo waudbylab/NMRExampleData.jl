@@ -1,0 +1,6 @@
+# Binary NMR data goes to Git LFS. Parameter files stay in plain git.
+datasets/**/fid                  filter=lfs diff=lfs merge=lfs -text
+datasets/**/ser                  filter=lfs diff=lfs merge=lfs -text
+datasets/**/pdata/*/[1-9][ri]*   filter=lfs diff=lfs merge=lfs -text
+datasets/**/*.ft[1-4]            filter=lfs diff=lfs merge=lfs -text
+datasets/**/*.ucsf               filter=lfs diff=lfs merge=lfs -text
