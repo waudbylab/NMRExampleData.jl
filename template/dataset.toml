@@ -26,3 +26,7 @@ source = ""
 
 # Optional: other names for the same data.
 aliases = []
+
+# When the dataset was added, in UTC, written by add.jl. Where a shortened name matches
+# several datasets, the first added is used, so never change this.
+added = ""

@@ -25,9 +25,9 @@ Names of the available example datasets, in alphabetical order.
 ```julia
 julia> examples()
 3-element Vector{String}:
+ "2d_hn_ubq"
  "hetnoe2d_calr"
- "relaxation2d_asyn"
- "tract_ubq"
+ "relaxation2d_ubq"
 ```
 """
 function examples()
@@ -40,15 +40,17 @@ end
 
 The description of an example dataset, from its `dataset.toml`: `name`, `title`,
 `spectrum`, `description`, `credit` (a vector of `"Name <email>"` or `"Name"`), `citation`,
-`licence`, `source` and `aliases`. Nothing is downloaded.
+`licence`, `source`, `aliases` and `added`. Nothing is downloaded.
 
-`name` may be the dataset's full name, an alias, or the start of the name or of any part of
-it between underscores, provided that matches only one dataset: `"hetnoe"` finds
-`"hetnoe2d_calr"`. The full name is returned as `name`.
+`name` may be the dataset's full name or an alias, in any case, or the start of the name
+or of any part of it between underscores: `"hetnoe"` finds `"hetnoe2d_calr"`, and the old
+NMRTools name `"2D_HN"` finds `"2d_hn_ubq"`. Where that matches several datasets, the one
+added first is used, so a shortened name keeps meaning the same dataset as more are added.
+The full name is returned as `name`.
 
 # Example
 ```julia
-julia> exampleinfo("hetnoe").title
+julia> exampleinfo("hetnoe2d_calr").title
 "CALR 2D 1H,15N hetNOE (600 MHz, 298 K)"
 ```
 """
@@ -60,7 +62,8 @@ function exampleinfo(name::AbstractString)
         spectrum=get(d, "spectrum", ""), description=get(d, "description", ""),
         credit=credit isa AbstractString ? [credit] : credit, citation=get(d, "citation", ""),
         licence=get(d, "licence", ""),
-        source=get(d, "source", ""), aliases=get(d, "aliases", String[]))
+        source=get(d, "source", ""), aliases=get(d, "aliases", String[]),
+        added=get(d, "added", ""))
 end
 
 """
@@ -102,7 +105,7 @@ dataset's folder. Downloads the dataset the first time it is used; see
 # Example
 ```julia
 julia> using NMRTools
-julia> spec = loadnmr.(examplepath("relaxation2d_asyn"))
+julia> spec = loadnmr.(examplepath("relaxation2d_ubq"))
 ```
 """
 function examplepath(name::AbstractString; fid::Bool=false)
@@ -112,21 +115,24 @@ function examplepath(name::AbstractString; fid::Bool=false)
     return s isa AbstractVector ? [joinpath(dir, p) for p in s] : joinpath(dir, s)
 end
 
-# The dataset a name refers to: its full name or an alias, or else the one dataset whose
-# name, or a part of it between underscores, starts with the name given, so that "hetnoe"
-# finds "hetnoe2d_calr".
+# The dataset a name refers to, ignoring case: its full name or an alias, or else a dataset
+# whose name, or a part of it between underscores, starts with the name given, so that
+# "hetnoe" finds "hetnoe2d_calr". Where several start that way, the one added first.
 function resolvename(name::AbstractString)
     names = examples()
-    name in names && return String(name)
-    for n in names
-        d = TOML.parsefile(joinpath(DATASETS, n, "dataset.toml"))
-        name in get(d, "aliases", String[]) && return n
-    end
     q = lowercase(name)
+    q in names && return q
+    tomls = Dict(n => TOML.parsefile(joinpath(DATASETS, n, "dataset.toml")) for n in names)
+    for n in names
+        any(a -> lowercase(a) == q, get(tomls[n], "aliases", String[])) && return n
+    end
     found = filter(n -> startswith(n, q) || any(p -> startswith(p, q), split(n, '_')), names)
-    length(found) == 1 && return only(found)
     isempty(found) && throw(ArgumentError("no example dataset called \"$name\". " *
         "Available: $(join(names, ", "))"))
+    # ISO 8601 times in UTC sort as strings. A dataset without one comes last.
+    added(n) = (a = get(tomls[n], "added", ""); isempty(a) ? "~" : a)
+    sort!(found; by=added)
+    (length(found) == 1 || added(found[1]) != added(found[2])) && return found[1]
     return throw(ArgumentError("\"$name\" could be any of $(join(found, ", ")): " *
         "give more of the name"))
 end

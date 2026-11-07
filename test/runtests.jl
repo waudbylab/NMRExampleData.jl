@@ -83,26 +83,46 @@ const POINTER = """
         end
     end
 
-    @testset "Partial names" begin
-        toml = """
-               title = "A"
-               """
-        withdataset("zzhetnoe2d_zzcalr"; toml, files=["1/acqus" => "a"]) do _
-            @test exampleinfo("zzhetnoe2d_zzcalr").name == "zzhetnoe2d_zzcalr"
-            @test exampleinfo("zzhetnoe").name == "zzhetnoe2d_zzcalr"
-            @test exampleinfo("ZZHetNOE2d").name == "zzhetnoe2d_zzcalr"
-            @test exampleinfo("zzcalr").name == "zzhetnoe2d_zzcalr"
-            @test exampleinfo("zzhetnoe2d_zz").name == "zzhetnoe2d_zzcalr"
-            @test_throws ArgumentError exampleinfo("zzcal_")
-            withdataset("zzhetnoe2d_zzasyn"; toml, files=["1/acqus" => "a"]) do _
+    @testset "Names: case, aliases, prefixes and the first added" begin
+        toml(added; alias="") = """
+                                title = "A"
+                                aliases = [$(isempty(alias) ? "" : "\"$alias\"")]
+                                added = "$added"
+                                """
+        files = ["1/acqus" => "a"]
+        withdataset("zzrelaxation2d_ubq";
+            toml=toml("2026-01-01T00:00:00Z"; alias="zzpseudo3D_HN_R2"), files) do _
+            withdataset("zzrelaxation2d_asyn"; toml=toml("2026-02-01T00:00:00Z"), files) do _
+                withdataset("zz2d_hn_ubq"; toml=toml("2026-01-01T00:00:01Z"), files) do _
+                    withdataset("zz2d_hn_calr"; toml=toml(""), files) do _
+                        # a full name, even one added later
+                        @test exampleinfo("zzrelaxation2d_asyn").name == "zzrelaxation2d_asyn"
+                        @test exampleinfo("ZZRelaxation2D_ASYN").name == "zzrelaxation2d_asyn"
+                        # a shortened name that matches several: the first added
+                        @test exampleinfo("ZZRelaxation2D").name == "zzrelaxation2d_ubq"
+                        @test exampleinfo("zzrelax").name == "zzrelaxation2d_ubq"
+                        # one without an added time comes last
+                        @test exampleinfo("ZZ2D_HN").name == "zz2d_hn_ubq"
+                        # a part that matches only one
+                        @test exampleinfo("asyn").name == "zzrelaxation2d_asyn"
+                        @test exampleinfo("calr").name == "zz2d_hn_calr"
+                        # aliases ignore case
+                        @test exampleinfo("ZZPSEUDO3D_hn_r2").name == "zzrelaxation2d_ubq"
+                        @test exampleinfo("zzrelaxation2d_ubq").added == "2026-01-01T00:00:00Z"
+                    end
+                end
+            end
+        end
+        # a tie cannot be settled
+        withdataset("zztie_a"; toml=toml("2026-01-01T00:00:00Z"), files) do _
+            withdataset("zztie_b"; toml=toml("2026-01-01T00:00:00Z"), files) do _
                 err = try
-                    exampleinfo("zzhetnoe")
+                    exampleinfo("zztie")
                 catch e
                     e
                 end
                 @test err isa ArgumentError
                 @test occursin("could be any of", err.msg)
-                @test exampleinfo("zzcalr").name == "zzhetnoe2d_zzcalr"
             end
         end
     end

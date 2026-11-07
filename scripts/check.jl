@@ -14,7 +14,6 @@ function checkdataset(name)
         return ["there is no datasets/$name/dataset.toml"]
     occursin(r"^[a-z0-9_]+$", name) ||
         push!(problems, "the name should be lowercase letters, digits and underscores")
-    occursin('_', name) || println("  warning: names are usually <experiment>_<sample>")
     toml = try
         TOML.parsefile(joinpath(dir, "dataset.toml"))
     catch e
@@ -31,6 +30,9 @@ function checkdataset(name)
         println("  warning: the title is not in the form " *
             "<protein> <dims> <nuclei> <experiment> (<field> MHz, <temperature> K)")
     end
+    occursin(r"^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$", get(toml, "added", "")) ||
+        push!(problems, "dataset.toml needs added, the time it was added in UTC, " *
+            "such as \"2026-11-07T10:30:00Z\"")
     credit = get(toml, "credit", String[])
     credit isa AbstractVector || (credit = [credit])
     isempty(credit) &&
@@ -81,13 +83,22 @@ function checkdataset(name)
     return problems
 end
 
-# Names and aliases must not collide across datasets.
+# Names and aliases must not collide across datasets, ignoring case as the lookup does.
 function checknames()
     seen = Dict{String,String}()
     problems = String[]
-    for n in examples(), a in [n; exampleinfo(n).aliases]
-        haskey(seen, a) && push!(problems, "\"$a\" is used by both $(seen[a]) and $n")
+    for n in examples(), a in lowercase.([n; exampleinfo(n).aliases])
+        haskey(seen, a) && seen[a] != n &&
+            push!(problems, "\"$a\" is used by both $(seen[a]) and $n")
         seen[a] = n
+    end
+    # the first added settles a shortened name that matches several, so no ties
+    times = Dict{String,String}()
+    for n in examples()
+        t = exampleinfo(n).added
+        isempty(t) && continue
+        haskey(times, t) && push!(problems, "$(times[t]) and $n were added at the same time, $t")
+        times[t] = n
     end
     return problems
 end

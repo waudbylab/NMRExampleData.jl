@@ -1,14 +1,16 @@
 # Add a dataset: copy experiment folders into datasets/<name>, together with the sample
 # records NMRTools matches to them, then ask for the metadata and write dataset.toml.
 #
-#     julia scripts/add.jl <name> <experiment folder>...
+#     julia scripts/add.jl <experiment folder>...
 #
-#     julia scripts/add.jl hetnoe2d_calr ~/data/calr/11 ~/data/calr/12
+#     julia scripts/add.jl ~/data/calr/11 ~/data/calr/12
 #
 # The experiments are copied from where they are: there is no need to copy them first.
 # For a series, give the experiments in the order they should load.
 
 include("common.jl")
+
+using Dates
 
 # Left out of every copy: TopSpin bookkeeping, and the imaginary parts of the processed data,
 # which can be regenerated from the raw data.
@@ -90,6 +92,34 @@ function ask(label, default=""; required=false)
     end
 end
 
+# Names and aliases already taken.
+function takennames()
+    taken = Set(examples())
+    for n in examples()
+        union!(taken, exampleinfo(n).aliases)
+    end
+    return taken
+end
+
+function askname()
+    println("""
+            Name, in lowercase letters, digits and underscores:
+              data for an analysis: <analysis function>_<sample>, e.g. hetnoe2d_calr, relaxation2d_ubq
+              a plain spectrum: <dims>_<correlation>_<sample>, e.g. 1d_1h_ubq, 1d_19f_sh3, 2d_hn_ubq, 3d_hnca_ubq
+              a variant goes last, e.g. relaxation2d_ubq_r1, 2d_hc_ubq_methyl, 3d_hnca_ubq_pipe""")
+    taken = takennames()
+    while true
+        name = ask("  Name"; required=true)
+        if !occursin(r"^[a-z0-9_]+$", name)
+            println("  only lowercase letters, digits and underscores")
+        elseif lowercase(name) in lowercase.(taken) || ispath(joinpath(DATASETS, name))
+            println("  $name is already taken")
+        else
+            return name
+        end
+    end
+end
+
 function asklicence()
     println("Licence:")
     for (k, l) in enumerate(LICENCES)
@@ -106,15 +136,11 @@ function asklicence()
 end
 
 function main(args)
-    if length(args) < 2
-        println("usage: julia scripts/add.jl <name> <experiment folder>...")
+    if isempty(args)
+        println("usage: julia scripts/add.jl <experiment folder>...")
         exit(1)
     end
-    name, sources = args[1], normpath.(abspath.(args[2:end]))
-    occursin(r"^[a-z0-9_]+$", name) ||
-        error("a dataset name is lowercase letters, digits and underscores: \"$name\"")
-    dest = joinpath(DATASETS, name)
-    ispath(dest) && error("datasets/$name already exists")
+    sources = normpath.(abspath.(args))
     for s in sources
         isfile(joinpath(s, "acqus")) || error("$s is not a Bruker experiment folder")
     end
@@ -133,7 +159,7 @@ function main(args)
     end
     unique!(r -> basename(r), records)
 
-    println("Adding $(length(expnos)) experiment(s) as datasets/$name")
+    println("Adding $(length(expnos)) experiment(s)")
     for (e, r) in zip(expnos, matched)
         println("  $e: sample record ", isnothing(r) ? "none found" : basename(r))
     end
@@ -154,6 +180,9 @@ function main(args)
         required=true)
     title = "$protein $dimlabel $nuclei $experiment ($field MHz, $temperature K)"
     println("  → ", title, "\n")
+
+    name = askname()
+    dest = joinpath(DATASETS, name)
 
     description = ask("Description (optional)")
 
@@ -185,7 +214,9 @@ function main(args)
     toml = replace(toml, r"^spectrum = .*$"m => "spectrum = " * spectrum,
                    r"^credit = .*$"m => "credit = " * tomlarray(credit),
                    r"^source = .*$"m => "source = " * tomlstring(join(sources, ", ")),
-                   r"^aliases = .*$"m => "aliases = " * tomlarray(aliases))
+                   r"^aliases = .*$"m => "aliases = " * tomlarray(aliases),
+                   r"^added = .*$"m => "added = " *
+                                         tomlstring(Dates.format(now(UTC), "yyyy-mm-ddTHH:MM:SSZ")))
     # copy only once every answer is in, so a cancelled run leaves nothing behind
     for (s, e) in zip(sources, expnos)
         copytree(s, joinpath(dest, e); skip=isjunk)

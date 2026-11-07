@@ -14,13 +14,15 @@ With [NMRTools](https://github.com/waudbylab/NMRTools.jl), load a dataset by nam
 ```julia
 using NMRTools
 
-spec = exampledata("hsqc_ubq")             # NMRData, downloading it if needed
-fid = exampledata("hsqc_ubq"; fid=true)    # the raw time-domain data instead
+spec = exampledata("2d_hn_ubq")            # NMRData, downloading it if needed
+fid = exampledata("2d_hn_ubq"; fid=true)  # the raw time-domain data instead
 spec = exampledata()                       # or choose one from a menu
 ```
 
-A name can be shortened to the start of the full name, or of any part of it, as long as
-only one dataset matches: `"hetnoe"` or `"calr"` finds `hetnoe2d_calr`.
+Names ignore case, and can be shortened to the start of the full name or of any part of
+it: `"hetnoe"` finds `hetnoe2d_calr`, and `"2d_hn"` finds `2d_hn_ubq`. Where a shortened
+name matches several datasets, the one added first is used, so it keeps meaning the same
+dataset as more are added. In code that others will run, give the full name.
 
 A dataset with several experiments, such as a titration or a hetNOE pair, loads as a vector
 of `NMRData`, in the order given by `spectrum` in its `dataset.toml`.
@@ -34,10 +36,10 @@ Without NMRTools, this package gives you the files:
 using NMRExampleData
 
 examples()                     # the names of every dataset
-exampleinfo("hsqc_ubq")        # its title, credit, citation, licence and description
-examplepath("hsqc_ubq")        # the experiment(s) to load, downloading if needed
-examplepath("hsqc_ubq"; fid=true)  # the same, with the raw fid/ser files
-exampledir("hsqc_ubq")         # the dataset's whole folder
+exampleinfo("2d_hn_ubq")       # its title, credit, citation, licence and description
+examplepath("2d_hn_ubq")       # the experiment(s) to load, downloading if needed
+examplepath("2d_hn_ubq"; fid=true)  # the same, with the raw fid/ser files
+exampledir("2d_hn_ubq")        # the dataset's whole folder
 ```
 
 `examplepath` is the experiment folder to load, or a vector of them for a series.
@@ -48,12 +50,11 @@ record, and any `analysis/` folder.
 
 You need [Git LFS](https://git-lfs.com) once: `brew install git-lfs`, then `git lfs install`.
 
-1. Run `add.jl` with a name for the dataset and the experiment folders, where they are now.
-   There is no need to copy anything first. For a series, give the experiments in the
-   order they should load:
+1. Run `add.jl` with the experiment folders, where they are now. There is no need to copy
+   anything first. For a series, give the experiments in the order they should load:
 
    ```
-   julia scripts/add.jl hetnoe2d_calr ~/data/calr/11 ~/data/calr/12
+   julia scripts/add.jl ~/data/calr/11 ~/data/calr/12
    ```
 
    The script finds the sample record that NMRTools matches to each experiment, so a
@@ -65,6 +66,7 @@ You need [Git LFS](https://git-lfs.com) once: `brew install git-lfs`, then `git 
      `CALR 2D 1H,15N hetNOE (600 MHz, 298 K)`. Dimensions, nuclei, field and
      temperature are detected for you to confirm. The field is the ¹H Larmor frequency
      rounded to 50 MHz, and a series spanning several temperatures gives a range.
+   - the name for the dataset (see [Names](#names))
    - a description
    - who to credit, one person at a time, as `Name <email>` or `Name`, starting with
      you from your git settings
@@ -72,12 +74,12 @@ You need [Git LFS](https://git-lfs.com) once: `brew install git-lfs`, then `git 
    - the licence: CC BY 4.0, None, or another
    - other names for the dataset
 
-   Once every answer is in, it makes `datasets/hetnoe2d_calr/` and copies the experiments and
+   Once every answer is in, it makes `datasets/<name>/` and copies the experiments and
    sample records into it, and writes `dataset.toml`. Your original data is not changed.
    The copy leaves out TopSpin bookkeeping files and the imaginary parts of the processed
    data, but keeps the raw `fid` and `ser` files.
 
-2. Optionally, edit `datasets/hetnoe2d_calr/dataset.toml` to change any of the answers.
+2. Optionally, edit `datasets/<name>/dataset.toml` to change any of the answers.
 
 3. Optionally, add an `analysis/` folder with the `peaklist.csv` or `regionlist.csv` and
    `results.csv` saved by NMRAnalysis.
@@ -85,7 +87,7 @@ You need [Git LFS](https://git-lfs.com) once: `brew install git-lfs`, then `git 
 4. Check it:
 
    ```
-   julia scripts/check.jl hetnoe2d_calr
+   julia scripts/check.jl <name>
    ```
 
 5. Commit and push to `main`. That is all: the release is automatic (see below).
@@ -102,16 +104,24 @@ Nothing is released until it is merged into `main`.
 
 ### Names
 
-`<experiment>_<sample>`, in lowercase letters, digits and underscores:
+Name a dataset for what someone would use it for, then the sample, in lowercase letters,
+digits and underscores:
 
-- the experiment: the NMRAnalysis function the data demonstrates (`hetnoe2d`,
-  `relaxation2d`, `titration2d`, `cest2d`), or else a standard name (`1h`, `19f`, `hsqc`,
-  `hmqc`, `hnca`, `xste`)
-- the sample: a short code for the protein or molecule (`ubq`, `calr`, `asyn`, `hewl`)
-- a suffix, only to tell two datasets apart (`_308k`, `_pipe`)
+- **Data for an analysis:** `<analysis function>_<sample>`, after the NMRAnalysis or
+  NMRScreen function it is for, such as `hetnoe2d_calr` or `relaxation2d_ubq`, so that
+  `hetnoe2d(exampledata("hetnoe2d_calr"))` does what it says.
+- **A plain spectrum**, for loading, processing and plotting:
+  `<dims>_<correlation>_<sample>`, such as `1d_1h_ubq`, `1d_19f_sh3`, `2d_hn_ubq` or
+  `2d_hc_ubq`. For a 3D, use the experiment: `3d_hnca_ubq`. The pulse sequence (HSQC,
+  HMQC, TROSY) is in the title, not the name.
+- **A variant** goes last, saying how it differs: `relaxation2d_ubq_r1`,
+  `2d_hc_ubq_methyl`, `3d_hnca_ubq_pipe`.
 
-For example `hetnoe2d_calr`, `relaxation2d_asyn`, `hsqc_ubq`. Old names can be kept as
-aliases.
+Because a shortened name finds the first dataset added, add the dataset you would want
+`"2d_hn"` or `"hetnoe"` to find before any others like it. The same goes for NMRTools' old
+names: `"2D_HN"` finds the first `2d_hn_…`. Give an old name as an alias where it is not
+the start of the new one, such as `pseudo3D_HN_R2` for `relaxation2d_ubq` or
+`3D_HNCA_pipe` for `3d_hnca_ubq_pipe`.
 
 ## Release
 
