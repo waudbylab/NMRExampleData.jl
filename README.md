@@ -2,7 +2,9 @@
 
 Example NMR data for [NMRTools.jl](https://github.com/waudbylab/NMRTools.jl),
 [NMRAnalysis.jl](https://github.com/waudbylab/NMRAnalysis.jl) and
-[NMRScreen.jl](https://github.com/waudbylab/NMRScreen.jl).
+[NMRScreen.jl](https://github.com/waudbylab/NMRScreen.jl). The
+[documentation](https://waudbylab.org/NMRExampleData.jl/stable/) has a catalogue of every
+dataset.
 
 Installing this package downloads no data. Each dataset is downloaded the first time you
 use it, and only that one.
@@ -27,8 +29,8 @@ dataset as more are added. In code that others will run, give the full name.
 A dataset with several experiments, such as a titration or a hetNOE pair, loads as a vector
 of `NMRData`, in the order given by `spectrum` in its `dataset.toml`.
 
-Each time `exampledata` loads a dataset, it shows who to credit, what to cite, and the
-licence.
+The first time `exampledata` loads a dataset in a session, it shows who to credit, what to
+cite, and the licence.
 
 Without NMRTools, this package gives you the files:
 

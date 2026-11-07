@@ -1,0 +1,39 @@
+name: Documentation
+on:
+  push:
+    branches: [main]
+    tags: ['*']
+  pull_request:
+  # The Release workflow starts this once it has released new data, since the commit it pushes
+  # with the workflow's own token starts no workflows of its own.
+  workflow_dispatch:
+
+# Every deploy pushes to gh-pages, so run them one at a time; superseded pull request builds
+# are cancelled.
+concurrency:
+  group: ${{ github.event_name == 'pull_request' && format('docs-{0}', github.ref) || 'docs-deploy' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: write   # push the built site to gh-pages
+  actions: write    # let julia-actions/cache delete its old caches
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # no LFS: the catalogue reads only dataset.toml and the parameter files
+      - uses: actions/checkout@v6
+        with:
+          lfs: false
+      - uses: julia-actions/setup-julia@v3
+        with:
+          version: '1'
+      - uses: julia-actions/cache@v3
+      - name: Install dependencies
+        run: julia --project=docs -e 'using Pkg; Pkg.instantiate()'
+      - name: Build and deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOCUMENTER_KEY: ${{ secrets.DOCUMENTER_KEY }}
+        run: julia --project=docs docs/make.jl

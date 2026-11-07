@@ -42,3 +42,9 @@ jobs:
           # Registrator ignores comments made with the workflow's own token, add a personal
           # access token as the secret RELEASE_TOKEN and it is used instead.
           GH_TOKEN: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
+      # the push above, made with the workflow's own token, starts no workflows, so rebuild
+      # the documentation's catalogue by hand
+      - name: Update the documentation
+        run: gh workflow run Documentation.yml --ref main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
