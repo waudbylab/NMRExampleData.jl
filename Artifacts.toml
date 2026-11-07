@@ -1,0 +1,15 @@
+[titration2d_fir_nbox]
+git-tree-sha1 = "03e773ce058c609b994f96398d3dbc85d604d0f8"
+lazy = true
+
+    [[titration2d_fir_nbox.download]]
+    sha256 = "47729ded8521e94aa7d17cd7c6ae2cfb3fa288bd4bda39d03f43e7c9d59f6111"
+    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-07/titration2d_fir_nbox.tar.gz"
+
+[titration2d_fir_nbox_fid]
+git-tree-sha1 = "9ab88702071ed974b06bd6598e429e65a9538113"
+lazy = true
+
+    [[titration2d_fir_nbox_fid.download]]
+    sha256 = "688ffaca93e64ece33a78ef22f96f5b20cd7df52f6daa99c11a779e89848d16f"
+    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-07/titration2d_fir_nbox_fid.tar.gz"
