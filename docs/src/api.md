@@ -1,6 +1,7 @@
 # API
 
 ```@docs
+NMRExampleData
 examples
 exampleinfo
 examplepath
