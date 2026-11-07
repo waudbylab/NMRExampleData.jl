@@ -155,25 +155,3 @@ function cataloguepage()
     foreach(e -> println(io, section(e)), entries)
     return String(take!(io))
 end
-
-# The "Add a dataset" and "Release" sections of the README, as the page on adding data.
-function addingpage()
-    readme = read(joinpath(dirname(@__DIR__), "README.md"), String)
-    from = findfirst("## Add a dataset", readme)
-    to = findfirst("## Licence", readme)
-    body = readme[from.start:prevind(readme, to.start)]
-    # Documenter's heading anchors keep the case of the heading
-    body = replace(body, "](#names)" => "](#Names)")
-    return """
-           ```@meta
-           EditURL = "../../README.md"
-           ```
-
-           # Adding data
-
-           Datasets are added to the
-           [repository](https://github.com/waudbylab/NMRExampleData.jl) and released
-           automatically. This page is the repository's README.
-
-           $body"""
-end

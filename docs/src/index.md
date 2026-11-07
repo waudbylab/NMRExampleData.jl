@@ -53,10 +53,9 @@ is the folder holding the whole dataset: every experiment, the sample records, a
 
 ## Versions
 
-Each version of the package points at a fixed set of data, so results stay reproducible. Adding
-a dataset or changing its data increases the minor version, and removing or renaming one
-without keeping the old name as an alias increases the major version. Depend on it as
-`NMRExampleData = "1"` to get new data with ordinary package updates.
+Each version of the package points at a fixed set of data, so results stay reproducible.
+Depend on it as `NMRExampleData = "1"` to get new data with ordinary package updates; see
+[Releases](@ref) for how versions are numbered.
 
 ## Credit and licences
 

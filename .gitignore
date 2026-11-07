@@ -2,4 +2,3 @@ Manifest.toml
 .DS_Store
 docs/build/
 docs/src/catalogue.md
-docs/src/adding.md

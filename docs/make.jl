@@ -11,9 +11,8 @@ using NMRTools
 
 include("catalogue.jl")
 
-# generated pages, ignored by git
+# the catalogue is generated, and ignored by git
 write(joinpath(@__DIR__, "src", "catalogue.md"), cataloguepage())
-write(joinpath(@__DIR__, "src", "adding.md"), addingpage())
 
 makedocs(;
          modules=[NMRExampleData],
@@ -22,6 +21,7 @@ makedocs(;
          pages=["Home" => "index.md",
                 "Catalogue" => "catalogue.md",
                 "Adding data" => "adding.md",
+                "Releases" => "releases.md",
                 "API" => "api.md"],
          sitename="NMRExampleData.jl",
          authors="Chris Waudby",
