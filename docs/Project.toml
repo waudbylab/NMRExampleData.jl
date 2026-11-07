@@ -1,0 +1,11 @@
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+NMRExampleData = "7d9aae8f-5363-4264-a191-4b2c0b96bceb"
+NMRTools = "c2839fe3-f1de-42fc-897f-c1b0e8db4db6"
+
+[sources]
+NMRExampleData = {path = ".."}
+
+[compat]
+Documenter = "1"
+julia = "1.11"
