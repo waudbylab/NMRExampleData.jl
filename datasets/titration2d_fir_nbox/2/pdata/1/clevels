@@ -1,0 +1,27 @@
+##TITLE= Parameter file, TopSpin 4.4.0
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 26	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= tf
+$$ 2025-09-01 17:02:44.416 +0100  chris@johann.local
+$$ /Users/chris/git/titan/examples/FBPNbox/2/pdata/1/clevels
+$$ process /opt/topspin4.4.0/prog/mod/dataserver
+##$LEVELS= (0..255)
+-3471287.6 -1928493.1 -1071385.05 -595213.9 -330674.4 -183708 -102060 -56700
+-31500 -17500 17500 31500 56700 102060 183708 330674.4 595213.9 1071385.05
+1928493.1 3471287.6 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##$LEVSIGN= 3
+##$MAXLEV= 10
+##$METHOD= 0
+##$NEGBASE= -35000
+##$NEGINCR= 1.8
+##$POSBASE= 35000
+##$POSINCR= 1.8
+##END=

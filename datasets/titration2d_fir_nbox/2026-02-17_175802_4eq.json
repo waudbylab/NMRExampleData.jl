@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "created_timestamp": "2008-06-30T15:44:44.000Z",
+    "modified_timestamp": "2026-02-17T17:58:27.806Z",
+    "schema_version": "0.1.0",
+    "ejected_timestamp": "2008-06-30T16:10:44.000Z"
+  },
+  "sample": {
+    "physical_form": "solution",
+    "components": [
+      {
+        "unit": "uM",
+        "concentration_or_amount": 35.22,
+        "name": "FIR",
+        "isotopic_labelling": "15N"
+      },
+      {
+        "unit": "uM",
+        "concentration_or_amount": 140.89,
+        "name": "Nbox",
+        "isotopic_labelling": "unlabelled"
+      }
+    ],
+    "label": "4eq"
+  },
+  "people": {
+    "groups": [
+      "Ramos",
+      "Waudby"
+    ],
+    "users": [
+      "Cyprian",
+      "Chris"
+    ]
+  },
+  "nmr_tube": {
+    "type": ""
+  },
+  "buffer": {
+    "components": [
+      {
+        "concentration": 10,
+        "unit": "mM",
+        "name": "Tris"
+      },
+      {
+        "concentration": 50,
+        "unit": "mM",
+        "name": "NaCl"
+      },
+      {
+        "concentration": 2,
+        "unit": "mM",
+        "name": "TCEP"
+      }
+    ],
+    "chemical_shift_reference": "none",
+    "ph": 7.4,
+    "reference_unit": "",
+    "solvent": "10% D2O"
+  }
+}
