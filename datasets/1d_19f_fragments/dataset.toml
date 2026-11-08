@@ -3,10 +3,11 @@
 # Larmor frequency rounded to 50 MHz, e.g. "CALR 2D 1H,15N hetNOE (600 MHz, 298 K)".
 title = "FRAGS 1D 19F 1D 19F{1H} (600 MHz, 298 K)"
 
-# The experiment folder to load, or a list of folders for a series, in order: loading
-# the dataset returns one spectrum, or a vector of them in this order.
-# Leave empty if the dataset is used as a whole folder.
-spectrum = "5"
+# What example(name) returns, inside the dataset's folder: the experiment folder or file
+# to load, a list of them for a series in the order they load, nested lists where an
+# analysis takes its data in roles (e.g. [["1", "2"], ["3", "4"]] for rdc2d's isotropic
+# and aligned pairs), or the experiment.toml of a screen. Empty for the whole folder.
+path = "5"
 
 # Optional: concentrations, temperature, field, anything a reader should know.
 description = "UCL Fragment Library Cocktail 1"
