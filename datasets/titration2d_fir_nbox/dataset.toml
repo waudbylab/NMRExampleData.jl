@@ -26,7 +26,7 @@ licence = "None"
 source = "/Users/chris/git/titan/examples/FBPNbox/1, /Users/chris/git/titan/examples/FBPNbox/2, /Users/chris/git/titan/examples/FBPNbox/3, /Users/chris/git/titan/examples/FBPNbox/4, /Users/chris/git/titan/examples/FBPNbox/5, /Users/chris/git/titan/examples/FBPNbox/6, /Users/chris/git/titan/examples/FBPNbox/7, /Users/chris/git/titan/examples/FBPNbox/8, /Users/chris/git/titan/examples/FBPNbox/9, /Users/chris/git/titan/examples/FBPNbox/10, /Users/chris/git/titan/examples/FBPNbox/11"
 
 # Optional: other names for the same data.
-aliases = []
+aliases = ["2D_HN_titration"]
 
 # When the dataset was added, in UTC, written by add.jl. Where a shortened name matches
 # several datasets, the first added is used, so never change this.
