@@ -3,10 +3,11 @@
 # Larmor frequency rounded to 50 MHz, e.g. "CALR 2D 1H,15N hetNOE (600 MHz, 298 K)".
 title = "UBQ 2D 1H,15N SOFAST-HMQC (600 MHz, 277 K)"
 
-# The experiment folder to load, or a list of folders for a series, in order: loading
-# the dataset returns one spectrum, or a vector of them in this order.
-# Leave empty if the dataset is used as a whole folder.
-spectrum = "2D_HN"
+# What example(name) returns, inside the dataset's folder: the experiment folder or file
+# to load, a list of them for a series in the order they load, nested lists where an
+# analysis takes its data in roles (e.g. [["1", "2"], ["3", "4"]] for rdc2d's isotropic
+# and aligned pairs), or the experiment.toml of a screen. Empty for the whole folder.
+path = "2D_HN"
 
 # Optional: concentrations, temperature, field, anything a reader should know.
 description = "13C,15N ubiquitin, 500 uM in 10% D2O, 20 mM Pi pH 6.5"
@@ -25,8 +26,17 @@ licence = "CC BY 4.0"
 source = "/Users/chris/NMR/example-data/2D_HN"
 
 # Optional: other names for the same data.
-aliases = []
+aliases = ["2D_HN"]
 
 # When the dataset was added, in UTC, written by add.jl. Where a shortened name matches
 # several datasets, the first added is used, so never change this.
 added = "2026-11-08T16:20:56Z"
+
+# Optional: the same experiment in other formats, each given as path is: a table such as
+#   nmrpipe = "1/test.ft2"
+#   ucsf = "1/hmqc.ucsf"
+# with the formats nmrpipe, ucsf, bmrb and bruker. The format of path is found from its
+# name, and path is Bruker data wherever there are any. Keep this table last.
+[formats]
+nmrpipe = "2D_HN/test.ft2"
+ucsf = "2D_HN/hmqc.ucsf"
