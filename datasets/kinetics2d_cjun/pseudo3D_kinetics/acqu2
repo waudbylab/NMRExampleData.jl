@@ -1,0 +1,23 @@
+##TITLE= Parameter file, TopSpin 4.2.0
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 2	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= waudbyc
+$$ 2023-11-19 12:36:36.507 +0000  chris@eduroam-int-dhcp-97-137-79.ucl.ac.uk
+$$ /Users/chris/Documents/Work/NMRTools/additional-data/pseudo3D_kinetics/1/acqu2
+$$ process /opt/topspin4.2.0/prog/mod/dataserver
+##$ACQT0= 0
+##$BF1= 96.308262
+##$FnMODE= 5
+##$NUC1= <15N>
+##$NusJSP= 0
+##$NusT2= 1
+##$NusTD= 0
+##$O1= 11296.9591326
+##$ProjAngle= 0
+##$SFO1= 96.3195589591326
+##$SW= 20
+##$SW_h= 1926.39117918265
+##$TD= 128
+##END=

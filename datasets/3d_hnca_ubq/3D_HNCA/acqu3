@@ -1,0 +1,23 @@
+##TITLE= Parameter file, TopSpin 3.5 pl 6
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 1	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= waudbyc
+$$ 2020-01-28 11:50:46.608 +0000  waudbyc@cl-nmr-spec701
+$$ /home/waudbyc/nmr/chris_nuws_ubq3d_270120/12/acqu3
+$$ process /opt/topspin3.5pl6/prog/mod/edparproc
+##$ACQT0= 0
+##$BF1= 176.047828526
+##$FnMODE= 5
+##$NUC1= <13C>
+##$NusJSP= 0
+##$NusT2= 1
+##$NusTD= 0
+##$O1= 9506.58274041416
+##$ProjAngle= 0
+##$SFO1= 176.05733510874
+##$SW= 24.0011279391348
+##$SW_h= 4225.574624568
+##$TD= 256
+##END=
