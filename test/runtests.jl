@@ -182,20 +182,20 @@ const POINTER = """
         files = ["1/acqus" => "a"]
         withdataset("zzrelaxation2d_ubq";
             toml=toml("2026-01-01T00:00:00Z"; alias="zzpseudo3D_HN_R2"), files) do _
-            withdataset("zzrelaxation2d_asyn"; toml=toml("2026-02-01T00:00:00Z"), files) do _
+            withdataset("zzrelaxation2d_zzasyn"; toml=toml("2026-02-01T00:00:00Z"), files) do _
                 withdataset("zz2d_hn_ubq"; toml=toml("2026-01-01T00:00:01Z"), files) do _
-                    withdataset("zz2d_hn_calr"; toml=toml(""), files) do _
+                    withdataset("zz2d_hn_zzcalr"; toml=toml(""), files) do _
                         # a full name, even one added later
-                        @test exampleinfo("zzrelaxation2d_asyn").name == "zzrelaxation2d_asyn"
-                        @test exampleinfo("ZZRelaxation2D_ASYN").name == "zzrelaxation2d_asyn"
+                        @test exampleinfo("zzrelaxation2d_zzasyn").name == "zzrelaxation2d_zzasyn"
+                        @test exampleinfo("ZZRelaxation2D_ZZASYN").name == "zzrelaxation2d_zzasyn"
                         # a shortened name that matches several: the first added
                         @test exampleinfo("ZZRelaxation2D").name == "zzrelaxation2d_ubq"
                         @test exampleinfo("zzrelax").name == "zzrelaxation2d_ubq"
                         # one without an added time comes last
                         @test exampleinfo("ZZ2D_HN").name == "zz2d_hn_ubq"
                         # a part that matches only one
-                        @test exampleinfo("asyn").name == "zzrelaxation2d_asyn"
-                        @test exampleinfo("calr").name == "zz2d_hn_calr"
+                        @test exampleinfo("zzasyn").name == "zzrelaxation2d_zzasyn"
+                        @test exampleinfo("zzcalr").name == "zz2d_hn_zzcalr"
                         # aliases ignore case
                         @test exampleinfo("ZZPSEUDO3D_hn_r2").name == "zzrelaxation2d_ubq"
                         @test exampleinfo("zzrelaxation2d_ubq").added == "2026-01-01T00:00:00Z"
