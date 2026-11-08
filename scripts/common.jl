@@ -2,6 +2,9 @@
 
 using Pkg: Pkg
 Pkg.activate(@__DIR__; io=devnull)
+# resolve, not just instantiate, so that the manifest follows changes to NMRExampleData's own
+# dependencies (instantiate does not look at a package developed from a path)
+Pkg.resolve(; io=devnull)
 Pkg.instantiate(; io=devnull)
 
 using NMRExampleData
