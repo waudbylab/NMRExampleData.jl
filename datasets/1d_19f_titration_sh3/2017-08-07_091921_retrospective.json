@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "created_timestamp": "2017-08-07T09:19:21.000Z",
+    "modified_timestamp": "2026-11-08T15:56:25.709Z",
+    "schema_version": "0.4.0",
+    "ejected_timestamp": "2017-08-07T09:19:31.000Z",
+    "schema_source": "https://raw.githubusercontent.com/nmr-samples/schema/main/versions/v0.4.0/schema.json"
+  },
+  "sample": {
+    "physical_form": "",
+    "components": [
+      {
+        "type": "protein",
+        "unit": "uM",
+        "concentration_or_amount": 290,
+        "name": "5-fluorotryptophan-labeled SH3 T22G",
+        "isotopic_labelling": "19F"
+      },
+      {
+        "type": "peptide",
+        "unit": "uM",
+        "concentration_or_amount": 145,
+        "name": "SOS PepS2",
+        "isotopic_labelling": "natural abundance"
+      }
+    ],
+    "label": "0.5eq (copy)"
+  },
+  "nmr_tube": {
+    "type": ""
+  },
+  "buffer": {
+    "chemical_shift_reference": "",
+    "reference_unit": "",
+    "solvent": ""
+  }
+}

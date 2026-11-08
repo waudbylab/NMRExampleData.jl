@@ -1,0 +1,11 @@
+##TITLE= Parameter file, TopSpin 4.4.0
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 2	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH & Co. KG
+##OWNER= chris
+$$ 2025-02-05 18:21:10.665 +0000  chris@johann.local
+$$ /Users/chris/NMR/crick-950/kleo_CRT_CTD_relax_241218/21/pdata/231/assocs
+$$ process /opt/topspin4.4.0/prog/mod/dataserver
+##$MULTDISP= </Users/chris/NMR/crick-950/kleo_CRT_CTD_relax_241218/21/pdata/232>
+##END=

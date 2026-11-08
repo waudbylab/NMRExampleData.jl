@@ -1,0 +1,24 @@
+##TITLE= Parameter file, TopSpin 4.4.0
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 162	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH & Co. KG
+##OWNER= waudbyc
+$$ 2024-12-19 05:24:52.470 +0000  waudbyc@cl-nmr-spec950
+$$ /home/waudbyc/nmr/kleo_CRT_CTD_relax_241218/21/acqu2s
+$$ process /opt/topspin4.4.0/prog/mod/acqdataserver
+##$ACQT0= 0
+##$BF1= 96.308262
+##$FnILOOP= 1
+##$FnMODE= 6
+##$NUC1= <15N>
+##$NusJSP= 0
+##$NusT2= 1
+##$NusTD= 160
+##$O1= 11556.99144
+##$ProjAngle= 0
+##$SFO1= 96.31981899144
+##$SW= 15
+##$SW_h= 1444.7972848716
+##$TD= 160
+##END=

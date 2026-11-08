@@ -1,0 +1,16 @@
+##TITLE= Parameter file, TopSpin 4.4.0
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 1	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH & Co. KG
+##OWNER= waudbyc
+$$ 2024-12-18 14:42:55.367 +0000  waudbyc@cl-nmr-spec950
+$$ /home/waudbyc/nmr/kleo_CRT_CTD_relax_241218/21/pdata/1/outd
+$$ process /opt/topspin4.4.0/prog/au/bin/iexpno
+##$CURPLOT= <>
+##$CURPRIN= <$>
+##$DFORMAT= <normdp>
+##$LAYOUT= <+/1D_H.xwp>
+##$LFORMAT= <normlp>
+##$PFORMAT= <normpl>
+##END=
