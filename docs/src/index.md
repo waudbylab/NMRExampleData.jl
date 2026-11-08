@@ -53,7 +53,7 @@ The first time a dataset is used in a session, who to credit, what to cite and t
 shown. `exampleinfo` gives the same information at any time, and `examples()` lists every
 dataset.
 
-## Names
+## Shortened names
 
 Names ignore case, and can be shortened to the start of the full name or of any part of it:
 `"titration2d"` and `"fir"` both find `titration2d_fir_nbox`. Where a shortened name matches
