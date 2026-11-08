@@ -40,10 +40,11 @@ reference, saturated = example("hetnoe2d_calr")
 expt = hetnoe2d(reference, saturated)
 ```
 
-With NMRScreen, a screen opens from its `experiment.toml`:
+With NMRScreen, a screen opens from its `experiment.toml`. NMRTools and NMRAnalysis make
+these functions available; with NMRScreen, load NMRExampleData as well:
 
 ```julia
-using NMRScreen
+using NMRScreen, NMRExampleData
 
 screen(example("screen_bsa"))
 ```
