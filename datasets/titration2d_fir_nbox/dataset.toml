@@ -10,7 +10,7 @@ title = "FIR-Nbox 2D 1H,15N SOFAST-HMQC titration (600 MHz, 315 K)"
 path = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
 
 # Optional: concentrations, temperature, field, anything a reader should know.
-description = "Titration of FIR RRM1-RRM2 with Nbox peptide"
+description = "Titration of 15N-labelled FIR RRM1-RRM2 (41 µM, diluted to 33 µM) with unlabelled Nbox peptide, from 0 to 200 µM in 11 steps, in 10 mM Tris, 50 mM NaCl, 2 mM TCEP, pH 7.4, 10% D2O. Each experiment is matched to a sample record giving its concentrations."
 
 # Who to credit, shown whenever the data are loaded: "Name <email>" or "Name", e.g.
 # ["Chris Waudby <c.waudby@ucl.ac.uk>", "A. Person"].
