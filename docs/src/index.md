@@ -9,47 +9,55 @@ sample records and analyses, for tutorials, documentation and tests. The
 Installing the package downloads no data. Each dataset is downloaded the first time you use it,
 and only that one.
 
-## Using the data with NMRTools
+## Opening a dataset
 
-NMRTools (version 0.3.2 or later) loads a dataset by name:
+`example(name)` gives what a dataset is opened with, downloading it the first time: a spectrum,
+a vector of them for a series, or the `experiment.toml` of a screen. You open it with the
+package it is for:
 
 ```julia
 using NMRTools
 
-spec = exampledata("titration2d_fir_nbox")              # NMRData, or a vector of them for a series
-fid = exampledata("titration2d_fir_nbox"; fid=true)     # the raw time-domain data instead
-path = exampledata("titration2d_fir_nbox"; path=true)   # where it is, without loading it
-spec = exampledata()                                    # or choose one from a menu
+spec = loadnmr(example("titration2d_fir_nbox"))   # NMRData, or a vector of them for a series
+fid = loadfid(example("titration2d_fir_nbox"))    # the raw data
+example()                                         # choose a dataset from a menu
 ```
 
-The first time a dataset is used in a session, NMRTools shows who to credit, what to cite, and
-the licence. `exampleinfo` gives the same information at any time.
+With NMRAnalysis, start an analysis from a dataset's spectra, or reopen the analysis saved
+with it, with its peaks picked and its parameters set:
+
+```julia
+using NMRAnalysis
+
+expt = relaxation2d(example("relaxation2d_ubq"))     # from the start
+expt = reopen(exampleanalysis("relaxation2d_ubq"))   # as saved, ready to refit
+```
+
+Where an analysis takes its data in roles, `example` returns them in that order, to unpack:
+
+```julia
+reference, saturated = example("hetnoe2d_calr")
+expt = hetnoe2d(reference, saturated)
+```
+
+With NMRScreen, a screen opens from its `experiment.toml`:
+
+```julia
+using NMRScreen
+
+screen(example("screen_bsa"))
+```
+
+The first time a dataset is used in a session, who to credit, what to cite and the licence are
+shown. `exampleinfo` gives the same information at any time, and `examples()` lists every
+dataset.
+
+## Names
 
 Names ignore case, and can be shortened to the start of the full name or of any part of it:
 `"titration2d"` and `"fir"` both find `titration2d_fir_nbox`. Where a shortened name matches
 several datasets, the one added first is used, so it keeps meaning the same dataset as more are
 added. In code that others will run, give the full name.
-
-A dataset with several experiments, such as a titration or a relaxation series, loads as a
-vector of spectra in a fixed order.
-
-## Using the data without NMRTools
-
-The package itself gives you the files, to load however you like:
-
-```julia
-using NMRExampleData
-
-examples()                                   # the names of every dataset
-exampleinfo("titration2d_fir_nbox")          # title, credit, citation, licence and description
-examplepath("titration2d_fir_nbox")          # the experiment(s) to load, downloading if needed
-examplepath("titration2d_fir_nbox"; fid=true)  # the same, with the raw fid and ser files
-exampledir("titration2d_fir_nbox")           # the dataset's whole folder
-```
-
-`examplepath` is the experiment folder to load, or a vector of them for a series. `exampledir`
-is the folder holding the whole dataset: every experiment, the sample records, and any
-`analysis/` folder of NMRAnalysis results.
 
 ## Versions
 

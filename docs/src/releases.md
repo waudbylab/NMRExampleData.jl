@@ -10,9 +10,8 @@ release, it:
 3. bumps the version in `Project.toml`, commits and pushes both files, and asks
    Registrator to register the new version. TagBot then tags it.
 
-Each dataset is packed twice: once without its raw `fid` and `ser` files, which is what
-`exampledata` downloads, and once complete, downloaded only for `fid=true`. A dataset without
-raw data is packed once. `dataset.toml` is not packed: it ships with the package itself.
+Each dataset is packed whole, raw data included, and downloaded the first time it is used.
+`dataset.toml` is not packed: it ships with the package itself.
 
 After a release, the workflow rebuilds this documentation, so the [Catalogue](@ref) shows the
 new data.
@@ -29,7 +28,10 @@ The version goes up by:
 - **patch**, when only `dataset.toml` files change. They ship with the package, so no data
   are uploaded.
 
-The first release was 1.0.0. Depend on the package as `NMRExampleData = "1"` to get new data
+A version is registered once TagBot has tagged it. Until then, a release keeps the same version
+and updates the registration still waiting, rather than adding another version behind it.
+
+The first release is 1.0.0. Depend on the package as `NMRExampleData = "1"` to get new data
 with ordinary package updates.
 
 ## When something goes wrong

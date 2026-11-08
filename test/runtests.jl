@@ -1,5 +1,5 @@
 using NMRExampleData
-using NMRExampleData: DATASETS, ARTIFACTS, hasdata
+using NMRExampleData: DATASETS, ARTIFACTS, CREDITED, hasdata
 using Test
 using TOML
 
@@ -43,7 +43,7 @@ const POINTER = """
     @testset "A dataset in the repository" begin
         toml = """
                title = "A test series"
-               spectrum = ["1", "2"]
+               path = ["1", "2"]
                credit = ["A. Tester <a.tester@example.com>", "B. Tester"]
                citation = "Tester et al. (2026)"
                licence = "CC BY 4.0"
@@ -53,33 +53,83 @@ const POINTER = """
             @test "zztest" in examples()
             info = exampleinfo("zztest")
             @test info.title == "A test series"
+            @test info.path == ["1", "2"]
             @test exampleinfo("zztestalias").name == "zztest"
             @test info.credit == ["A. Tester <a.tester@example.com>", "B. Tester"]
             @test info.citation == "Tester et al. (2026)"
             @test info.licence == "CC BY 4.0"
-            @test exampledir("zztest") == dir
-            @test examplepath("zztest") == [joinpath(dir, "1"), joinpath(dir, "2")]
-            @test examplepath("zztest"; fid=true) == examplepath("zztest")
+            @test example("zztest") == [joinpath(dir, "1"), joinpath(dir, "2")]
+            @test_throws ArgumentError exampleanalysis("zztest")
         end
     end
 
-    @testset "A whole-folder dataset" begin
+    @testset "Shapes of path" begin
+        withdataset("zztest"; toml="title = \"A folder\"", files=["1/acqus" => "a"]) do dir
+            @test example("zztest") == joinpath(dir, "")
+        end
         toml = """
-               title = "A folder"
+               title = "Pairs"
+               path = [["1", "2"], ["3", "4"]]
+               """
+        files = ["$i/acqus" => "a" for i in 1:4]
+        withdataset("zztest"; toml, files) do dir
+            iso, aln = example("zztest")
+            @test iso == [joinpath(dir, "1"), joinpath(dir, "2")]
+            @test aln == [joinpath(dir, "3"), joinpath(dir, "4")]
+        end
+        toml = """
+               title = "A screen"
+               path = "experiment.toml"
+               """
+        withdataset("zztest"; toml, files=["experiment.toml" => "[setup]"]) do dir
+            @test example("zztest") == joinpath(dir, "experiment.toml")
+        end
+    end
+
+    @testset "A saved analysis" begin
+        toml = """
+               title = "Analysed"
+               path = "1"
+               """
+        files = ["1/acqus" => "a", "analysis/peaklist.csv" => "label", "analysis/analysis.toml" => ""]
+        withdataset("zztest"; toml, files) do dir
+            @test exampleanalysis("zztest") == joinpath(dir, "analysis")
+        end
+    end
+
+    @testset "Credit, once a session" begin
+        toml = """
+               title = "Credited"
+               path = "1"
+               credit = ["A. Tester"]
+               licence = "CC BY 4.0"
                """
         withdataset("zztest"; toml, files=["1/acqus" => "a"]) do dir
-            @test examplepath("zztest") == joinpath(dir, "")
+            delete!(CREDITED, "zztest")
+            @test_logs (:info, r"^Example data zztest: Credited\nCredit: A. Tester") example("zztest")
+            @test_logs example("zztest")
+        end
+    end
+
+    @testset "The list of datasets" begin
+        withdataset("zztest"; toml="title = \"Listed\"", files=["1/acqus" => "a"]) do dir
+            listing = mktemp() do path, io
+                redirect_stdout(() -> example(), io)
+                close(io)
+                read(path, String)
+            end
+            @test occursin(r"zztest\s+Listed", listing)
         end
     end
 
     @testset "LFS pointers instead of data" begin
         toml = """
                title = "Not fetched"
-               spectrum = "1"
+               path = "1"
                """
         withdataset("zztest"; toml, files=["1/acqus" => "a", "1/fid" => POINTER]) do dir
             @test !hasdata(dir)
-            @test_throws ErrorException exampledir("zztest")
+            @test_throws ArgumentError example("zztest")
         end
     end
 
@@ -129,6 +179,6 @@ const POINTER = """
 
     @testset "Unknown names" begin
         @test_throws ArgumentError exampleinfo("no_such_dataset")
-        @test_throws ArgumentError examplepath("no_such_dataset")
+        @test_throws ArgumentError example("no_such_dataset")
     end
 end

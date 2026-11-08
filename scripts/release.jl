@@ -5,17 +5,18 @@
 #     julia scripts/release.jl [--yes] [--dry-run]
 #
 # It finds the datasets changed since the last release, fetches their data from Git LFS,
-# checks them, and packs each one whose data has changed: `<name>` without the raw data, and
-# `<name>_fid` complete (a dataset without raw data is packed once). The packs go up to a
-# new GitHub release, and Artifacts.toml is updated to point at them. The version in
-# Project.toml is bumped, the two files are committed and pushed, and Registrator is asked
-# to register the new version. TagBot then tags it.
+# checks them, and packs each one whose data has changed, whole except for its dataset.toml.
+# The packs go up to a new GitHub release, and Artifacts.toml is updated to point at them.
+# The version in Project.toml is bumped, the two files are committed and pushed, and
+# Registrator is asked to register the new version. TagBot then tags it.
 #
 # The version goes up by:
 #   - major, when a dataset is removed or renamed without keeping its old name as an alias
 #   - minor, when a dataset is added or its data changes
 #   - patch, when only dataset.toml files change, since they ship with the package itself
-# with 1.0.0 as the first release.
+# with 1.0.0 as the first release. A version not yet tagged by TagBot has not been
+# registered, so it is released again rather than bumped: Registrator then updates the
+# registration still waiting for it.
 #
 # --yes skips the question before uploading. --dry-run says what would happen and stops.
 
@@ -33,14 +34,7 @@ git(args...) = readchomp(Cmd(`git $args`; dir=ROOT))
 
 # dataset.toml is read from the package itself, so it stays out of the packs and editing it
 # needs no new upload
-nometa(f) = f == "dataset.toml"
-
-# (pack name, files to leave out)
-function packs(name)
-    nofid = f -> nometa(f) || israw(f)
-    hasraw(joinpath(DATASETS, name)) || return [(name, nofid)]
-    return [(name, nofid), (name * "_fid", nometa)]
-end
+skip(f) = f == "dataset.toml"
 
 # The commit of the last release, or nothing before the first.
 function lastrelease()
@@ -83,17 +77,22 @@ function nextversion(current, uploads, stale, changed)
     for n in examples()
         union!(names, exampleinfo(n).aliases)
     end
+    # a dataset's raw data were once packed separately, as <name>_fid
     removed = filter(n -> !(n in names), unique(replace.(stale, r"_fid$" => "")))
     bump = !isempty(removed) ? :major :
            !isempty(uploads) || !isempty(stale) ? :minor :
            !isempty(changed) ? :patch : nothing
     isnothing(bump) && return nothing, removed
+    registered(current) || return current, removed
     current < v"1" && return v"1.0.0", removed
     v = bump == :major ? VersionNumber(current.major + 1, 0, 0) :
         bump == :minor ? VersionNumber(current.major, current.minor + 1, 0) :
         VersionNumber(current.major, current.minor, current.patch + 1)
     return v, removed
 end
+
+# TagBot tags each version once it is registered
+registered(v) = !isempty(git("tag", "--list", "v$v"))
 
 function setversion!(v)
     toml = read(PROJECT, String)
@@ -118,15 +117,14 @@ function main(args)
 
     build = mktempdir()
     uploads = []
-    for name in changed, (a, skip) in packs(name)
-        hash = create_artifact(d -> copytree(joinpath(DATASETS, name), d; skip))
+    for a in changed
+        hash = create_artifact(d -> copytree(joinpath(DATASETS, a), d; skip))
         artifact_hash(a, ARTIFACTS) == hash && continue
         tarball = joinpath(build, "$a.tar.gz")
         archive_artifact(hash, tarball)
         push!(uploads, (; a, hash, tarball))
     end
-    stale = collect(setdiff(keys(TOML.parsefile(ARTIFACTS)),
-        [a for n in examples() for (a, _) in packs(n)]))
+    stale = collect(setdiff(keys(TOML.parsefile(ARTIFACTS)), examples()))
 
     current = VersionNumber(TOML.parsefile(PROJECT)["version"])
     version, removed = nextversion(current, uploads, stale, changed)
@@ -136,7 +134,8 @@ function main(args)
     end
 
     total = sum((filesize(u.tarball) for u in uploads); init=0)
-    println("\nRelease version $version (from $current):")
+    println("\nRelease version $version", version == current ? " (not yet registered)" :
+                                                      " (from $current)", ":")
     foreach(u -> println("  upload  $(u.a)  $(megabytes(filesize(u.tarball)))"), uploads)
     foreach(a -> println("  remove  $a"), stale)
     isempty(removed) || println("  no longer available: ", join(removed, ", "))

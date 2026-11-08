@@ -7,22 +7,32 @@ using NMRExampleData: DATASETS, released
 # What the catalogue says about one dataset.
 struct Entry
     info::NamedTuple             # from exampleinfo
-    nspectra::Int                # spectra loaded by exampledata
+    paths::Vector{String}        # what `path` gives, flattened, relative to the dataset
+    roles::Bool                  # `path` is nested: the data come in roles
     experiments::Vector{NMRExperiment}
     raw::Bool                    # has fid or ser files
-    analysis::Vector{String}     # folders of NMRAnalysis output, relative to the dataset
+    analysis::Bool               # has a saved NMRAnalysis analysis
 end
 
 function Entry(name::AbstractString)
     info = exampleinfo(name)
     dir = joinpath(DATASETS, info.name)
-    spectra = info.spectrum isa AbstractVector ? info.spectrum :
-              isempty(info.spectrum) ? String[] : [info.spectrum]
-    folders = isempty(spectra) ? experimentfolders(dir) :
-              unique(filter(!isnothing, [experimentfolder(joinpath(dir, s), dir) for s in spectra]))
-    nspectra = isempty(spectra) ? length(folders) : length(spectra)
-    return Entry(info, nspectra, NMRExperiment.(folders), hasraw(dir), analysisfolders(dir))
+    paths = isempty(info.path) ? String[] : leaves(info.path)
+    roles = info.path isa AbstractVector && any(p -> p isa AbstractVector, info.path)
+    folders = isempty(paths) || isscreen(paths) ? experimentfolders(dir) :
+              unique(filter(!isnothing, [experimentfolder(joinpath(dir, p), dir) for p in paths]))
+    return Entry(info, paths, roles, NMRExperiment.(folders), hasraw(dir),
+                 isdir(joinpath(dir, "analysis")))
 end
+
+leaves(p::AbstractString) = [p]
+leaves(p::AbstractVector) = reduce(vcat, leaves.(p); init=String[])
+
+# a screen is opened by its experiment.toml
+isscreen(paths) = length(paths) == 1 && endswith(only(paths), ".toml")
+isscreen(e::Entry) = isscreen(e.paths)
+
+nspectra(e::Entry) = isempty(e.paths) ? length(e.experiments) : length(e.paths)
 
 name(e::Entry) = e.info.name
 isreleased(e::Entry) = released(name(e))
@@ -44,14 +54,6 @@ end
 experimentfolders(dir) = sort!([r for (r, _, fs) in walkdir(dir) if "acqus" in fs])
 
 hasraw(dir) = any(f -> f == "fid" || f == "ser", (f for (_, _, fs) in walkdir(dir) for f in fs))
-
-const OUTPUTS = ("results.csv", "global.csv", "peaklist.csv", "regionlist.csv", "series.csv")
-
-function analysisfolders(dir)
-    a = joinpath(dir, "analysis")
-    isdir(a) || return String[]
-    return sort!([relpath(r, dir) for (r, _, fs) in walkdir(a) if any(in(OUTPUTS), fs)])
-end
 
 # ---- Markdown -----------------------------------------------------------------------------
 
@@ -76,9 +78,10 @@ yesno(b) = b ? "yes" : "no"
 plural(n, one, many=one * "s") = "$n $(n == 1 ? one : many)"
 
 function summaryrow(e::Entry)
-    cells = ["[`$(name(e))`](@ref $(name(e)))", markdown(e.info.title), string(e.nspectra),
-             yesno(e.raw), yesno(!isempty(samplerecords(e))), yesno(nannotated(e) > 0),
-             yesno(!isempty(e.analysis)), markdown(e.info.licence)]
+    cells = ["[`$(name(e))`](@ref $(name(e)))", markdown(e.info.title),
+             isscreen(e) ? "screen" : string(nspectra(e)), yesno(e.raw),
+             yesno(!isempty(samplerecords(e))), yesno(nannotated(e) > 0), yesno(e.analysis),
+             markdown(e.info.licence)]
     return "| " * join(cells, " | ") * " |"
 end
 
@@ -88,7 +91,7 @@ function section(e::Entry)
     println(io, "## [`$n`](@id $n)\n")
     println(io, "**", markdown(e.info.title), "**\n")
     isempty(e.info.description) || println(io, markdown(e.info.description), "\n")
-    println(io, "```julia\nspec = exampledata(\"$n\")\n```\n")
+    println(io, "```julia\n", join(usage(e), "\n"), "\n```\n")
     println(io, join(facts(e), " "), "\n")
     isempty(e.info.credit) ||
         println(io, "**Credit:** ", markdown(join(person.(e.info.credit), ", ")), "\n")
@@ -98,13 +101,30 @@ function section(e::Entry)
     return String(take!(io))
 end
 
+# The lines that open a dataset.
+function usage(e::Entry)
+    n = "\"$(name(e))\""
+    isscreen(e) && return ["screen(example($n))"]
+    lines = e.roles ? ["data = example($n)   # in the roles of its analysis"] :
+            ["spec = loadnmr(example($n))"]
+    e.raw && push!(lines, "fid = loadfid(example($n))")
+    e.analysis && push!(lines, "expt = reopen(exampleanalysis($n))   # with NMRAnalysis")
+    return lines
+end
+
 # Sentences describing a dataset's contents.
 function facts(e::Entry)
     s = String[]
-    push!(s, e.nspectra == 1 ? "Loads as a single spectrum." :
-             "Loads as a vector of $(e.nspectra) spectra, in the order given in `dataset.toml`.")
-    push!(s, e.raw ? "Includes the raw data: load it with `exampledata(\"$(name(e))\"; fid=true)`." :
-             "Processed data only.")
+    k = nspectra(e)
+    if isscreen(e)
+        push!(s, "A screen, opened with NMRScreen from its `experiment.toml`.")
+    elseif e.roles
+        push!(s, "$k spectra, in the roles their analysis takes them, as given in `dataset.toml`.")
+    else
+        push!(s, k == 1 ? "Loads as a single spectrum." :
+                 "Loads as a vector of $k spectra, in the order given in `dataset.toml`.")
+    end
+    isscreen(e) || push!(s, e.raw ? "Includes the raw data." : "Processed data only.")
     nexpt = length(e.experiments)
     records = samplerecords(e)
     if nexpt == 0
@@ -112,14 +132,12 @@ function facts(e::Entry)
     else
         push!(s, isempty(records) ? "No sample records." :
                  "Matched to $(plural(length(records), "sample record")).")
-        k = nannotated(e)
-        push!(s, k == 0 ? "No pulse programme annotations." :
-                 k == nexpt ? "The pulse programme is annotated." :
-                 "The pulse programmes of $k of $nexpt experiments are annotated.")
+        a = nannotated(e)
+        push!(s, a == 0 ? "No pulse programme annotations." :
+                 a == nexpt ? "The pulse programme is annotated." :
+                 "The pulse programmes of $a of $nexpt experiments are annotated.")
     end
-    isempty(e.analysis) ||
-        push!(s, "Includes NMRAnalysis results, in " *
-                 join(("`$(a)/`" for a in e.analysis), ", ") * ".")
+    e.analysis && push!(s, "Includes a saved NMRAnalysis analysis, with its peak list and results.")
     isempty(e.info.aliases) ||
         push!(s, "Also called " * join(("`$a`" for a in e.info.aliases), ", ") * ".")
     isreleased(e) ||
@@ -138,10 +156,9 @@ function cataloguepage()
 
                 # Catalogue
 
-                Every dataset in this version of NMRExampleData. Load one with NMRTools by its
-                name, as in `exampledata("$(isempty(entries) ? "name" : name(first(entries)))")`. Each is
-                downloaded the first time it is used. Raw data are downloaded only when asked for,
-                with `fid=true`.
+                Every dataset in this version of NMRExampleData. Open one by its name, as in
+                `loadnmr(example("$(isempty(entries) ? "name" : name(first(entries)))"))` with NMRTools.
+                Each is downloaded the first time it is used.
                 """)
     if isempty(entries)
         println(io, "There are no datasets yet.")

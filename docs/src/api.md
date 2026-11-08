@@ -4,6 +4,6 @@
 NMRExampleData
 examples
 exampleinfo
-examplepath
-exampledir
+example
+exampleanalysis
 ```
