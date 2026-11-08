@@ -26,7 +26,7 @@ licence = "None"
 source = "/Users/chris/NMR/example-data/pseudo3D_HN_R2"
 
 # Optional: other names for the same data.
-aliases = ["pseudo3D_HN_R2"]
+aliases = []
 
 # When the dataset was added, in UTC, written by add.jl. Where a shortened name matches
 # several datasets, the first added is used, so never change this.

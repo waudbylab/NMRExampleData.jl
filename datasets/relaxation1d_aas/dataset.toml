@@ -26,7 +26,7 @@ licence = "CC BY 4.0"
 source = "/Users/chris/NMR/example-data/pseudo2D_T2"
 
 # Optional: other names for the same data.
-aliases = ["pseudo2D_T2"]
+aliases = []
 
 # When the dataset was added, in UTC, written by add.jl. Where a shortened name matches
 # several datasets, the first added is used, so never change this.

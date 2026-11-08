@@ -117,8 +117,3 @@ digits and underscores:
 
 Because a shortened name finds the first dataset added, add the dataset you would want
 `"2d_hn"` or `"hetnoe"` to find before any others like it.
-
-A dataset that replaces one of the example datasets of earlier NMRTools versions keeps the
-old name as an alias, such as `2D_HN` for `2d_hn_ubq` or `pseudo3D_HN_R2` for
-`relaxation2d_ubq`. An alias matches exactly, so NMRTools' documentation, tests and users'
-code go on finding the same data however many datasets are added.
