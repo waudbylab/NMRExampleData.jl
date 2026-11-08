@@ -1,0 +1,11 @@
+##TITLE= Parameter file, TopSpin 5.0.0
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 4	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH & Co. KG
+##OWNER= christopher.waudby
+$$ 2026-06-18 10:37:50.434 +0100  christopher.waudby@freeman1200-ashow
+$$ /opt/nmrdata/christopher.waudby/yishan_crt_ctd_260617/10107/pdata/1/assocs
+$$ process /opt/Bruker/topspin5.0.0/prog/mod/dataserver
+##$MULTDISP= </opt/nmrdata/christopher.waudby/yishan_crt_ctd_260617/10108/pdata/1|/opt/nmrdata/christopher.waudby/yishan_crt_ctd_260617/10109/pdata/1|/opt/nmrdata/christopher.waudby/yishan_crt_ctd_260617/10110/pdata/1>
+##END=

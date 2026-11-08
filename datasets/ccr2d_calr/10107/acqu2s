@@ -1,0 +1,24 @@
+##TITLE= Parameter file, TopSpin 5.0.0
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 2	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH & Co. KG
+##OWNER= christopher.waudby
+$$ 2026-06-18 09:21:54.022 +0100  christopher.waudby@freeman1200-ashow
+$$ /opt/nmrdata/christopher.waudby/yishan_crt_ctd_260617/10107/acqu2s
+$$ process /opt/Bruker/topspin5.0.0/prog/au/bin/split
+##$ACQT0= 0
+##$BF1= 121.650568823
+##$FnILOOP= 1
+##$FnMODE= 5
+##$NUC1= <15N>
+##$NusJSP= 0
+##$NusT2= 1
+##$NusTD= 256
+##$O1= 14598.0682587634
+##$ProjAngle= 0
+##$SFO1= 121.665166891259
+##$SW= 15.0000149982003
+##$SW_h= 1824.97932812743
+##$TD= 166
+##END=
