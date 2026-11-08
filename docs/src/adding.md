@@ -47,6 +47,22 @@ You need [Git LFS](https://git-lfs.com) once: `brew install git-lfs`, then `git 
    list even when there is one experiment: given a single path, `r1rho` offers a menu of
    the experiments in it.
 
+   Where the dataset holds the same experiment in other formats as well, such as nmrPipe or
+   UCSF spectra processed from it, list them in a `formats` table at the end of
+   `dataset.toml`, each given as `path` is, so that `example(name, :nmrpipe)` finds them:
+
+   ```toml
+   path = "1"
+
+   [formats]
+   nmrpipe = "1/test.ft2"
+   ucsf = "1/hmqc.ucsf"
+   ```
+
+   `path` gives the Bruker data wherever there are any. Say in the description how each
+   format was processed, since their intensities need not agree. Keep the files small:
+   process the other formats over a narrow region where that will do.
+
 3. Optionally, save an analysis with it. Run the analysis on the dataset's own copy of the
    data, from the dataset's folder, and save it to the output folder `analysis`:
 

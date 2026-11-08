@@ -31,3 +31,10 @@ aliases = []
 # When the dataset was added, in UTC, written by add.jl. Where a shortened name matches
 # several datasets, the first added is used, so never change this.
 added = ""
+
+# Optional: the same experiment in other formats, each given as path is: a table such as
+#   nmrpipe = "1/test.ft2"
+#   ucsf = "1/hmqc.ucsf"
+# with the formats nmrpipe, ucsf, bmrb and bruker. The format of path is found from its
+# name, and path is Bruker data wherever there are any. Keep this table last.
+[formats]

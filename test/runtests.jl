@@ -86,6 +86,46 @@ const POINTER = """
         end
     end
 
+    @testset "Formats" begin
+        format = NMRExampleData.format
+        @test format("1") == :bruker
+        @test format("1/pdata/1") == :bruker
+        @test format("1/test.ft2") == :nmrpipe
+        @test format("smile/test%03d.ft3") == :nmrpipe
+        @test format("hnca.ucsf") == :ucsf
+        @test format("bmr17769_3.str") == :bmrb
+        @test format("experiment.toml") == :screen
+        @test format(["1/test.ft2", "2/test.ft2"]) == :nmrpipe
+
+        toml = """
+               title = "Several formats"
+               path = "1"
+
+               [formats]
+               ucsf = "1/hmqc.ucsf"
+               nmrpipe = "1/test.ft2"
+               """
+        files = ["1/acqus" => "a", "1/test.ft2" => "b", "1/hmqc.ucsf" => "c"]
+        withdataset("zztest"; toml, files) do dir
+            # the default first, then the others in a fixed order
+            info = exampleinfo("zztest")
+            @test info.formats == (bruker="1", nmrpipe="1/test.ft2", ucsf="1/hmqc.ucsf")
+            @test example("zztest") == joinpath(dir, "1")
+            @test example("zztest", :nmrpipe) == joinpath(dir, "1", "test.ft2")
+            @test example("zztest", :ucsf) == joinpath(dir, "1", "hmqc.ucsf")
+            @test_throws ArgumentError example("zztest", :bmrb)
+            @test "zztest" in examples(:ucsf)
+            @test "zztest" in examples(:bruker)
+            @test !("zztest" in examples(:screen))
+        end
+        # a dataset in one format needs no table
+        withdataset("zztest"; toml="title = \"Pipe\"\npath = \"1/test.ft2\"",
+                    files=["1/test.ft2" => "b"]) do dir
+            @test exampleinfo("zztest").formats == (nmrpipe="1/test.ft2",)
+            @test example("zztest", :nmrpipe) == example("zztest")
+        end
+    end
+
     @testset "A saved analysis" begin
         toml = """
                title = "Analysed"

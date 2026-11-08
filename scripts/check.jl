@@ -47,13 +47,38 @@ function checkdataset(name)
         return push!(problems, "the data files are Git LFS pointers: run `git lfs pull`")
 
     path = get(toml, "path", "")
-    paths = isempty(path) ? String[] : leaves(NMRExampleData.within(dir, path))
-    for p in paths
-        ispath(p) || push!(problems, "path $(relpath(p, dir)) does not exist")
+    formats = exampleinfo(name).formats
+    for (f, p) in pairs(get(toml, "formats", Dict()))
+        Symbol(f) in NMRExampleData.FORMATS ||
+            push!(problems, "formats has an unknown format \"$f\": use " *
+                            join(NMRExampleData.FORMATS, ", "))
+        NMRExampleData.format(p) == Symbol(f) ||
+            push!(problems, "formats gives $p as $f, but it looks like " *
+                            "$(NMRExampleData.format(p)) data")
+        Symbol(f) == NMRExampleData.format(path) &&
+            push!(problems, "formats repeats $f, the format of path")
     end
-    filter!(ispath, paths)
-    # a screen's experiment.toml is checked by NMRScreen, not loaded here
-    spectra = isempty(path) ? experiments(dir) : filter(p -> !endswith(p, ".toml"), paths)
+    paths = String[]
+    for p in values(formats)
+        isempty(p) && continue
+        append!(paths, leaves(NMRExampleData.within(dir, p)))
+    end
+    for p in paths
+        ispath(replace(p, r"%\d*d" => "001")) ||
+            push!(problems, "$(relpath(p, dir)) does not exist")
+    end
+    filter!(p -> ispath(replace(p, r"%\d*d" => "001")), paths)
+    # spectra in a format not declared would be invisible to users and to tests
+    declared = Set(normpath.(paths))
+    for (root, _, fs) in walkdir(dir), f in fs
+        occursin(r"\.(ft[1-4]|ucsf)$", f) || continue
+        p = normpath(joinpath(root, f))
+        p in declared || any(d -> occursin('%', d) && dirname(d) == dirname(p), declared) ||
+            println("  warning: $(relpath(p, dir)) is not in path or formats")
+    end
+    # a screen's experiment.toml and BMRB shifts are checked by their own packages
+    spectra = isempty(path) ? experiments(dir) :
+              filter(p -> NMRExampleData.format(p) in (:bruker, :nmrpipe, :ucsf), paths)
     for p in spectra
         spec = try
             loadnmr(p)

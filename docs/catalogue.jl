@@ -25,7 +25,14 @@ function Entry(name::AbstractString)
                  isdir(joinpath(dir, "analysis")))
 end
 
+const FORMATNAMES = Dict(:bruker => "Bruker", :nmrpipe => "nmrPipe", :ucsf => "UCSF",
+                         :bmrb => "NMR-STAR", :screen => "NMRScreen")
+
 leaves(p::AbstractString) = [p]
+
+# the file behind a format, or the first of a series
+filename(p::AbstractString) = p
+filename(p::AbstractVector) = first(leaves(p)) * ", …"
 leaves(p::AbstractVector) = reduce(vcat, leaves.(p); init=String[])
 
 # a screen is opened by its experiment.toml
@@ -79,7 +86,8 @@ plural(n, one, many=one * "s") = "$n $(n == 1 ? one : many)"
 
 function summaryrow(e::Entry)
     cells = ["[`$(name(e))`](@ref $(name(e)))", markdown(e.info.title),
-             isscreen(e) ? "screen" : string(nspectra(e)), yesno(e.raw),
+             isscreen(e) ? "screen" : string(nspectra(e)),
+             join((FORMATNAMES[f] for f in keys(e.info.formats)), ", "), yesno(e.raw),
              yesno(!isempty(samplerecords(e))), yesno(nannotated(e) > 0), yesno(e.analysis),
              markdown(e.info.licence)]
     return "| " * join(cells, " | ") * " |"
@@ -107,6 +115,9 @@ function usage(e::Entry)
     isscreen(e) && return ["screen(example($n))"]
     lines = e.roles ? ["data = example($n)   # in the roles of its analysis"] :
             ["spec = loadnmr(example($n))"]
+    for f in Iterators.drop(keys(e.info.formats), 1)
+        push!(lines, "spec = loadnmr(example($n, :$f))")
+    end
     e.raw && push!(lines, "fid = loadfid(example($n))")
     e.analysis && push!(lines, "expt = reopen(exampleanalysis($n))   # with NMRAnalysis")
     return lines
@@ -125,6 +136,10 @@ function facts(e::Entry)
                  "Loads as a vector of $k spectra, in the order given in `dataset.toml`.")
     end
     isscreen(e) || push!(s, e.raw ? "Includes the raw data." : "Processed data only.")
+    length(e.info.formats) > 1 &&
+        push!(s, "The same data in " *
+                 join(("$(FORMATNAMES[f]) (`$(filename(p))`)" for (f, p) in pairs(e.info.formats)),
+                      ", ", " and ") * ".")
     nexpt = length(e.experiments)
     records = samplerecords(e)
     if nexpt == 0
@@ -165,8 +180,8 @@ function cataloguepage()
         return String(take!(io))
     end
     println(io, """
-                | Name | Title | Spectra | Raw data | Sample records | Annotations | Analysis | Licence |
-                |:-----|:------|--------:|:--------:|:--------------:|:-----------:|:--------:|:--------|""")
+                | Name | Title | Spectra | Formats | Raw data | Sample records | Annotations | Analysis | Licence |
+                |:-----|:------|--------:|:--------|:--------:|:--------------:|:-----------:|:--------:|:--------|""")
     foreach(e -> println(io, summaryrow(e)), entries)
     println(io)
     foreach(e -> println(io, section(e)), entries)

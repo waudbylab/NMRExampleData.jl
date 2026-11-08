@@ -6,4 +6,5 @@ examples
 exampleinfo
 example
 exampleanalysis
+NMRExampleData.FORMATS
 ```

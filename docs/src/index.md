@@ -53,6 +53,27 @@ The first time a dataset is used in a session, who to credit, what to cite and t
 shown. `exampleinfo` gives the same information at any time, and `examples()` lists every
 dataset.
 
+## Other formats
+
+Some datasets hold the same experiment in other formats too, as nmrPipe or UCSF (Sparky)
+spectra beside the Bruker data. `example` gives the Bruker data unless asked for another
+format, and `exampleinfo` says which formats there are, and which files hold them:
+
+```julia
+loadnmr(example("3d_hnca_ubq"))             # the Bruker experiment
+loadnmr(example("3d_hnca_ubq", :nmrpipe))   # the same spectrum, from nmrPipe
+exampleinfo("3d_hnca_ubq").formats          # (bruker = "1", nmrpipe = "1/smile/test%03d.ft3", …)
+examples(:ucsf)                             # every dataset with UCSF data
+```
+
+So a test of a file format can run over every dataset that has it:
+
+```julia
+for name in examples(:ucsf)
+    @test loadnmr(example(name, :ucsf)) isa NMRData
+end
+```
+
 ## Shortened names
 
 Names ignore case, and can be shortened to the start of the full name or of any part of it:

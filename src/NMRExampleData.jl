@@ -19,8 +19,10 @@ const ARTIFACTS = joinpath(ROOT, "Artifacts.toml")
 
 """
     examples() -> Vector{String}
+    examples(format) -> Vector{String}
 
-Names of the available example datasets, in alphabetical order.
+Names of the available example datasets, in alphabetical order: all of them, or those
+holding data in `format` (see [`FORMATS`](@ref NMRExampleData.FORMATS)), such as `:ucsf`.
 
 # Example
 ```julia
@@ -36,12 +38,17 @@ function examples()
     return filter(n -> isfile(joinpath(DATASETS, n, "dataset.toml")), readdir(DATASETS))
 end
 
+examples(format::Symbol) = filter(n -> haskey(exampleinfo(n).formats, format), examples())
+
 """
     exampleinfo(name) -> NamedTuple
 
 The description of an example dataset, from its `dataset.toml`: `name`, `title`, `path`,
-`description`, `credit` (a vector of `"Name <email>"` or `"Name"`), `citation`, `licence`,
-`source`, `aliases` and `added`. Nothing is downloaded.
+`formats`, `description`, `credit` (a vector of `"Name <email>"` or `"Name"`), `citation`,
+`licence`, `source`, `aliases` and `added`. Nothing is downloaded.
+
+`formats` names the files holding each format of the data, relative to the dataset's
+folder, with the default (`path`) first: `(bruker = "1", nmrpipe = "1/test.ft2")`.
 
 `name` may be the dataset's full name or an alias, in any case, or the start of the name
 or of any part of it between underscores: `"hetnoe"` finds `"hetnoe2d_calr"`. Where that
@@ -58,7 +65,12 @@ function exampleinfo(name::AbstractString)
     n = resolvename(name)
     d = TOML.parsefile(joinpath(DATASETS, n, "dataset.toml"))
     credit = get(d, "credit", String[])
-    return (; name=n, title=get(d, "title", ""), path=get(d, "path", ""),
+    path = get(d, "path", "")
+    others = get(d, "formats", Dict{String,Any}())
+    formats = (; format(path) => path,
+               (f => others[string(f)] for f in FORMATS
+                if haskey(others, string(f)) && f != format(path))...)
+    return (; name=n, title=get(d, "title", ""), path, formats,
         description=get(d, "description", ""),
         credit=credit isa AbstractString ? [credit] : credit, citation=get(d, "citation", ""),
         licence=get(d, "licence", ""), source=get(d, "source", ""),
@@ -67,10 +79,12 @@ end
 
 """
     example(name)
+    example(name, format)
     example()
 
 What an example dataset is opened with, downloading it the first time it is used: the path
-given by `path` in its `dataset.toml`, with the same shape. That is an experiment folder or
+given by `path` in its `dataset.toml`, with the same shape. Given a `format`, such as
+`:nmrpipe` or `:ucsf`, the same data in that format instead, where the dataset has it. That is an experiment folder or
 file, a vector of them for a series, nested vectors where an analysis takes its data in
 roles, or the `experiment.toml` of a screen. Where `path` is empty, the dataset's folder.
 
@@ -88,15 +102,19 @@ julia> using NMRTools
 
 julia> spec = loadnmr(example("2d_hn_ubq"))          # a spectrum, or a vector of them
 julia> fid = loadfid(example("2d_hn_ubq"))           # its raw data
+julia> spec = loadnmr(example("2d_hn_ubq", :ucsf))   # the same spectrum, from UCSF
 julia> reference, saturated = example("hetnoe2d_calr")
 julia> screen(example("screen_bsa"))                  # with NMRScreen
 ```
 """
-function example(name::AbstractString)
+function example(name::AbstractString, format::Symbol=:default)
     info = exampleinfo(name)
+    format == :default || haskey(info.formats, format) ||
+        throw(ArgumentError("example dataset \"$(info.name)\" has no $format data: it has " *
+                            join(keys(info.formats), ", ")))
     dir = datasetdir(info.name)
     showcredit(info)
-    return within(dir, info.path)
+    return within(dir, format == :default ? info.path : info.formats[format])
 end
 
 function example()
@@ -136,6 +154,32 @@ function exampleanalysis(name::AbstractString)
     showcredit(info)
     return joinpath(dir, "analysis")
 end
+
+"""
+    FORMATS
+
+The formats a dataset may hold, in the order `exampleinfo` lists them: Bruker experiment
+folders, nmrPipe and UCSF (Sparky) spectra, NMR-STAR shift lists from the BMRB, and the
+`experiment.toml` of an NMRScreen screen.
+"""
+const FORMATS = (:bruker, :nmrpipe, :ucsf, :bmrb, :screen)
+
+"""
+    format(path) -> Symbol
+
+The format of a dataset's `path`, from its name, as `loadnmr` tells formats apart: `.ft1` to
+`.ft4` and plane templates (`test%03d.ft3`) are nmrPipe, `.ucsf` is UCSF, `.str` is NMR-STAR,
+`experiment.toml` is a screen, and anything else is a Bruker experiment. A series has the
+format of its first member.
+"""
+function format(path::AbstractString)
+    endswith(path, ".toml") && return :screen
+    endswith(path, ".str") && return :bmrb
+    endswith(path, ".ucsf") && return :ucsf
+    occursin(r"\.ft[1-4]$", path) && return :nmrpipe
+    return :bruker
+end
+format(path::AbstractVector) = isempty(path) ? :bruker : format(first(path))
 
 # `path` from dataset.toml, inside the dataset's folder, keeping its shape
 within(dir, p::AbstractString) = joinpath(dir, p)
