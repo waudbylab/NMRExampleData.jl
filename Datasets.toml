@@ -1,0 +1,180 @@
+# The example datasets, written by scripts/release.jl from their dataset.toml files.
+[1d_19f_fragments]
+added = "2026-11-08T15:09:31Z"
+aliases = []
+citation = ""
+credit = ["Chris Waudby <c.waudby@ucl.ac.uk>", "Nikita Harvey"]
+description = "UCL Fragment Library Cocktail 1"
+licence = "None"
+path = "5"
+source = "/Users/chris/NMR/sop-600/nikita_19Ffragment_C1_241001/5"
+title = "FRAGS 1D 19F 1D 19F{1H} (600 MHz, 298 K)"
+
+[1d_19f_titration_sh3]
+added = "2026-11-08T16:09:31Z"
+aliases = []
+citation = "Stadmiller SS, Aguilar JS, Waudby CA, Pielak GJ. Rapid Quantification of Protein-Ligand Binding via 19F NMR Lineshape Analysis. Biophys J. 2020 May 19;118(10):2537-2548. doi: 10.1016/j.bpj.2020.03.031"
+credit = ["Chris Waudby <c.waudby@ucl.ac.uk>", "Samantha Stadmiller", "Gary Pielak"]
+description = "Titration of SH3 T22G with SOS PepS2"
+licence = "CC BY 4.0"
+path = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+source = "/Users/chris/NMR/example-data/1D_19F_titration/1, /Users/chris/NMR/example-data/1D_19F_titration/2, /Users/chris/NMR/example-data/1D_19F_titration/3, /Users/chris/NMR/example-data/1D_19F_titration/4, /Users/chris/NMR/example-data/1D_19F_titration/5, /Users/chris/NMR/example-data/1D_19F_titration/6, /Users/chris/NMR/example-data/1D_19F_titration/7, /Users/chris/NMR/example-data/1D_19F_titration/8, /Users/chris/NMR/example-data/1D_19F_titration/9, /Users/chris/NMR/example-data/1D_19F_titration/10, /Users/chris/NMR/example-data/1D_19F_titration/11"
+title = "SH3 1D 19F 1D titration (500 MHz, 318 K)"
+
+[1d_1h_ubq]
+added = "2026-11-08T17:09:18Z"
+aliases = []
+citation = ""
+credit = ["Chris Waudby <c.waudby@ucl.ac.uk>"]
+description = "13C,15N ubiquitin, 500 uM in 10% D2O, 20 mM Pi pH 6.5"
+licence = "CC BY 4.0"
+path = "1D_1H"
+source = "/Users/chris/NMR/example-data/1D_1H"
+title = "UBQ 1D 1H zgesgp (600 MHz, 277 K)"
+
+[2d_hn_ubq]
+added = "2026-11-08T16:20:56Z"
+aliases = []
+citation = ""
+credit = ["Chris Waudby <c.waudby@ucl.ac.uk>"]
+description = "13C,15N ubiquitin, 500 uM in 10% D2O, 20 mM Pi pH 6.5"
+licence = "CC BY 4.0"
+path = "2D_HN"
+source = "/Users/chris/NMR/example-data/2D_HN"
+title = "UBQ 2D 1H,15N SOFAST-HMQC (600 MHz, 277 K)"
+
+    [2d_hn_ubq.formats]
+    nmrpipe = "2D_HN/test.ft2"
+    ucsf = "2D_HN/hmqc.ucsf"
+
+[3d_hnca_ubq]
+added = "2026-11-08T23:35:35Z"
+aliases = []
+citation = ""
+credit = ["Chris Waudby <c.waudby@ucl.ac.uk>"]
+description = "500 uM 13C,15N ubiquitin"
+licence = "CC BY 4.0"
+path = "3D_HNCA"
+source = "/Users/chris/NMR/example-data/3D_HNCA"
+title = "UBQ 3D 1H,15N,13C BEST-HNCA (700 MHz, 298 K)"
+
+    [3d_hnca_ubq.formats]
+
+[calibration1d_19f]
+added = "2026-11-08T17:49:22Z"
+aliases = []
+citation = ""
+credit = ["Sophia Hazlett", "Chris Waudby <c.waudby@ucl.ac.uk>"]
+description = "100 uM 19F-ligand"
+licence = "CC BY 4.0"
+path = ["10", "11"]
+source = "/Users/chris/NMR/crick-701/sophia_hsp90_990_260823/10, /Users/chris/NMR/crick-701/sophia_hsp90_990_260823/11"
+title = "LIG pseudo-2D 19F nutation calibration (700 MHz, 298 K)"
+
+[ccr2d_calr]
+added = "2026-11-08T23:51:55Z"
+aliases = []
+citation = ""
+credit = ["Kleopatra Savvidou", "Chris Waudby <c.waudby@ucl.ac.uk>"]
+description = "15N CALR CTD"
+licence = "None"
+path = [["10107", "10110"], ["10108", "10109"]]
+source = "/Users/chris/NMR/warwick-1200/yishan_crt_ctd_260617/10107, /Users/chris/NMR/warwick-1200/yishan_crt_ctd_260617/10110, /Users/chris/NMR/warwick-1200/yishan_crt_ctd_260617/10108, /Users/chris/NMR/warwick-1200/yishan_crt_ctd_260617/10109"
+title = "CALR 2D 1H,15N Transverse amide CCR (symmetric reconversion) (1200 MHz, 283 K)"
+
+    [ccr2d_calr.formats]
+
+[diffusion1d_asyn]
+added = "2026-11-08T17:26:03Z"
+aliases = []
+citation = "Chan SHS, Waudby CA, Cassaignau AME, Cabrita LD, Christodoulou J. Increasing the sensitivity of NMR diffusion measurements by paramagnetic longitudinal relaxation enhancement, with application to ribosome-nascent chain complexes. J Biomol NMR. 2015 Oct;63(2):151-163. doi: 10.1007/s10858-015-9968-x"
+credit = ["Chris Waudby <c.waudby@ucl.ac.uk>", "Sammy Chan", "John Christodoulou"]
+description = "15N alpha-synuclein"
+licence = "CC BY 4.0"
+path = "pseudo2D_XSTE"
+source = "/Users/chris/NMR/example-data/pseudo2D_XSTE"
+title = "ASYN pseudo-2D 1H 15N XSTE, 5-95% gradients (500 MHz, 283 K)"
+
+    [diffusion1d_asyn.formats]
+    nmrpipe = "pseudo2D_XSTE/test.ft1"
+
+[hetnoe2d_calr]
+added = "2026-11-08T17:53:20Z"
+aliases = []
+citation = ""
+credit = ["Kleopatra Savvidou", "Chris Waudby <c.waudby@ucl.ac.uk>"]
+description = "15N CALR CTD"
+licence = "None"
+path = ["21/pdata/231", "21/pdata/232"]
+source = "/Users/chris/NMR/crick-950/kleo_CRT_CTD_relax_241218/21"
+title = "CALR pseudo-3D 1H,15N hetNOE (950 MHz, 283 K)"
+
+[kinetics2d_cjun]
+added = "2026-11-08T23:44:58Z"
+aliases = []
+citation = "Waudby CA, Alvarez-Teijeiro S, Josue Ruiz E, Suppinger S, Pinotsis N, Brown PR, Behrens A, Christodoulou J, Mylona A. An intrinsic temporal order of c-JUN N-terminal phosphorylation regulates its activity by orchestrating co-factor recruitment. Nat Commun. 2022 Oct 17;13(1):6133. doi: 10.1038/s41467-022-33866-w"
+credit = ["Chris Waudby <c.waudby@ucl.ac.uk>"]
+description = "100 uM WT 15N cJun phosphorylation kinetics (4 min dead time)"
+licence = "CC BY 4.0"
+path = "pseudo3D_kinetics"
+source = "/Users/chris/NMR/example-data/pseudo3D_kinetics"
+title = "CJUN pseudo-3D 1H,15N SOFAST-HMQC (950 MHz, 293 K)"
+
+    [kinetics2d_cjun.formats]
+
+[methylccr2d_fln5]
+added = "2026-11-08T23:57:20Z"
+aliases = []
+citation = "Charles Burridge, Christopher A. Waudby, Tomasz Włodarski, Anaïs M. E. Cassaignau, Lisa D. Cabrita, John Christodoulou; Nascent chain dynamics and ribosome interactions within folded ribosome–nascent chain complexes observed by NMR spectroscopy. Chem. Sci. 2021; 12 (39): 13120–13126. https://doi.org/10.1039/d1sc04313g"
+credit = ["Chris Waudby <c.waudby@ucl.ac.uk>"]
+description = "[2H,13CH3-ILV]-FLN5"
+licence = "CC BY 4.0"
+path = ["14", "15"]
+source = "/Users/chris/NMR/darwin-500/chris_ilv750_ccr_temperature_130618/15, /Users/chris/NMR/darwin-500/chris_ilv750_ccr_temperature_130618/14"
+title = "FLN5 pseudo-3D 1H,13C Methyl TQ CCR (500 MHz, 283 K)"
+
+    [methylccr2d_fln5.formats]
+
+[relaxation1d_aas]
+added = "2026-11-08T17:22:54Z"
+aliases = []
+citation = ""
+credit = ["Chris Waudby <c.waudby@ucl.ac.uk>", "Kitty Gong"]
+description = "Amino acid mixture"
+licence = "CC BY 4.0"
+path = "pseudo2D_T2"
+source = "/Users/chris/NMR/example-data/pseudo2D_T2"
+title = "AAs pseudo-2D 1H PROJECT T2, 4ms per loop (600 MHz, 298 K)"
+
+[relaxation2d_asyn]
+added = "2026-11-08T17:43:34Z"
+aliases = []
+citation = ""
+credit = ["Chris Waudby <c.waudby@ucl.ac.uk>", "Anders Malmendal"]
+description = "70 uM 15N aSyn"
+licence = "None"
+path = "pseudo3D_HN_R2"
+source = "/Users/chris/NMR/example-data/pseudo3D_HN_R2"
+title = "ASYN pseudo-3D 1H,15N 15N PD-CPMG T2 (900 MHz, 298 K)"
+
+[titration2d_fir_nbox]
+added = "2026-11-07T09:30:08Z"
+aliases = []
+citation = "Cukier, C., Hollingworth, D., Martin, S. et al. Molecular basis of FIR-mediated c-myc transcriptional control. Nat Struct Mol Biol 17, 1058–1064 (2010). https://doi.org/10.1038/nsmb.1883"
+credit = ["Chris Waudby <c.waudby@ucl.ac.uk>", "Andres Ramos <a.ramos@ucl.ac.uk>", "Cyprian Cukier"]
+description = "Titration of FIR RRM1-RRM2 with Nbox peptide"
+licence = "None"
+path = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+source = "/Users/chris/git/titan/examples/FBPNbox/1, /Users/chris/git/titan/examples/FBPNbox/2, /Users/chris/git/titan/examples/FBPNbox/3, /Users/chris/git/titan/examples/FBPNbox/4, /Users/chris/git/titan/examples/FBPNbox/5, /Users/chris/git/titan/examples/FBPNbox/6, /Users/chris/git/titan/examples/FBPNbox/7, /Users/chris/git/titan/examples/FBPNbox/8, /Users/chris/git/titan/examples/FBPNbox/9, /Users/chris/git/titan/examples/FBPNbox/10, /Users/chris/git/titan/examples/FBPNbox/11"
+title = "FIR-Nbox 2D 1H,15N SOFAST-HMQC titration (600 MHz, 315 K)"
+
+[tract_calr]
+added = "2026-11-08T17:36:02Z"
+aliases = []
+citation = ""
+credit = ["Kleopatra Savvidou", "Chris Waudby <c.waudby@ucl.ac.uk>"]
+description = "60 uM 15N CRT lectin-GSG-C163S"
+licence = "CC BY 4.0"
+path = ["12", "13"]
+source = "/Users/chris/NMR/crick-702/kleopatra_231201_CRT_GSG_C163S/12, /Users/chris/NMR/crick-702/kleopatra_231201_CRT_GSG_C163S/13"
+title = "CALR pseudo-2D 1H TRACT (700 MHz, 298 K)"

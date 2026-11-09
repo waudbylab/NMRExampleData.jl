@@ -1,9 +1,0 @@
-<pid_settings type="probehead">
-    <standard_pid proportional="1.582189" integral="81.4665" differential="13.57775"/>
-    <temperature selftune="298.15" min="248.15" max="348.15"/>
-    <vta type="4" sensor="1" connected_sensors="1"/>
-    <gasflow selftune="535.0" min="481.5" max="588.5"/>
-    <bcu_chiller type="1" selftune="2" min="0" max="2"/>
-    <pics checksum="0000" name="No PICS data"/>
-    <checksum value="1c9a7cab"/>
-</pid_settings>

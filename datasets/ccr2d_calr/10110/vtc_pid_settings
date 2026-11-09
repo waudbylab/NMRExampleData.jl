@@ -1,9 +1,0 @@
-<pid_settings type="probehead">
-   <standard_pid proportional="1.107" integral="101.475" differential="16.912" />
-   <temperature selftune="300.628" min="250.628" max="350.628" />
-   <vta type="4" sensor="1" connected_sensors="1" />
-   <gasflow selftune="600.000" min="540.000" max="660.000" />
-   <bcu_chiller type="2" selftune="0" min="0" max="3" />
-   <pics checksum="" name="CP2.1 TCI 1200SA H/C/N-D-03 Z" />
-   <checksum value="C7917EBF" />
-</pid_settings>
