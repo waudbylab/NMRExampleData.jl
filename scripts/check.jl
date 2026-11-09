@@ -46,13 +46,39 @@ function checkdataset(name)
     NMRExampleData.hasdata(dir) ||
         return push!(problems, "the data files are Git LFS pointers: run `git lfs pull`")
 
-    paths = examplepath(name)
-    paths = paths isa AbstractVector ? paths : [paths]
-    for p in paths
-        ispath(p) || push!(problems, "spectrum $(relpath(p, dir)) does not exist")
+    path = get(toml, "path", "")
+    formats = exampleinfo(name).formats
+    for (f, p) in pairs(get(toml, "formats", Dict()))
+        Symbol(f) in NMRExampleData.FORMATS ||
+            push!(problems, "formats has an unknown format \"$f\": use " *
+                            join(NMRExampleData.FORMATS, ", "))
+        NMRExampleData.format(p) == Symbol(f) ||
+            push!(problems, "formats gives $p as $f, but it looks like " *
+                            "$(NMRExampleData.format(p)) data")
+        Symbol(f) == NMRExampleData.format(path) &&
+            push!(problems, "formats repeats $f, the format of path")
     end
-    filter!(ispath, paths)
-    spectra = isempty(get(toml, "spectrum", "")) ? experiments(dir) : paths
+    paths = String[]
+    for p in values(formats)
+        isempty(p) && continue
+        append!(paths, leaves(NMRExampleData.within(dir, p)))
+    end
+    for p in paths
+        ispath(replace(p, r"%\d*d" => "001")) ||
+            push!(problems, "$(relpath(p, dir)) does not exist")
+    end
+    filter!(p -> ispath(replace(p, r"%\d*d" => "001")), paths)
+    # spectra in a format not declared would be invisible to users and to tests
+    declared = Set(normpath.(paths))
+    for (root, _, fs) in walkdir(dir), f in fs
+        occursin(r"\.(ft[1-4]|ucsf)$", f) || continue
+        p = normpath(joinpath(root, f))
+        p in declared || any(d -> occursin('%', d) && dirname(d) == dirname(p), declared) ||
+            println("  warning: $(relpath(p, dir)) is not in path or formats")
+    end
+    # a screen's experiment.toml and BMRB shifts are checked by their own packages
+    spectra = isempty(path) ? experiments(dir) :
+              filter(p -> NMRExampleData.format(p) in (:bruker, :nmrpipe, :ucsf), paths)
     for p in spectra
         spec = try
             loadnmr(p)
@@ -66,6 +92,7 @@ function checkdataset(name)
         println("  $(relpath(p, dir)): loads",
             isempty(notes) ? "" : ", " * join(notes, ", "))
     end
+    append!(problems, checkanalysis(dir))
     for e in experiments(dir)
         any(f -> isfile(joinpath(e, f)), ("fid", "ser")) || continue
         try
@@ -77,11 +104,45 @@ function checkdataset(name)
         end
     end
 
-    processed = foldersize(dir; skip=israw)
-    println("  download $(megabytes(processed)), with raw data $(megabytes(foldersize(dir)))")
-    processed > 100e6 && println("  warning: over 100 MB to download without the raw data")
+    bytes = foldersize(dir)
+    println("  download $(megabytes(bytes))")
+    bytes > 100e6 && println("  warning: over 100 MB to download")
     return problems
 end
+
+# The paths of `path`, however it is nested.
+leaves(p::AbstractString) = [p]
+leaves(p::AbstractVector) = reduce(vcat, leaves.(p); init=String[])
+
+# A saved analysis is an NMRAnalysis output folder: its picks in peaklist.csv, and the record
+# that `reopen` reads, whose inputs (paths relative to the folder, so starting "../") must
+# lie inside the dataset.
+function checkanalysis(dir)
+    a = joinpath(dir, "analysis")
+    isdir(a) || return String[]
+    problems = String[]
+    isfile(joinpath(a, "peaklist.csv")) ||
+        push!(problems, "analysis/ has no peaklist.csv")
+    record = joinpath(a, "analysis.toml")
+    if !isfile(record)
+        push!(problems, "analysis/ has no analysis.toml: save it with NMRAnalysis")
+        return problems
+    end
+    for s in strings(TOML.parsefile(record))
+        startswith(s, "../") || continue
+        p = normpath(joinpath(a, s))
+        startswith(p, normpath(dir)) ||
+            push!(problems, "analysis.toml refers to $s, outside the dataset")
+        ispath(p) || push!(problems, "analysis.toml refers to $s, which does not exist")
+    end
+    isempty(problems) && println("  analysis: ok")
+    return problems
+end
+
+strings(x::AbstractString) = [x]
+strings(x::AbstractDict) = reduce(vcat, strings.(values(x)); init=String[])
+strings(x::AbstractVector) = reduce(vcat, strings.(x); init=String[])
+strings(x) = String[]
 
 # Names and aliases must not collide across datasets, ignoring case as the lookup does.
 function checknames()

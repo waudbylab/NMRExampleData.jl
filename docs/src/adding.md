@@ -41,8 +41,38 @@ You need [Git LFS](https://git-lfs.com) once: `brew install git-lfs`, then `git 
 2. Optionally, edit `datasets/<name>/dataset.toml` to change any of the answers. The comments
    in `template/dataset.toml` describe each field.
 
-3. Optionally, add an `analysis/` folder with the `peaklist.csv` or `regionlist.csv` and
-   `results.csv` saved by NMRAnalysis.
+   `path` sets what `example(name)` returns, in the shape it returns it: one experiment, a
+   list of them for a series, or nested lists where an analysis takes its data in roles, so
+   that `iso, aln = example(name)` unpacks into `rdc2d(iso, aln)`. Give `r1rho` data as a
+   list even when there is one experiment: given a single path, `r1rho` offers a menu of
+   the experiments in it.
+
+   Where the dataset holds the same experiment in other formats as well, such as nmrPipe or
+   UCSF spectra processed from it, list them in a `formats` table at the end of
+   `dataset.toml`, each given as `path` is, so that `example(name, :nmrpipe)` finds them:
+
+   ```toml
+   path = "1"
+
+   [formats]
+   nmrpipe = "1/test.ft2"
+   ucsf = "1/hmqc.ucsf"
+   ```
+
+   `path` gives the Bruker data wherever there are any. Say in the description how each
+   format was processed, since their intensities need not agree. Keep the files small:
+   process the other formats over a narrow region where that will do.
+
+3. Optionally, save an analysis with it. Run the analysis on the dataset's own copy of the
+   data, from the dataset's folder, and save it to the output folder `analysis`:
+
+   ```julia
+   cd("datasets/relaxation2d_ubq")
+   relaxation2d("1")              # pick the peaks, fit, and save to "analysis"
+   ```
+
+   The saved folder records the analysis with paths relative to itself, so that
+   `reopen(exampleanalysis(name))` repeats it wherever the dataset is downloaded.
 
 4. Check it:
 
@@ -54,6 +84,15 @@ You need [Git LFS](https://git-lfs.com) once: `brew install git-lfs`, then `git 
 
 You can use a dataset straight away from your own clone, before it is released. To change
 a dataset, edit its folder, check it, and push in the same way.
+
+## Add a screen
+
+A screen is added by hand, since NMRScreen describes it in a file of its own. Copy the folder
+holding its `experiment.toml`, with the fragment library and the experiments that file names,
+to `datasets/<name>/`. Write `dataset.toml` from `template/dataset.toml`, with
+`path = "experiment.toml"` and `added` set to the time in UTC. Then check and push it as
+above. To include the registration, save it with the screen, so that its `peaklist.csv` is in
+the output folder.
 
 ## Contributing data
 
@@ -68,8 +107,7 @@ Name a dataset for what someone would use it for, then the sample, in lowercase 
 digits and underscores:
 
 - **Data for an analysis:** `<analysis function>_<sample>`, after the NMRAnalysis or
-  NMRScreen function it is for, such as `hetnoe2d_calr` or `relaxation2d_ubq`, so that
-  `hetnoe2d(exampledata("hetnoe2d_calr"))` does what it says.
+  NMRScreen function it is for, such as `hetnoe2d_calr` or `relaxation2d_ubq`.
 - **A plain spectrum**, for loading, processing and plotting:
   `<dims>_<correlation>_<sample>`, such as `1d_1h_ubq`, `1d_19f_sh3`, `2d_hn_ubq` or
   `2d_hc_ubq`. For a 3D, use the experiment: `3d_hnca_ubq`. The pulse sequence (HSQC,
@@ -79,8 +117,3 @@ digits and underscores:
 
 Because a shortened name finds the first dataset added, add the dataset you would want
 `"2d_hn"` or `"hetnoe"` to find before any others like it.
-
-A dataset that replaces one of the example datasets of earlier NMRTools versions keeps the
-old name as an alias, such as `2D_HN` for `2d_hn_ubq` or `pseudo3D_HN_R2` for
-`relaxation2d_ubq`. An alias matches exactly, so NMRTools' documentation, tests and users'
-code go on finding the same data however many datasets are added.

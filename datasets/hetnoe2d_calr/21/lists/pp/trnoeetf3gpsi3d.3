@@ -1,0 +1,258 @@
+;trnoeetf3gpsi3d.3
+;avance-version (23/07/12)
+;2D H-1/X correlation via TROSY and inept transfer
+;   using sensitivity improvement
+;for measuring H1-N15 NOEs
+;phase sensitive using Echo/Antiecho-TPPI gradient selection
+;using f3 - channel
+;recording NONOE and NOE as pseudo 3D
+;(use parameterset TRNOEETF3GPSI3D.3)
+
+; This pulse sequence performs a TROSY heteronuclear 1H-15N NOE experiment,
+; alternating between reference and saturation experiments recorded as 2D planes
+; in the F1 dimension of a pseudo-3D experiment.
+
+; Saturation of 1H is performed by repetition of the symmetric (delta-180-delta) unit, 
+; with delta set to 11ms and hard 180 degree pulses being used. During this period, 
+; the 1H carrier frequency is set to a frequency defined in cnst19 (in ppm); 
+; this should correspond to the center of the amide proton region (e.g. 8.2 ppm). 
+
+; The duration of the saturation period is defined by the delay d21 (in seconds).
+; The actually executed saturation delay has a length of d31 seconds, calculated
+; as a number of l4 repeats of the (delta-180-delta) unit (l4 = d21 / (p2+22m);
+; d31 = (p2+22m) * l4).
+
+; Saturation is performed in every even-numbered F1 plane of the pseudo-3D experiment;
+; in all odd-numbered planes, a reference delay of the same length (d31) is executed
+; instead.
+
+; Before the saturation or reference period, an additional recycle delay of duration 
+; d1 (in seconds) is executed.
+
+
+
+; 
+;N.-A. Lakomek, J. Ying & A. Bax, J. Biomol. NMR 53, 209-221 (2013)
+;
+;$CLASS=HighRes
+;$DIM=3D
+;$TYPE=
+;$SUBTYPE=
+;$COMMENT=
+
+
+prosol relations=<triple>
+
+
+#include <Avance.incl>
+#include <Grad.incl>
+#include <Delay.incl>
+
+
+define loopcounter COUNTER1
+
+
+"p0=p1*7/3"
+"p2=p1*2"
+"p22=p21*2"
+"d11=30m"
+"d26=2.65m"
+
+"p19=500u"
+"p29=250u"
+
+"d10=3u"
+
+"in10=inf2/2"
+
+"DELTA3=d26-p11-p16-d16-4u"
+"DELTA4=d26-p19-d16-p29/2-d16/2-2u"
+"DELTA5=p29+d16+4u+de-p1*2/PI"      ; delay epsilon
+
+#   ifdef LABEL_CN
+"DELTA1=d26-p19-d16-p11-6u-p1-p0/2-p21*4/PI"
+"DELTA2=d26-p19-d16-p11-6u-p1-p0/2-d10*2-p8-p1"
+#   else
+"DELTA1=d26-p19-d16-p11-6u-p1-p0/2-p21*4/PI"
+"DELTA2=d26-p19-d16-p11-6u-p1-p0/2-d10*2-p1"
+#   endif /*LABEL_CN*/
+
+
+"l0=1"
+"l11=0"
+
+"l4=d21/(p2+22m)"
+"d31=(p2+22m)*l4"
+
+
+"spoffs13=0"
+
+
+aqseq 312
+
+
+"acqt0=0"
+baseopt_echo
+
+
+1 ze 
+2 d11
+
+  (p21 ph1):f3
+3 d1 pl1:f1 pl3:f3
+  20u fq=cnst19(bf ppm):f1
+
+  if "l11 %2 == 0"
+     {
+     d31
+     }
+  else
+     {
+4    11m
+     (p2 ph1)
+     11m
+     lo to 4 times l4
+     }
+
+  20u fq=0:f1 
+  50u UNBLKGRAD
+
+  if "l0 %2 == 1"
+     {
+     (p21 ph5):f3
+     DELTA1
+     2u
+     p19:gp4*EA*-1
+     d16
+     (center (p11:sp1 ph3 2u 2u pl1 p1 ph1 p0 ph2 p1 ph1 4u p11:sp1 ph10:r):f1 (p22 ph5):f3 )
+     2u
+     p19:gp4*EA
+     d16 pl1:f1
+     DELTA2
+     }
+  else
+     {
+     (p21 ph6):f3
+     DELTA1
+     2u
+     p19:gp4*EA*-1
+     d16
+     (center (p11:sp1 ph3 2u 2u pl1 p1 ph1 p0 ph2 p1 ph1 4u p11:sp1 ph10:r):f1 (p22 ph6):f3 )
+     2u
+     p19:gp4*EA
+     d16 pl1:f1
+     DELTA2
+     }
+
+#   ifdef LABEL_CN
+  d10
+  (p8:sp13 ph1):f2
+  d10
+#   else
+  d10
+  d10
+#   endif /*LABEL_CN*/
+
+  (p1 ph7)
+  4u
+  (p11:sp1 ph7):f1
+  p16:gp5
+  d16
+  DELTA3 pl1:f1
+  (center (p2 ph1) (p22 ph1):f3 )
+  DELTA3
+  p16:gp5
+  d16
+  (p11:sp1 ph3):f1
+  2u
+  2u pl1:f1
+  (p1 ph1) 
+  (p21 ph7):f3
+
+  4u
+  p19:gp6
+  d16
+  (center (DELTA5 p11:sp1 ph8:r 2u 2u pl1 p2 ph1 4u p11:sp1 ph8:r):f1 (DELTA4 p22 ph1 DELTA4):f3 )
+  4u
+  p19:gp6
+  d16
+  (p21 ph1):f3
+  p29:gp7
+  d16
+  4u BLKGRAD
+
+  go=2 ph31
+  d11 mc #0 to 2
+     F1QF(calclc(l11, 1))
+     F2EA(calgrad(EA) & calph(ph7, +180) & calph(ph9, +180) & calclc(l0, 1), caldel(d10, +in10) & calph(ph5, +180) & calph(ph6, +180) & calph(ph31, +180))
+exit 
+  
+
+ph1=0
+ph2=1
+ph3=2
+ph5=2 1 0 3
+ph6=2 3 0 1
+ph7=1
+ph8=2
+ph9=3
+ph10=(12) 1
+ph31=1 2 3 0
+
+
+;pl1 : f1 channel - power level for pulse (default)
+;pl3 : f3 channel - power level for pulse (default)
+;sp1 : f1 channel - shaped pulse 180 degree
+;sp13: f2 channel - shaped pulse 180 degree (adiabatic)
+;p0 : f1 channel - 210 degree high power pulse
+;p1 : f1 channel -  90 degree high power pulse
+;p2 : f1 channel - 180 degree high power pulse
+;p8 : f2 channel - 180 degree shaped pulse for inversion (adiabatic)
+;p11: f1 channel -  90 degree shaped pulse
+;p16: homospoil/gradient pulse                       [1 msec]
+;p19: gradient pulse 2                               [500 usec]
+;p21: f3 channel -  90 degree high power pulse
+;p22: f3 channel - 180 degree high power pulse
+;p29: gradient pulse 3                               [250 usec]
+;d1 : relaxation delay; 1-5 * T1
+;d10: incremented delay (F2 in 3D)                   [3 usec]
+;d11: delay for disk I/O                             [30 msec]
+;d16: delay for homospoil/gradient recovery
+;d21: saturation time								 [5 s]
+;d26: 1/(4J)YH                                       [2.65 msec]
+;d31: saturation and reference time as executed (= l4 * (p2+22m))
+;l4: loop for saturation sequence (= d21 / (p2+22m))
+;cnst4: = J(YH)
+;cnst19: H(N) chemical shift (offset, in ppm)
+;inf2: 1/SW(X) = 2 * DW(X)
+;in10: 1/(2 * SW(X)) = DW(X)
+;nd10: 2
+;ns: 4 * n
+;ds: >= 16
+;td1: = 2 
+;td2: number of experiments in F2
+;FnMODE: QF(no-frequency) in F1
+;FnMODE: echo-antiecho in F2
+
+
+;for z-only gradients:
+;gpz4: 40%
+;gpz5: 11%
+;gpz6: 47%
+;gpz7: 16.2%
+
+;use gradient files:
+;gpnam4: SMSQ10.50
+;gpnam5: SMSQ10.100
+;gpnam6: SMSQ10.50
+;gpnam7: SMSQ10.32
+
+
+                                          ;preprocessor-flags-start
+;LABEL_CN: for C-13 and N-15 labeled samples start experiment with
+;             option -DLABEL_CN (eda: ZGOPTNS)
+                                          ;preprocessor-flags-end
+
+
+
+;$Id: $

@@ -206,12 +206,12 @@ function main(args)
     meta = Dict("title" => title, "description" => description, "citation" => citation,
         "licence" => licence)
 
-    spectrum = length(expnos) == 1 ? tomlstring(only(expnos)) : tomlarray(expnos)
+    path = length(expnos) == 1 ? tomlstring(only(expnos)) : tomlarray(expnos)
     toml = read(TEMPLATE, String)
     for (k, v) in meta
         toml = replace(toml, Regex("^$k = .*\$", "m") => "$k = " * tomlstring(v))
     end
-    toml = replace(toml, r"^spectrum = .*$"m => "spectrum = " * spectrum,
+    toml = replace(toml, r"^path = .*$"m => "path = " * path,
                    r"^credit = .*$"m => "credit = " * tomlarray(credit),
                    r"^source = .*$"m => "source = " * tomlstring(join(sources, ", ")),
                    r"^aliases = .*$"m => "aliases = " * tomlarray(aliases),

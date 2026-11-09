@@ -8,9 +8,10 @@ module NMRExampleData
 
 using Artifacts
 using LazyArtifacts
+using REPL.TerminalMenus: RadioMenu, request
 using TOML
 
-export examples, exampleinfo, exampledir, examplepath
+export examples, exampleinfo, example, exampleanalysis
 
 const ROOT = dirname(@__DIR__)
 const DATASETS = joinpath(ROOT, "datasets")
@@ -18,16 +19,18 @@ const ARTIFACTS = joinpath(ROOT, "Artifacts.toml")
 
 """
     examples() -> Vector{String}
+    examples(format) -> Vector{String}
 
-Names of the available example datasets, in alphabetical order.
+Names of the available example datasets, in alphabetical order: all of them, or those
+holding data in `format` (see [`FORMATS`](@ref NMRExampleData.FORMATS)), such as `:ucsf`.
 
 # Example
 ```julia
 julia> examples()
 3-element Vector{String}:
- "2d_hn_ubq"
  "hetnoe2d_calr"
  "relaxation2d_ubq"
+ "titration2d_fir_nbox"
 ```
 """
 function examples()
@@ -35,18 +38,22 @@ function examples()
     return filter(n -> isfile(joinpath(DATASETS, n, "dataset.toml")), readdir(DATASETS))
 end
 
+examples(format::Symbol) = filter(n -> haskey(exampleinfo(n).formats, format), examples())
+
 """
     exampleinfo(name) -> NamedTuple
 
-The description of an example dataset, from its `dataset.toml`: `name`, `title`,
-`spectrum`, `description`, `credit` (a vector of `"Name <email>"` or `"Name"`), `citation`,
+The description of an example dataset, from its `dataset.toml`: `name`, `title`, `path`,
+`formats`, `description`, `credit` (a vector of `"Name <email>"` or `"Name"`), `citation`,
 `licence`, `source`, `aliases` and `added`. Nothing is downloaded.
 
+`formats` names the files holding each format of the data, relative to the dataset's
+folder, with the default (`path`) first: `(bruker = "1", nmrpipe = "1/test.ft2")`.
+
 `name` may be the dataset's full name or an alias, in any case, or the start of the name
-or of any part of it between underscores: `"hetnoe"` finds `"hetnoe2d_calr"`, and the old
-NMRTools name `"2D_HN"` finds `"2d_hn_ubq"`. Where that matches several datasets, the one
-added first is used, so a shortened name keeps meaning the same dataset as more are added.
-The full name is returned as `name`.
+or of any part of it between underscores: `"hetnoe"` finds `"hetnoe2d_calr"`. Where that
+matches several datasets, the one added first is used, so a shortened name keeps meaning
+the same dataset as more are added. The full name is returned as `name`.
 
 # Example
 ```julia
@@ -58,61 +65,155 @@ function exampleinfo(name::AbstractString)
     n = resolvename(name)
     d = TOML.parsefile(joinpath(DATASETS, n, "dataset.toml"))
     credit = get(d, "credit", String[])
-    return (; name=n, title=get(d, "title", ""),
-        spectrum=get(d, "spectrum", ""), description=get(d, "description", ""),
+    path = get(d, "path", "")
+    others = get(d, "formats", Dict{String,Any}())
+    formats = (; format(path) => path,
+               (f => others[string(f)] for f in FORMATS
+                if haskey(others, string(f)) && f != format(path))...)
+    return (; name=n, title=get(d, "title", ""), path, formats,
+        description=get(d, "description", ""),
         credit=credit isa AbstractString ? [credit] : credit, citation=get(d, "citation", ""),
-        licence=get(d, "licence", ""),
-        source=get(d, "source", ""), aliases=get(d, "aliases", String[]),
-        added=get(d, "added", ""))
+        licence=get(d, "licence", ""), source=get(d, "source", ""),
+        aliases=get(d, "aliases", String[]), added=get(d, "added", ""))
 end
 
 """
-    exampledir(name; fid=false) -> String
+    example(name)
+    example(name, format)
+    example()
 
-The folder holding the whole of an example dataset: every experiment in it, any sample
-record, and any `analysis/` folder. Downloads the dataset the first time it is used.
+What an example dataset is opened with, downloading it the first time it is used: the path
+given by `path` in its `dataset.toml`, with the same shape. Given a `format`, such as
+`:nmrpipe` or `:ucsf`, the same data in that format instead, where the dataset has it. That is an experiment folder or
+file, a vector of them for a series, nested vectors where an analysis takes its data in
+roles, or the `experiment.toml` of a screen. Where `path` is empty, the dataset's folder.
 
-The download leaves out the raw time-domain data (`fid` and `ser` files) unless
-`fid=true`. In a clone of this repository with the data fetched from Git LFS, the dataset's
-own folder is used instead and nothing is downloaded.
+The first time a dataset is used in a session, who to credit, what to cite and the licence
+are shown.
 
-# Example
-```julia
-julia> dir = exampledir("hetnoe2d_calr")
-julia> readdir(dir)
-```
-"""
-function exampledir(name::AbstractString; fid::Bool=false)
-    n = resolvename(name)
-    here = joinpath(DATASETS, n)
-    hasdata(here) && return here
-    a = fid && released(n * "_fid") ? n * "_fid" : n
-    released(a) ||
-        error("example dataset \"$n\" has not been released yet. In a clone of " *
-            "NMRExampleData.jl, run `git lfs pull` to use it from the repository")
-    return @artifact_str(a)
-end
+Without a name, choose a dataset from a menu, or outside an interactive session, list them.
 
-"""
-    examplepath(name; fid=false) -> String or Vector{String}
+See [`exampleinfo`](@ref) for how names are matched, and [`exampleanalysis`](@ref) for a
+dataset's saved analysis.
 
-The path of the experiment to load from an example dataset, as given by `spectrum` in its
-`dataset.toml`. Where `spectrum` lists several experiments (a titration, a hetNOE pair, a
-relaxation series) this is a vector of paths in that order. Where `spectrum` is empty, the
-dataset's folder. Downloads the dataset the first time it is used; see
-[`exampledir`](@ref).
-
-# Example
+# Examples
 ```julia
 julia> using NMRTools
-julia> spec = loadnmr.(examplepath("relaxation2d_ubq"))
+
+julia> spec = loadnmr(example("2d_hn_ubq"))          # a spectrum, or a vector of them
+julia> fid = loadfid(example("2d_hn_ubq"))           # its raw data
+julia> spec = loadnmr(example("2d_hn_ubq", :ucsf))   # the same spectrum, from UCSF
+julia> reference, saturated = example("hetnoe2d_calr")
+julia> screen(example("screen_bsa"))                  # with NMRScreen
 ```
 """
-function examplepath(name::AbstractString; fid::Bool=false)
+function example(name::AbstractString, format::Symbol=:default)
     info = exampleinfo(name)
-    dir = exampledir(info.name; fid)
-    s = info.spectrum
-    return s isa AbstractVector ? [joinpath(dir, p) for p in s] : joinpath(dir, s)
+    format == :default || haskey(info.formats, format) ||
+        throw(ArgumentError("example dataset \"$(info.name)\" has no $format data: it has " *
+                            join(keys(info.formats), ", ")))
+    dir = datasetdir(info.name)
+    showcredit(info)
+    return within(dir, format == :default ? info.path : info.formats[format])
+end
+
+function example()
+    names = examples()
+    isempty(names) && return nothing
+    width = maximum(length, names)
+    entries = [rpad(n, width) * "  " * exampleinfo(n).title for n in names]
+    if isinteractive() && stdin isa Base.TTY
+        i = request("Choose an example dataset:", RadioMenu(entries; pagesize=min(20, length(entries))))
+        return i == -1 ? nothing : example(names[i])
+    end
+    println("Example datasets, to open with example(name):\n")
+    foreach(e -> println("  ", e), entries)
+    return nothing
+end
+
+"""
+    exampleanalysis(name) -> String
+
+The saved analysis of an example dataset: an output folder written by NMRAnalysis, with the
+picked peaks in `peaklist.csv`, the results, and the record that `reopen` reads. Downloads
+the dataset the first time it is used. Throws an `ArgumentError` for a dataset without one.
+
+# Examples
+```julia
+julia> using NMRAnalysis
+
+julia> expt = reopen(exampleanalysis("relaxation2d_ubq"))   # as saved, ready to refit
+julia> pks = loadpeaks(exampleanalysis("relaxation2d_ubq"))  # just the peaks
+```
+"""
+function exampleanalysis(name::AbstractString)
+    info = exampleinfo(name)
+    isdir(joinpath(DATASETS, info.name, "analysis")) ||
+        throw(ArgumentError("example dataset \"$(info.name)\" has no saved analysis"))
+    dir = datasetdir(info.name)
+    showcredit(info)
+    return joinpath(dir, "analysis")
+end
+
+"""
+    FORMATS
+
+The formats a dataset may hold, in the order `exampleinfo` lists them: Bruker experiment
+folders, nmrPipe and UCSF (Sparky) spectra, NMR-STAR shift lists from the BMRB, and the
+`experiment.toml` of an NMRScreen screen.
+"""
+const FORMATS = (:bruker, :nmrpipe, :ucsf, :bmrb, :screen)
+
+"""
+    format(path) -> Symbol
+
+The format of a dataset's `path`, from its name, as `loadnmr` tells formats apart: `.ft1` to
+`.ft4` and plane templates (`test%03d.ft3`) are nmrPipe, `.ucsf` is UCSF, `.str` is NMR-STAR,
+`experiment.toml` is a screen, and anything else is a Bruker experiment. A series has the
+format of its first member.
+"""
+function format(path::AbstractString)
+    endswith(path, ".toml") && return :screen
+    endswith(path, ".str") && return :bmrb
+    endswith(path, ".ucsf") && return :ucsf
+    occursin(r"\.ft[1-4]$", path) && return :nmrpipe
+    return :bruker
+end
+format(path::AbstractVector) = isempty(path) ? :bruker : format(first(path))
+
+# `path` from dataset.toml, inside the dataset's folder, keeping its shape
+within(dir, p::AbstractString) = joinpath(dir, p)
+within(dir, p::AbstractVector) = [within(dir, q) for q in p]
+
+# The folder holding a dataset: its own folder in a clone of this repository with the data
+# fetched from Git LFS, and otherwise the released artifact, downloaded if need be.
+function datasetdir(n)
+    here = joinpath(DATASETS, n)
+    hasdata(here) && return here
+    released(n) ||
+        throw(ArgumentError("example dataset \"$n\" has not been released yet. In a clone " *
+                            "of NMRExampleData.jl, run `git lfs pull` to use it from the " *
+                            "repository"))
+    return @artifact_str(n)
+end
+
+# datasets whose credit has been shown in this session
+const CREDITED = Set{String}()
+
+function showcredit(info)
+    info.name in CREDITED && return
+    push!(CREDITED, info.name)
+    lines = ["Example data $(info.name): $(info.title)"]
+    isempty(info.credit) || push!(lines, "Credit: " * join(info.credit, ", "))
+    isempty(info.citation) || push!(lines, "Cite: " * info.citation)
+    if isempty(info.licence) || info.licence == "None"
+        push!(lines, "Licence: none granted. Ask those credited before using these data " *
+                     "beyond trying out the software.")
+    else
+        push!(lines, "Licence: " * info.licence)
+    end
+    @info join(lines, "\n")
+    return
 end
 
 # The dataset a name refers to, ignoring case: its full name or an alias, or else a dataset
@@ -138,7 +239,6 @@ function resolvename(name::AbstractString)
 end
 
 released(a) = !isnothing(artifact_hash(a, ARTIFACTS))
-
 
 # True for a dataset folder whose files are all present. In an installed package, as in a
 # clone made without Git LFS, the binary files are small text pointers to LFS instead.

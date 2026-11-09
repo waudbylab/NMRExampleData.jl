@@ -9,7 +9,7 @@ first time it is used.
 
 ```julia
 using NMRTools
-spec = exampledata("titration2d_fir_nbox")
+spec = loadnmr(example("titration2d_fir_nbox"))
 ```
 
 The [documentation](https://waudbylab.org/NMRExampleData.jl/stable/) has the

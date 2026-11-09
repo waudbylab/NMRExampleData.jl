@@ -1,0 +1,33 @@
+# One line, shown in the menu, in the form
+# <protein> <dims> <nuclei> <experiment> (<field> MHz, <temperature> K), with the 1H
+# Larmor frequency rounded to 50 MHz, e.g. "CALR 2D 1H,15N hetNOE (600 MHz, 298 K)".
+title = "FRAGS 1D 19F 1D 19F{1H} (600 MHz, 298 K)"
+
+# What example(name) returns, inside the dataset's folder: the experiment folder or file
+# to load, a list of them for a series in the order they load, nested lists where an
+# analysis takes its data in roles (e.g. [["1", "2"], ["3", "4"]] for rdc2d's isotropic
+# and aligned pairs), or the experiment.toml of a screen. Empty for the whole folder.
+path = "5"
+
+# Optional: concentrations, temperature, field, anything a reader should know.
+description = "UCL Fragment Library Cocktail 1"
+
+# Who to credit, shown whenever the data are loaded: "Name <email>" or "Name", e.g.
+# ["Chris Waudby <c.waudby@ucl.ac.uk>", "A. Person"].
+credit = ["Chris Waudby <c.waudby@ucl.ac.uk>", "Nikita Harvey"]
+
+# Optional: a paper to cite when using these data, with its DOI.
+citation = ""
+
+# The licence the data are released under: "CC BY 4.0", "None", or another licence.
+licence = "None"
+
+# Optional: where the original data lives, for maintainers. Not shown to users.
+source = "/Users/chris/NMR/sop-600/nikita_19Ffragment_C1_241001/5"
+
+# Optional: other names for the same data.
+aliases = []
+
+# When the dataset was added, in UTC, written by add.jl. Where a shortened name matches
+# several datasets, the first added is used, so never change this.
+added = "2026-11-08T15:09:31Z"
