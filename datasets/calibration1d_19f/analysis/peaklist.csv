@@ -1,0 +1,10 @@
+# NMRAnalysis.jl 0.5.0
+# Analysis: Nutation calibration
+# Source: /Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/10/pdata/1
+# Source: /Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/11/pdata/1
+# Number of spectra: 32
+# Arrayed variables: duration, power
+# Noise position / ppm: -53.943
+label,lo (ppm),hi (ppm)
+signal,-54.55612290359191,-54.531180894756446
+noise,-53.95549104859507,-53.930549039759605
