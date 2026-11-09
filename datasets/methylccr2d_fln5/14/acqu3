@@ -1,0 +1,23 @@
+##TITLE= Parameter file, TopSpin 3.5 pl 5
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 1	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= jc
+$$ 2018-06-14 15:10:22.312 +0100  jc@CZC516016K
+$$ /opt/topspin3.5pl2/data/jc/nmr/chris_ilv750_ccr_temperature_130618/14/acqu3
+$$ process /opt/topspin3.5pl5/prog/mod/edparproc
+##$ACQT0= 0
+##$BF1= 500.18
+##$FnMODE= 1
+##$NUC1= <1H>
+##$NusJSP= 0
+##$NusT2= 1
+##$NusTD= 0
+##$O1= 2350.846
+##$ProjAngle= 0
+##$SFO1= 500.182350846
+##$SW= 9.99635431266834
+##$SW_h= 5000
+##$TD= 8
+##END=
