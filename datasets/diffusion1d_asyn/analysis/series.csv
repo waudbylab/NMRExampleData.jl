@@ -1,0 +1,17 @@
+# NMRAnalysis.jl 0.5.0
+# Analysis: Diffusion
+# Source: /Users/chris/git/NMRExampleData.jl/datasets/diffusion1d_asyn/pseudo2D_XSTE/pdata/1
+# Number of spectra: 10
+# Arrayed variables: gradient
+# Noise position / ppm: 12.6978
+source,label,plane,gradient,I,I_err,I_fit
+/Users/chris/git/NMRExampleData.jl/datasets/diffusion1d_asyn/pseudo2D_XSTE/pdata/1,signal,1,0.05,7241.160316933552,22.880740557225977,7242.207443094155
+/Users/chris/git/NMRExampleData.jl/datasets/diffusion1d_asyn/pseudo2D_XSTE/pdata/1,signal,2,0.15,7044.911910669878,22.880740557225977,7062.670811009422
+/Users/chris/git/NMRExampleData.jl/datasets/diffusion1d_asyn/pseudo2D_XSTE/pdata/1,signal,3,0.25,6741.646524878031,22.880740557225977,6716.839521916359
+/Users/chris/git/NMRExampleData.jl/datasets/diffusion1d_asyn/pseudo2D_XSTE/pdata/1,signal,4,0.35,6213.4525970390505,22.880740557225977,6229.583109525276
+/Users/chris/git/NMRExampleData.jl/datasets/diffusion1d_asyn/pseudo2D_XSTE/pdata/1,signal,5,0.45,5633.289480865325,22.880740557225977,5634.443132710599
+/Users/chris/git/NMRExampleData.jl/datasets/diffusion1d_asyn/pseudo2D_XSTE/pdata/1,signal,6,0.55,4985.559393180623,22.880740557225977,4969.824123248069
+/Users/chris/git/NMRExampleData.jl/datasets/diffusion1d_asyn/pseudo2D_XSTE/pdata/1,signal,7,0.65,4290.435093610439,22.880740557225977,4274.9303522118025
+/Users/chris/git/NMRExampleData.jl/datasets/diffusion1d_asyn/pseudo2D_XSTE/pdata/1,signal,8,0.75,3580.2774857189697,22.880740557225977,3586.039518622257
+/Users/chris/git/NMRExampleData.jl/datasets/diffusion1d_asyn/pseudo2D_XSTE/pdata/1,signal,9,0.85,2911.721269155387,22.880740557225977,2933.587881397471
+/Users/chris/git/NMRExampleData.jl/datasets/diffusion1d_asyn/pseudo2D_XSTE/pdata/1,signal,10,0.9500000000000001,2346.2047136451406,22.880740557225977,2340.3517642047104
