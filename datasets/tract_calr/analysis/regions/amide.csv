@@ -1,0 +1,40 @@
+# NMRAnalysis.jl 0.5.0
+# Analysis: TRACT
+# Source: /Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1
+# Source: /Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1
+# Number of spectra: 32
+# Arrayed variables: time, which
+# Noise position / ppm: -0.8316
+source,label,plane,which,time (s),I,I_err,I_fit
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,amide,1,trosy,0.0001,504.96811613148685,47.64368760353808,386.18442909903484
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,amide,2,trosy,0.001,371.3972800738551,47.64368760353808,378.97881093845615
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,amide,3,trosy,0.002,325.13056290835254,47.64368760353808,371.1301426382879
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,amide,4,trosy,0.003,347.45095626526665,47.64368760353808,363.4440206132888
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,amide,5,trosy,0.005,331.1263249363689,47.64368760353808,348.5460197430499
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,amide,6,trosy,0.008,319.7053191735378,47.64368760353808,327.3361926765511
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,amide,7,trosy,0.012,246.30663009283256,47.64368760353808,301.0504117439531
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,amide,8,trosy,0.017,301.41721323236385,47.64368760353808,271.14133125009374
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,amide,9,trosy,0.023,165.16486217752933,47.64368760353808,239.14622083164863
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,amide,10,trosy,0.03,241.0751971023009,47.64368760353808,206.55828547820835
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,amide,11,trosy,0.038,201.33527291137787,47.64368760353808,174.71613655191314
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,amide,12,trosy,0.049,174.590527591066,47.64368760353808,138.7897247263458
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,amide,13,trosy,0.059,103.23771979360403,47.64368760353808,112.5823504328472
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,amide,14,trosy,0.07,23.466979876852427,47.64368760353808,89.43234285046786
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,amide,15,trosy,0.082,105.7148793344826,47.64368760353808,69.57131375411207
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,amide,16,trosy,0.095,92.74001727867757,47.64368760353808,53.00015022151263
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,amide,17,anti,0.0001,572.5406658853227,47.64368760353808,606.9088780625514
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,amide,18,anti,0.001,632.4667536547036,47.64368760353808,560.9330459040393
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,amide,19,anti,0.002,580.4696769877595,47.64368760353808,513.9219613186339
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,amide,20,anti,0.003,366.5129603217303,47.64368760353808,470.85081589358634
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,amide,21,anti,0.005,359.96237554401415,47.64368760353808,395.23521112996264
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,amide,22,anti,0.008,278.8491850230942,47.64368760353808,303.958351412219
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,amide,23,anti,0.012,266.5309740873006,47.64368760353808,214.17002273685912
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,amide,24,anti,0.017,202.08517028079882,47.64368760353808,138.25773437276078
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,amide,25,anti,0.023,85.38798337282307,47.64368760353808,81.77232376313536
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,amide,26,anti,0.03,19.154470520767298,47.64368760353808,44.31077987593004
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,amide,27,anti,0.038,-28.60891816404818,47.64368760353808,21.998780104431866
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,amide,28,anti,0.049,-74.5196328093578,47.64368760353808,8.39936115290905
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,amide,29,anti,0.059,-60.9942919066984,47.64368760353808,3.5003200962223593
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,amide,30,anti,0.07,24.13259702101698,47.64368760353808,1.3364583172061395
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,amide,31,anti,0.082,63.31921523947366,47.64368760353808,0.4675081921276361
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,amide,32,anti,0.095,-72.46394746646388,47.64368760353808,0.1498335893145017

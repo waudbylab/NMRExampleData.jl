@@ -1,0 +1,11 @@
+# NMRAnalysis.jl 0.5.0
+# Analysis type: Titration
+# Model: NMRAnalysis.GUI2D.TitrationModel
+# Filename: /Users/chris/git/NMRExampleData.jl/datasets/titration2d_fir_nbox/1/pdata/1
+# Number of peaks: 23
+# Number of planes: 11
+# Global Kd: 26.7213 ± 0.8585
+# X radius / ppm: 0.04
+# Y radius / ppm: 0.24
+parameter,value,error,unit
+Kd,26.721265511319633,0.8585426811621713,

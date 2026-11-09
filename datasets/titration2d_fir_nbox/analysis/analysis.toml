@@ -1,0 +1,10 @@
+# The analysis that wrote this folder, with paths relative to it.
+# reopen("<this folder>") in NMRAnalysis.jl repeats it.
+nmranalysis = "0.5.0"
+call = '''
+titration2d(["../1", "../2", "../3", "../4", "../5", "../6", "../7", "../8", "../9", "../10", "../11"];
+            L0=[0.0, 8.13, 16.14, 24.01, 31.76, 46.89, 61.56, 75.79, 109.53, 140.89, 200.06],
+            P0=[41.0, 40.67, 40.34, 40.02, 39.7, 39.08, 38.48, 37.89, 36.51, 35.22, 32.8],
+            weights=(1.0, 0.14),
+            peaklist="./peaklist.csv")
+'''
