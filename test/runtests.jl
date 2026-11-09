@@ -1,5 +1,5 @@
 using NMRExampleData
-using NMRExampleData: DATASETS, ARTIFACTS, CREDITED, hasdata
+using NMRExampleData: DATASETS, ARTIFACTS, CREDITED, hasdata, catalogue, writeindex
 using Test
 using TOML
 
@@ -215,6 +215,20 @@ const POINTER = """
                 @test occursin("could be any of", err.msg)
             end
         end
+    end
+
+    @testset "The index in the registered package" begin
+        # the registered package has no datasets/, only the index written at release
+        withdataset("zzindexed"; toml="title = \"Indexed\"\npath = [[\"1\"], [\"2\"]]\n\n[formats]\nucsf = [[\"1/a.ucsf\"], [\"2/a.ucsf\"]]\n",
+                    files=["1/acqus" => "a", "2/acqus" => "b", "analysis/peaklist.csv" => "x"]) do dir
+            index = writeindex(tempname())
+            fromindex = catalogue(joinpath(tempdir(), "no-datasets-here"), index)
+            @test fromindex == catalogue()
+            @test fromindex["zzindexed"]["path"] == [["1"], ["2"]]
+            @test fromindex["zzindexed"]["formats"]["ucsf"] == [["1/a.ucsf"], ["2/a.ucsf"]]
+            @test fromindex["zzindexed"]["analysis"] == true
+        end
+        @test isempty(catalogue(joinpath(tempdir(), "no-datasets-here"), tempname()))
     end
 
     @testset "Unknown names" begin

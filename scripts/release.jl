@@ -7,8 +7,12 @@
 # It finds the datasets changed since the last release, fetches their data from Git LFS,
 # checks them, and packs each one whose data has changed, whole except for its dataset.toml.
 # The packs go up to a new GitHub release, and Artifacts.toml is updated to point at them.
-# The version in Project.toml is bumped, the two files are committed and pushed, and
-# Registrator is asked to register the new version. TagBot then tags it.
+# The version in Project.toml is bumped and the two files are committed and pushed.
+#
+# The version is registered from a commit of its own on the branch `release`: this one
+# without datasets/, whose Git LFS files the registry's `git archive` would expand, failing
+# its tree check, and with Datasets.toml, the index of their dataset.toml files, in their
+# place. Registrator is asked to register that commit, and TagBot then tags it.
 #
 # The version goes up by:
 #   - major, when a dataset is removed or renamed without keeping its old name as an alias
@@ -16,7 +20,8 @@
 #   - patch, when only dataset.toml files change, since they ship with the package itself
 # with 1.0.0 as the first release. A version not yet tagged by TagBot has not been
 # registered, so it is released again rather than bumped: Registrator then updates the
-# registration still waiting for it.
+# registration still waiting for it. With nothing to release, a version not yet registered
+# is registered again, from the latest main.
 #
 # --yes skips the question before uploading. --dry-run says what would happen and stops.
 
@@ -91,6 +96,39 @@ function nextversion(current, uploads, stale, changed)
     return v, removed
 end
 
+# The commit to register, made on the branch `release` from main's HEAD: see the top.
+function releasecommit(version)
+    index = tempname()
+    tree = withenv("GIT_INDEX_FILE" => index) do
+        git("read-tree", "HEAD")
+        git("rm", "-r", "--cached", "--quiet", "datasets")
+        blob = git("hash-object", "-w", NMRExampleData.writeindex(tempname()))
+        git("update-index", "--add", "--cacheinfo", "100644,$blob,Datasets.toml")
+        git("write-tree")
+    end
+    rm(index; force=true)
+    # after the previous release commit, if any, and the main commit it is made from
+    parents = ["-p", "HEAD"]
+    if !isempty(git("ls-remote", "origin", "refs/heads/release"))
+        git("fetch", "--quiet", "origin", "release")
+        parents = ["-p", "FETCH_HEAD", parents...]
+    end
+    main = git("rev-parse", "--short", "HEAD")
+    commit = git("commit-tree", tree, parents..., "-m",
+        "NMRExampleData v$version, from $main without datasets/")
+    git("push", "--quiet", "origin", "$commit:refs/heads/release")
+    return commit
+end
+
+function register(repo, version)
+    commit = releasecommit(version)
+    run(pipeline(`gh api repos/$repo/commits/$commit/comments -f body="@JuliaRegistrator register"`;
+        stdout=devnull))
+    println("\nPushed $(commit[1:7]) to the branch release and asked Registrator to register " *
+            "version $version.")
+    return
+end
+
 # TagBot tags each version once it is registered
 registered(v) = !isempty(git("tag", "--list", "v$v"))
 
@@ -129,7 +167,9 @@ function main(args)
     current = VersionNumber(TOML.parsefile(PROJECT)["version"])
     version, removed = nextversion(current, uploads, stale, changed)
     if isnothing(version)
-        println("Nothing to release.")
+        registered(current) && (println("Nothing to release."); return)
+        println("Nothing to release, but version $current is not yet registered: registering it again.")
+        dry || register(readchomp(`gh repo view --json nameWithOwner -q .nameWithOwner`), current)
         return
     end
 
@@ -165,10 +205,7 @@ function main(args)
     git("commit", "--quiet", "-m", "$MESSAGE v$version$summary", "--", "Artifacts.toml",
         "Project.toml")
     git("push", "--quiet")
-    commit = git("rev-parse", "HEAD")
-    run(pipeline(`gh api repos/$repo/commits/$commit/comments -f body="@JuliaRegistrator register"`;
-        stdout=devnull))
-    println("\nPushed $(commit[1:7]) and asked Registrator to register version $version.")
+    register(repo, version)
     return
 end
 
