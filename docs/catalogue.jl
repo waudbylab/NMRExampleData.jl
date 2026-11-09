@@ -113,8 +113,7 @@ end
 function usage(e::Entry)
     n = "\"$(name(e))\""
     isscreen(e) && return ["screen(example($n))"]
-    lines = e.roles ? ["data = example($n)   # in the roles of its analysis"] :
-            ["spec = loadnmr(example($n))"]
+    lines = ["spec = loadnmr(example($n))"]
     for f in Iterators.drop(keys(e.info.formats), 1)
         push!(lines, "spec = loadnmr(example($n, :$f))")
     end
@@ -128,36 +127,32 @@ function facts(e::Entry)
     s = String[]
     k = nspectra(e)
     if isscreen(e)
-        push!(s, "A screen, opened with NMRScreen from its `experiment.toml`.")
+        push!(s, "A screen, for NMRScreen.")
     elseif e.roles
-        push!(s, "$k spectra, in the roles their analysis takes them, as given in `dataset.toml`.")
+        push!(s, "$k spectra, in $(length(e.info.path)) groups.")
     else
-        push!(s, k == 1 ? "Loads as a single spectrum." :
-                 "Loads as a vector of $k spectra, in the order given in `dataset.toml`.")
+        push!(s, k == 1 ? "One spectrum." : "A series of $k spectra.")
     end
     isscreen(e) || push!(s, e.raw ? "Includes the raw data." : "Processed data only.")
     length(e.info.formats) > 1 &&
-        push!(s, "The same data in " *
-                 join(("$(FORMATNAMES[f]) (`$(filename(p))`)" for (f, p) in pairs(e.info.formats)),
-                      ", ", " and ") * ".")
+        push!(s, "Also as " *
+                 join(("$(FORMATNAMES[f]) (`$(filename(p))`)"
+                       for (f, p) in Iterators.drop(pairs(e.info.formats), 1)), ", ", " and ") *
+                 ".")
     nexpt = length(e.experiments)
     records = samplerecords(e)
-    if nexpt == 0
-        push!(s, "There are no Bruker parameter files, so no sample records or annotations.")
-    else
-        push!(s, isempty(records) ? "No sample records." :
-                 "Matched to $(plural(length(records), "sample record")).")
+    if nexpt > 0
+        isempty(records) ||
+            push!(s, "$(plural(length(records), "sample record")).")
         a = nannotated(e)
-        push!(s, a == 0 ? "No pulse programme annotations." :
-                 a == nexpt ? "The pulse programme is annotated." :
-                 "The pulse programmes of $a of $nexpt experiments are annotated.")
+        a == 0 || push!(s, a == nexpt ? "Annotated pulse programme." :
+                           "Annotated pulse programmes in $a of $nexpt experiments.")
     end
-    e.analysis && push!(s, "Includes a saved NMRAnalysis analysis, with its peak list and results.")
+    e.analysis && push!(s, "Includes a saved NMRAnalysis analysis.")
     isempty(e.info.aliases) ||
         push!(s, "Also called " * join(("`$a`" for a in e.info.aliases), ", ") * ".")
     isreleased(e) ||
-        push!(s, "Not yet released: use it from a clone of the repository, with " *
-                 "`git lfs pull`.")
+        push!(s, "Not yet released: use it from a clone of the repository after `git lfs pull`.")
     return s
 end
 
@@ -171,9 +166,8 @@ function cataloguepage()
 
                 # Catalogue
 
-                Every dataset in this version of NMRExampleData. Open one by its name, as in
-                `loadnmr(example("$(isempty(entries) ? "name" : name(first(entries)))"))` with NMRTools.
-                Each is downloaded the first time it is used.
+                The datasets in this version of NMRExampleData. Load one by name, for example
+                `loadnmr(example("$(isempty(entries) ? "name" : name(first(entries)))"))`.
                 """)
     if isempty(entries)
         println(io, "There are no datasets yet.")

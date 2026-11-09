@@ -1,9 +1,9 @@
 """
-Example NMR data shared by NMRTools.jl, NMRAnalysis.jl and NMRScreen.jl.
+Example NMR datasets for NMRTools.jl, NMRAnalysis.jl and NMRScreen.jl, each downloaded the
+first time it is used.
 
-Each example is a folder under `datasets/` with a `dataset.toml`. Released examples are
-downloaded the first time they are used, and only then. The registered package holds no
-datasets, only `Datasets.toml`, the index of their `dataset.toml` files.
+Each dataset is a folder in `datasets/` with a `dataset.toml` describing it. The registered
+package holds no datasets, only `Datasets.toml`, an index of their `dataset.toml` files.
 """
 module NMRExampleData
 
@@ -20,19 +20,18 @@ const ARTIFACTS = joinpath(ROOT, "Artifacts.toml")
 const INDEX = joinpath(ROOT, "Datasets.toml")
 
 """
-    examples() -> Vector{String}
-    examples(format) -> Vector{String}
+    examples()
+    examples(format)
 
-Names of the available example datasets, in alphabetical order: all of them, or those
-holding data in `format` (see [`FORMATS`](@ref NMRExampleData.FORMATS)), such as `:ucsf`.
+Return the names of the example datasets, sorted. Given a `format` such as `:ucsf`, return
+only the datasets with data in that format. See [`FORMATS`](@ref NMRExampleData.FORMATS).
 
-# Example
+# Examples
 ```julia
-julia> examples()
-3-element Vector{String}:
- "hetnoe2d_calr"
- "relaxation2d_ubq"
- "titration2d_fir_nbox"
+julia> examples(:nmrpipe)
+2-element Vector{String}:
+ "2d_hn_ubq"
+ "diffusion1d_asyn"
 ```
 """
 examples() = sort!(collect(keys(catalogue())))
@@ -40,24 +39,23 @@ examples() = sort!(collect(keys(catalogue())))
 examples(format::Symbol) = filter(n -> haskey(exampleinfo(n).formats, format), examples())
 
 """
-    exampleinfo(name) -> NamedTuple
+    exampleinfo(name)
 
-The description of an example dataset, from its `dataset.toml`: `name`, `title`, `path`,
-`formats`, `description`, `credit` (a vector of `"Name <email>"` or `"Name"`), `citation`,
-`licence`, `source`, `aliases` and `added`. Nothing is downloaded.
+Return a description of the dataset `name` from its `dataset.toml`, without downloading it.
 
-`formats` names the files holding each format of the data, relative to the dataset's
-folder, with the default (`path`) first: `(bruker = "1", nmrpipe = "1/test.ft2")`.
+The result is a `NamedTuple` with the fields `name` (the full name), `title`, `path`,
+`formats`, `description`, `credit`, `citation`, `licence`, `source`, `aliases` and `added`.
+`formats` gives the path of each format in the dataset, the default first, such as
+`(bruker = "2D_HN", nmrpipe = "2D_HN/test.ft2", ucsf = "2D_HN/hmqc.ucsf")`.
 
-`name` may be the dataset's full name or an alias, in any case, or the start of the name
-or of any part of it between underscores: `"hetnoe"` finds `"hetnoe2d_calr"`. Where that
-matches several datasets, the one added first is used, so a shortened name keeps meaning
-the same dataset as more are added. The full name is returned as `name`.
+`name` ignores case, and can be an alias or the start of the name or of any part of it:
+`"hetnoe"` finds `"hetnoe2d_calr"`. If it matches several datasets, the one added first is
+used, so a shortened name keeps finding the same dataset as more are added.
 
-# Example
+# Examples
 ```julia
-julia> exampleinfo("hetnoe2d_calr").title
-"CALR 2D 1H,15N hetNOE (600 MHz, 298 K)"
+julia> exampleinfo("hetnoe").name
+"hetnoe2d_calr"
 ```
 """
 function exampleinfo(name::AbstractString)
@@ -82,29 +80,28 @@ end
     example(name, format)
     example()
 
-What an example dataset is opened with, downloading it the first time it is used: the path
-given by `path` in its `dataset.toml`, with the same shape. Given a `format`, such as
-`:nmrpipe` or `:ucsf`, the same data in that format instead, where the dataset has it. That is an experiment folder or
-file, a vector of them for a series, nested vectors where an analysis takes its data in
-roles, or the `experiment.toml` of a screen. Where `path` is empty, the dataset's folder.
+Return the path of the dataset `name`, downloading it if needed. Pass the path to `loadnmr`,
+`loadfid` or an analysis.
 
-The first time a dataset is used in a session, who to credit, what to cite and the licence
-are shown.
+A series returns a vector of paths in order, and data that an analysis takes in groups
+return nested vectors, one per group. Given a `format` such as `:nmrpipe`, return the same
+data in that format. Without a name, choose a dataset from a menu.
 
-Without a name, choose a dataset from a menu, or outside an interactive session, list them.
-
-See [`exampleinfo`](@ref) for how names are matched, and [`exampleanalysis`](@ref) for a
-dataset's saved analysis.
+The first time you use a dataset in a session, its credit, citation and licence are shown.
 
 # Examples
 ```julia
-julia> using NMRTools
+julia> using NMRTools, NMRAnalysis
 
-julia> spec = loadnmr(example("2d_hn_ubq"))          # a spectrum, or a vector of them
-julia> fid = loadfid(example("2d_hn_ubq"))           # its raw data
-julia> spec = loadnmr(example("2d_hn_ubq", :ucsf))   # the same spectrum, from UCSF
-julia> reference, saturated = example("hetnoe2d_calr")
-julia> screen(example("screen_bsa"))                  # with NMRScreen
+julia> spec = loadnmr(example("2d_hn_ubq"))
+
+julia> fid = loadfid(example("2d_hn_ubq"))
+
+julia> pipe = loadnmr(example("2d_hn_ubq", :nmrpipe))
+
+julia> decay, buildup = example("ccr2d_calr")
+
+julia> ccr2d(decay, buildup; T=0.04)
 ```
 """
 function example(name::AbstractString, format::Symbol=:default)
@@ -132,18 +129,19 @@ function example()
 end
 
 """
-    exampleanalysis(name) -> String
+    exampleanalysis(name)
 
-The saved analysis of an example dataset: an output folder written by NMRAnalysis, with the
-picked peaks in `peaklist.csv`, the results, and the record that `reopen` reads. Downloads
-the dataset the first time it is used. Throws an `ArgumentError` for a dataset without one.
+Return the folder of the NMRAnalysis analysis saved with the dataset `name`, downloading the
+dataset if needed. The folder holds the peak list, the results and the record that `reopen`
+reads. Throw an `ArgumentError` if the dataset has no saved analysis.
 
 # Examples
 ```julia
 julia> using NMRAnalysis
 
-julia> expt = reopen(exampleanalysis("relaxation2d_ubq"))   # as saved, ready to refit
-julia> pks = loadpeaks(exampleanalysis("relaxation2d_ubq"))  # just the peaks
+julia> expt = reopen(exampleanalysis(name))   # ready to refit
+
+julia> peaks = loadpeaks(exampleanalysis(name))
 ```
 """
 function exampleanalysis(name::AbstractString)
@@ -158,9 +156,9 @@ end
 """
     FORMATS
 
-The formats a dataset may hold, in the order `exampleinfo` lists them: Bruker experiment
-folders, nmrPipe and UCSF (Sparky) spectra, NMR-STAR shift lists from the BMRB, and the
-`experiment.toml` of an NMRScreen screen.
+The formats a dataset can hold, in the order [`exampleinfo`](@ref) lists them: `:bruker`
+(experiment folders), `:nmrpipe`, `:ucsf` (Sparky), `:bmrb` (NMR-STAR shift lists) and
+`:screen` (the `experiment.toml` of an NMRScreen screen).
 """
 const FORMATS = (:bruker, :nmrpipe, :ucsf, :bmrb, :screen)
 
