@@ -1,0 +1,50 @@
+NMRAnalysis.jl 0.4.7
+Analysis type: Intensity
+Model: NMRAnalysis.GUI2D.ExponentialModel
+Filename: /Users/chris/git/NMRExampleData.jl/datasets/relaxation2d_asyn/pseudo3D_HN_R2/pdata/1
+Number of peaks: 35
+Experiment title: 15N aSyn monomer, 70 uM, 298 K, 15N PD-CPMG T2
+Number of points: 11
+Time / s range: 0.0 - 0.064
+X radius / ppm: 0.04
+Y radius / ppm: 0.18
+
+R / s-1 by peak:
+  L8           23.04 +/- 0.28
+  A17          26.16 +/- 0.25
+  A27          25.05 +/- 0.33
+  G31          22.77 +/- 0.46
+  V37          26.85 +/- 0.089
+  V40          29.54 +/- 0.12
+  G41          30.06 +/- 0.41
+  V48          23.67 +/- 0.11
+  A53          23.03 +/- 0.36
+  T54          21.72 +/- 0.13
+  A56          25.1 +/- 0.31
+  G67          19.24 +/- 0.27
+  G68          16.61 +/- 0.35
+  V71          17.65 +/- 0.097
+  G73          20.35 +/- 0.25
+  A76          19.81 +/- 0.23
+  A78          19.7 +/- 0.26
+  T81          21.93 +/- 0.18
+  E83          19.64 +/- 0.13
+  G86          17.68 +/- 0.38
+  A89          19.38 +/- 0.28
+  T92          19.77 +/- 0.22
+  G93          21.49 +/- 0.51
+  V95          21.98 +/- 0.083
+  K96          24.06 +/- 0.25
+  G101         21.19 +/- 0.13
+  N103         22.42 +/- 0.28
+  Q109         20.16 +/- 0.08
+  E110         21.1 +/- 0.11
+  L113         24.0 +/- 0.21
+  D119         29.89 +/- 0.13
+  N122         30.03 +/- 0.11
+  S129         26.32 +/- 0.11
+  E130         24.58 +/- 0.094
+  A140         9.343 +/- 0.32
+
+Reproduce:
+    reopen("out-asyn")
