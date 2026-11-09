@@ -2,7 +2,8 @@
 Example NMR data shared by NMRTools.jl, NMRAnalysis.jl and NMRScreen.jl.
 
 Each example is a folder under `datasets/` with a `dataset.toml`. Released examples are
-downloaded the first time they are used, and only then.
+downloaded the first time they are used, and only then. The registered package holds no
+datasets, only `Datasets.toml`, the index of their `dataset.toml` files.
 """
 module NMRExampleData
 
@@ -16,6 +17,7 @@ export examples, exampleinfo, example, exampleanalysis
 const ROOT = dirname(@__DIR__)
 const DATASETS = joinpath(ROOT, "datasets")
 const ARTIFACTS = joinpath(ROOT, "Artifacts.toml")
+const INDEX = joinpath(ROOT, "Datasets.toml")
 
 """
     examples() -> Vector{String}
@@ -33,10 +35,7 @@ julia> examples()
  "titration2d_fir_nbox"
 ```
 """
-function examples()
-    isdir(DATASETS) || return String[]
-    return filter(n -> isfile(joinpath(DATASETS, n, "dataset.toml")), readdir(DATASETS))
-end
+examples() = sort!(collect(keys(catalogue())))
 
 examples(format::Symbol) = filter(n -> haskey(exampleinfo(n).formats, format), examples())
 
@@ -62,8 +61,9 @@ julia> exampleinfo("hetnoe2d_calr").title
 ```
 """
 function exampleinfo(name::AbstractString)
-    n = resolvename(name)
-    d = TOML.parsefile(joinpath(DATASETS, n, "dataset.toml"))
+    datasets = catalogue()
+    n = resolvename(name, datasets)
+    d = datasets[n]
     credit = get(d, "credit", String[])
     path = get(d, "path", "")
     others = get(d, "formats", Dict{String,Any}())
@@ -148,7 +148,7 @@ julia> pks = loadpeaks(exampleanalysis("relaxation2d_ubq"))  # just the peaks
 """
 function exampleanalysis(name::AbstractString)
     info = exampleinfo(name)
-    isdir(joinpath(DATASETS, info.name, "analysis")) ||
+    get(catalogue()[info.name], "analysis", false) ||
         throw(ArgumentError("example dataset \"$(info.name)\" has no saved analysis"))
     dir = datasetdir(info.name)
     showcredit(info)
@@ -185,6 +185,30 @@ format(path::AbstractVector) = isempty(path) ? :bruker : format(first(path))
 within(dir, p::AbstractString) = joinpath(dir, p)
 within(dir, p::AbstractVector) = [within(dir, q) for q in p]
 
+# Every dataset's dataset.toml, by name, with `analysis = true` for those with a saved
+# analysis: read from datasets/ in a clone of the repository, and otherwise from the index
+# that takes its place in the registered package.
+function catalogue(datasets=DATASETS, index=INDEX)
+    isdir(datasets) || return isfile(index) ? TOML.parsefile(index) : Dict{String,Any}()
+    names = filter(n -> isfile(joinpath(datasets, n, "dataset.toml")), readdir(datasets))
+    return Dict{String,Any}(n => entry(joinpath(datasets, n)) for n in names)
+end
+
+function entry(dir)
+    d = TOML.parsefile(joinpath(dir, "dataset.toml"))
+    isdir(joinpath(dir, "analysis")) && (d["analysis"] = true)
+    return d
+end
+
+# Write the index of datasets/ to `path`, for the registered package.
+function writeindex(path)
+    open(path, "w") do io
+        println(io, "# The example datasets, written by scripts/release.jl from their dataset.toml files.")
+        return TOML.print(io, catalogue(); sorted=true)
+    end
+    return path
+end
+
 # The folder holding a dataset: its own folder in a clone of this repository with the data
 # fetched from Git LFS, and otherwise the released artifact, downloaded if need be.
 function datasetdir(n)
@@ -219,11 +243,10 @@ end
 # The dataset a name refers to, ignoring case: its full name or an alias, or else a dataset
 # whose name, or a part of it between underscores, starts with the name given, so that
 # "hetnoe" finds "hetnoe2d_calr". Where several start that way, the one added first.
-function resolvename(name::AbstractString)
-    names = examples()
+function resolvename(name::AbstractString, tomls=catalogue())
+    names = sort!(collect(keys(tomls)))
     q = lowercase(name)
     q in names && return q
-    tomls = Dict(n => TOML.parsefile(joinpath(DATASETS, n, "dataset.toml")) for n in names)
     for n in names
         any(a -> lowercase(a) == q, get(tomls[n], "aliases", String[])) && return n
     end
@@ -243,6 +266,7 @@ released(a) = !isnothing(artifact_hash(a, ARTIFACTS))
 # True for a dataset folder whose files are all present. In an installed package, as in a
 # clone made without Git LFS, the binary files are small text pointers to LFS instead.
 function hasdata(dir)
+    isdir(dir) || return false
     found = false
     for (root, _, files) in walkdir(dir), f in files
         f == "dataset.toml" && continue
