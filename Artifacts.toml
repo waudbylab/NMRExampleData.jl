@@ -1,15 +1,119 @@
+[1d_19f_fragments]
+git-tree-sha1 = "1ee91be4ef223c99f0a23db5de456b1f6e43815a"
+lazy = true
+
+    [[1d_19f_fragments.download]]
+    sha256 = "6b0d02db6f4790ba4a584b471b73be6c213f5fc482bb40b452f15681d38a2bd5"
+    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-09/1d_19f_fragments.tar.gz"
+
+[1d_19f_titration_sh3]
+git-tree-sha1 = "d79784fa99471cbf274b0437d574d890e0d8c27c"
+lazy = true
+
+    [[1d_19f_titration_sh3.download]]
+    sha256 = "b2012dbf287d9eb6e85c04ac0eee2de5920152cd3c793446e7b3b1326c2118e2"
+    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-09/1d_19f_titration_sh3.tar.gz"
+
+[1d_1h_ubq]
+git-tree-sha1 = "fc6e806a32ab761651c440f2dbb7637cdd85dc8c"
+lazy = true
+
+    [[1d_1h_ubq.download]]
+    sha256 = "8d6e22dc800928b0f9c76bda24359038647a8a9d76200caf39a3efce19f38568"
+    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-09/1d_1h_ubq.tar.gz"
+
+[2d_hn_ubq]
+git-tree-sha1 = "eb7b1a38d397ec13c1a323499e5601b4644e49d1"
+lazy = true
+
+    [[2d_hn_ubq.download]]
+    sha256 = "99a3d09fb1dae87d913281cf7c9e94b8f2e60da434986a4f6055c63a5e5aca47"
+    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-09/2d_hn_ubq.tar.gz"
+
+[3d_hnca_ubq]
+git-tree-sha1 = "c25d1c5aa50ba14bcdf9290bcd1bc7052b169299"
+lazy = true
+
+    [[3d_hnca_ubq.download]]
+    sha256 = "9271e1bccaddfcf26e9b766b12d69d68a4f64782c7715fbc5bd860f501d9d071"
+    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-09/3d_hnca_ubq.tar.gz"
+
+[calibration1d_19f]
+git-tree-sha1 = "febdd440ee5c78966e01aab5905e2ea2fc846da8"
+lazy = true
+
+    [[calibration1d_19f.download]]
+    sha256 = "2a46fa05a49a9147ff38f417edfc5a3ff270b3722dde0174c6635e0d4b2a8a23"
+    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-09/calibration1d_19f.tar.gz"
+
+[ccr2d_calr]
+git-tree-sha1 = "d930e9c0247cbfa7207a38fcc818904616a1f8a2"
+lazy = true
+
+    [[ccr2d_calr.download]]
+    sha256 = "36cfbf96e616cd5420d6e9be4e9283522ab92ed6a35bba8f6255fc5b0e2c8bbd"
+    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-09/ccr2d_calr.tar.gz"
+
+[diffusion1d_asyn]
+git-tree-sha1 = "52607e53231d1bdfa796b63302b5ae827255f209"
+lazy = true
+
+    [[diffusion1d_asyn.download]]
+    sha256 = "57ff29124be4d0a46f222fc68df46f36b00b25ee327511b97751dcd9779ee293"
+    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-09/diffusion1d_asyn.tar.gz"
+
+[hetnoe2d_calr]
+git-tree-sha1 = "289b16a056886a1662055881f12daa2194572831"
+lazy = true
+
+    [[hetnoe2d_calr.download]]
+    sha256 = "0dc7f8255dfd5b4adf337228ea7551a611dd54aec76b28823c35e19bfe47dff4"
+    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-09/hetnoe2d_calr.tar.gz"
+
+[kinetics2d_cjun]
+git-tree-sha1 = "a39b93adfc3dc962f5d6cb5e82c805c84f1fec58"
+lazy = true
+
+    [[kinetics2d_cjun.download]]
+    sha256 = "ed28b6fb9ca6a67bcc9494401155f010ca6f8f3c43ab614a810c4ae6a43f64b3"
+    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-09/kinetics2d_cjun.tar.gz"
+
+[methylccr2d_fln5]
+git-tree-sha1 = "167cc6ac064eb5d592b529ebb20aa80902ec4214"
+lazy = true
+
+    [[methylccr2d_fln5.download]]
+    sha256 = "5a40e67427966e67d723afbc8359feb9302206dfb79fca669043cb168f52fc66"
+    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-09/methylccr2d_fln5.tar.gz"
+
+[relaxation1d_aas]
+git-tree-sha1 = "e25e8513b32eae6a21cac4225fb6bcc40434dab6"
+lazy = true
+
+    [[relaxation1d_aas.download]]
+    sha256 = "c1f58c81ced599825a4a45963db2ace24db07f0728785122e43c5601ab582167"
+    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-09/relaxation1d_aas.tar.gz"
+
+[relaxation2d_asyn]
+git-tree-sha1 = "49c578c34099c9e020a99fb212f96d434c5b9109"
+lazy = true
+
+    [[relaxation2d_asyn.download]]
+    sha256 = "321e5b0cc90f9caef5b56a3f3e058472874217e0eb7482813bbac68690916735"
+    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-09/relaxation2d_asyn.tar.gz"
+
 [titration2d_fir_nbox]
-git-tree-sha1 = "03e773ce058c609b994f96398d3dbc85d604d0f8"
+git-tree-sha1 = "7facb5e7d123c5e49f362225204ab4a704e5313c"
 lazy = true
 
     [[titration2d_fir_nbox.download]]
-    sha256 = "47729ded8521e94aa7d17cd7c6ae2cfb3fa288bd4bda39d03f43e7c9d59f6111"
-    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-07/titration2d_fir_nbox.tar.gz"
+    sha256 = "7de42b038da82fb1ea368c1c271ffa4b897f99868e145cd0420b10b9d668ab89"
+    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-09/titration2d_fir_nbox.tar.gz"
 
-[titration2d_fir_nbox_fid]
-git-tree-sha1 = "9ab88702071ed974b06bd6598e429e65a9538113"
+[tract_calr]
+git-tree-sha1 = "d6288599faacb682addff6e53f7d2ff0464249bf"
 lazy = true
 
-    [[titration2d_fir_nbox_fid.download]]
-    sha256 = "688ffaca93e64ece33a78ef22f96f5b20cd7df52f6daa99c11a779e89848d16f"
-    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-07/titration2d_fir_nbox_fid.tar.gz"
+    [[tract_calr.download]]
+    sha256 = "9fb8352d5258e043841541f6bdf7937d55a2d156e3fc79b22b0c82cca0c0bdd5"
+    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-09/tract_calr.tar.gz"
