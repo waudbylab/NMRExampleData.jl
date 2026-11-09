@@ -7,7 +7,7 @@ title = "FLN5 pseudo-3D 1H,13C Methyl TQ CCR (500 MHz, 283 K)"
 # to load, a list of them for a series in the order they load, nested lists where an
 # analysis takes its data in roles (e.g. [["1", "2"], ["3", "4"]] for rdc2d's isotropic
 # and aligned pairs), or the experiment.toml of a screen. Empty for the whole folder.
-path = ["15", "14"]
+path = ["14", "15"]
 
 # Optional: concentrations, temperature, field, anything a reader should know.
 description = "[2H,13CH3-ILV]-FLN5"
