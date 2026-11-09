@@ -28,8 +28,8 @@ decay, buildup = example("ccr2d_calr")
 ccr2d(decay, buildup; T=0.04)
 ```
 
-NMRTools and NMRAnalysis export these functions. To use them with NMRScreen, also load
-NMRExampleData.
+NMRTools, NMRAnalysis and NMRScreen export these functions, so you don't need to load
+NMRExampleData yourself.
 
 ## Find a dataset
 
