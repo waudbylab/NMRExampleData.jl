@@ -13,3 +13,15 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           ssh: ${{ secrets.DOCUMENTER_KEY }}
+  # The tag TagBot pushes with the workflow's own token starts no workflows, so start the
+  # documentation build here: a build from main deploys the newest version if it has no
+  # documentation yet.
+  docs:
+    needs: TagBot
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - run: gh workflow run Documentation.yml --repo "$GITHUB_REPOSITORY" --ref main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
