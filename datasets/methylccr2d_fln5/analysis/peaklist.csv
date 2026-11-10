@@ -1,0 +1,17 @@
+# NMRAnalysis.jl 0.5.0
+# Analysis type: Intensity
+# Model: NMRAnalysis.GUI2D.MethylCCRModel
+# Filename: /Users/chris/git/NMRExampleData.jl/datasets/methylccr2d_fln5/15/pdata/1
+# Number of peaks: 5
+# Experiment title: [2H,13CH3-ILV]-750, 283 K, HH/HH TQ buildup (ns 24)
+# vdlist = 2m, 6m, 12m, 20m, 30m, 40m, 50m, 60m
+# Number of points: 16
+# Relaxation delay T / s range: 0.002 - 0.06
+# X radius / ppm: 0.04
+# Y radius / ppm: 0.14
+label,plane,x (ppm),y (ppm),xradius (ppm),yradius (ppm)
+I674CD1,,0.08691611886024475,20.7708740234375,0.04,0.14
+I695CD1,,-0.4010872542858124,19.888687133789062,0.04,0.14
+I738CD1,,0.2909276783466339,20.2772274017334,0.04,0.14
+I743CD1,,0.6647157073020935,21.15489959716797,0.04,0.14
+I748CD1,,0.5764205455780029,20.176048278808594,0.04,0.14

@@ -1,0 +1,8 @@
+# NMRAnalysis.jl 0.5.0
+# Analysis: Diffusion
+# Source: /Users/chris/git/NMRExampleData.jl/datasets/diffusion1d_asyn/pseudo2D_XSTE/pdata/1
+# Number of spectra: 10
+# Arrayed variables: gradient
+# Noise position / ppm: 12.6978
+label,D (1e-10 m2/s),D_err (1e-10 m2/s),A,A_err,viscosity (mPa s),viscosity_err (mPa s),rH (A),rH_err (A)
+signal,0.4533892957817392,0.0023523665084371624,7264.968070799545,12.664340042937502,1.3102945185540058,NA,34.88265462674561,0.18098527961021602

@@ -1,0 +1,40 @@
+# NMRAnalysis.jl 0.5.0
+# Analysis: Nutation calibration
+# Source: /Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/10/pdata/1
+# Source: /Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/11/pdata/1
+# Number of spectra: 32
+# Arrayed variables: duration, power
+# Noise position / ppm: -53.943
+source,label,plane,power (dB),duration (s),I,I_err,I_fit
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/10/pdata/1,signal,1,11.11,6.25e-5,274.04933344936796,14.929643543130481,246.5273314852469
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/10/pdata/1,signal,2,11.11,0.000125,397.3103222665161,14.929643543130481,342.37321360673474
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/10/pdata/1,signal,3,11.11,0.0001875,282.03625340384343,14.929643543130481,230.9814492520575
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/10/pdata/1,signal,4,11.11,0.00025,36.46158461822616,14.929643543130481,-15.995294750704282
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/10/pdata/1,signal,5,11.11,0.0003125,-143.78759786470982,14.929643543130481,-245.61343827549646
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/10/pdata/1,signal,6,11.11,0.000375,-291.2573696116177,14.929643543130481,-320.2943350237678
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/10/pdata/1,signal,7,11.11,0.0004375,-187.25245136872726,14.929643543130481,-201.92361933219308
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/10/pdata/1,signal,8,11.11,0.0005,20.694184638030674,14.929643543130481,29.013003177520304
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/10/pdata/1,signal,9,11.11,0.0005625000000000001,223.61418265145733,14.929643543130481,228.50965382302513
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/10/pdata/1,signal,10,11.11,0.0006250000000000001,261.5182602157325,14.929643543130481,280.31325227700376
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/10/pdata/1,signal,11,11.11,0.0006875,140.51146781564555,14.929643543130481,164.60749547761725
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/10/pdata/1,signal,12,11.11,0.00075,-26.61725872585907,14.929643543130481,-36.980051181453454
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/10/pdata/1,signal,13,11.11,0.0008125000000000001,-245.67566401232216,14.929643543130481,-198.59165593178236
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/10/pdata/1,signal,14,11.11,0.0008750000000000001,-236.2505429547508,14.929643543130481,-229.4952206505831
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/10/pdata/1,signal,15,11.11,0.0009375,-122.7183182760593,14.929643543130481,-125.04353118937222
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/10/pdata/1,signal,16,11.11,0.001,67.10154318650896,14.929643543130481,39.255649270420435
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/11/pdata/1,signal,17,31.11,0.000625,268.4028879305732,14.929643543130481,256.45389446395654
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/11/pdata/1,signal,18,31.11,0.00125,359.2461597169204,14.929643543130481,351.9645610148606
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/11/pdata/1,signal,19,31.11,0.001875,320.38264923064287,14.929643543130481,230.0628197847106
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/11/pdata/1,signal,20,31.11,0.0025,-0.5139542091453544,14.929643543130481,-26.78580594802964
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/11/pdata/1,signal,21,31.11,0.003125,-190.0455843219199,14.929643543130481,-254.39136431210252
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/11/pdata/1,signal,22,31.11,0.0037500000000000003,-291.73611693063754,14.929643543130481,-315.0340508163986
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/11/pdata/1,signal,23,31.11,0.0043749999999999995,-172.0558333985537,14.929643543130481,-183.25862573878865
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/11/pdata/1,signal,24,31.11,0.005,52.36254017809559,14.929643543130481,45.65136791166234
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/11/pdata/1,signal,25,31.11,0.005625,206.1699052260074,14.929643543130481,224.91546093560012
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/11/pdata/1,signal,26,31.11,0.0062499999999999995,252.8599878253639,14.929643543130481,252.3713163800044
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/11/pdata/1,signal,27,31.11,0.006875,103.96789489656261,14.929643543130481,129.21908208908542
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/11/pdata/1,signal,28,31.11,0.0075,-38.67319267118357,14.929643543130481,-52.44930180095123
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/11/pdata/1,signal,29,31.11,0.008125,-216.00048469032498,14.929643543130481,-177.45053934710847
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/11/pdata/1,signal,30,31.11,0.00875,-185.30214339648956,14.929643543130481,-180.91533919151055
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/11/pdata/1,signal,31,31.11,0.009375000000000001,-67.64908027512294,14.929643543130481,-80.29303410624695
+/Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/11/pdata/1,signal,32,31.11,0.01,73.3128805928166,14.929643543130481,48.14408236074585

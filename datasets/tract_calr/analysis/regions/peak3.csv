@@ -1,0 +1,40 @@
+# NMRAnalysis.jl 0.5.0
+# Analysis: TRACT
+# Source: /Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1
+# Source: /Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1
+# Number of spectra: 32
+# Arrayed variables: time, which
+# Noise position / ppm: -0.8316
+source,label,plane,which,time (s),I,I_err,I_fit
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,peak3,1,trosy,0.0001,554.0075424609697,51.75815298060709,501.13888951496887
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,peak3,2,trosy,0.001,545.4195829481404,51.75815298060709,493.1650073202412
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,peak3,3,trosy,0.002,364.2197243497633,51.75815298060709,484.45385609554427
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,peak3,4,trosy,0.003,376.41804537209913,51.75815298060709,475.8965766065407
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,peak3,5,trosy,0.005,472.0911528086354,51.75815298060709,459.23280902766845
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,peak3,6,trosy,0.008,468.88009630519355,51.75815298060709,435.32478941781864
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,peak3,7,trosy,0.012,457.0882582999664,51.75815298060709,405.3722849681145
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,peak3,8,trosy,0.017,407.4094308010964,51.75815298060709,370.81293134719107
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,peak3,9,trosy,0.023,285.3101335585385,51.75815298060709,333.20833185871845
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,peak3,10,trosy,0.03,360.09255473516185,51.75815298060709,294.1284250617303
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,peak3,11,trosy,0.038,286.69640558471167,51.75815298060709,255.04587636406558
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,peak3,12,trosy,0.049,232.1129717526272,51.75815298060709,209.64287437016026
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,peak3,13,trosy,0.059,134.0171972731551,51.75815298060709,175.4210642384788
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,peak3,14,trosy,0.07,70.40303050567026,51.75815298060709,144.1927885927926
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,peak3,15,trosy,0.082,98.9756438691196,51.75815298060709,116.43016258012563
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1,peak3,16,trosy,0.095,113.87878326372082,51.75815298060709,92.35228184992737
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,peak3,17,anti,0.0001,597.8927784010663,51.75815298060709,634.94130848983
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,peak3,18,anti,0.001,650.2044882058306,51.75815298060709,601.0824018309137
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,peak3,19,anti,0.002,579.5237274547978,51.75815298060709,565.5747952550489
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,peak3,20,anti,0.003,451.7152540947731,51.75815298060709,532.1647215979754
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,peak3,21,anti,0.005,486.6819565428289,51.75815298060709,471.1488642003453
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,peak3,22,anti,0.008,386.9804344825175,51.75815298060709,392.4878797634039
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,peak3,23,anti,0.012,413.2060002536697,51.75815298060709,307.645371416061
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,peak3,24,anti,0.017,230.32754634413928,51.75815298060709,226.89794089231876
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,peak3,25,anti,0.023,143.60642944561747,51.75815298060709,157.458734884656
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,peak3,26,anti,0.03,99.64149023184382,51.75815298060709,102.81559536073604
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,peak3,27,anti,0.038,-43.77806579562836,51.75815298060709,63.16947470179724
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,peak3,28,anti,0.049,69.01680620574007,51.75815298060709,32.331335017621534
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,peak3,29,anti,0.059,-88.28250709596189,51.75815298060709,17.586684649530415
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,peak3,30,anti,0.07,53.020234323223626,51.75815298060709,9.001198695056624
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,peak3,31,anti,0.082,24.165747469018363,51.75815298060709,4.3348368311093095
+/Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1,peak3,32,anti,0.095,-14.751417983886839,51.75815298060709,1.964270049474204

@@ -1,0 +1,66 @@
+NMRAnalysis.jl 0.5.0
+Analysis: Relaxation
+Source: /Users/chris/git/NMRExampleData.jl/datasets/relaxation1d_aas/pseudo2D_T2/pdata/1
+Number of spectra: 16
+Arrayed variables: time
+Noise position / ppm: 12.6313
+
+Integration regions / ppm:
+  peak1: 0.8331 to 0.8951
+  peak2: 1.5538 to 1.6734
+  peak3: 1.8675 to 1.9915
+  peak4: 2.9844 to 3.0558
+  peak5: 3.2949 to 3.3567
+  peak6: 2.3689 to 2.4487
+  peak7: 7.2124 to 7.2493
+  peak8: 7.3081 to 7.3517
+  peak9: 7.2693 to 7.2958
+
+peak1
+-----
+Amplitude        7022.0 ± 12.0
+Relaxation rate  0.8366 ± 0.0055 s⁻¹
+
+peak2
+-----
+Amplitude        3606.0 ± 22.0
+Relaxation rate  0.7788 ± 0.019 s⁻¹
+
+peak3
+-----
+Amplitude        4000.0 ± 21.0
+Relaxation rate  0.4255 ± 0.012 s⁻¹
+
+peak4
+-----
+Amplitude        1206.0 ± 15.0
+Relaxation rate  1.087 ± 0.047 s⁻¹
+
+peak5
+-----
+Amplitude        990.3 ± 12.0
+Relaxation rate  0.4778 ± 0.028 s⁻¹
+
+peak6
+-----
+Amplitude        978.1 ± 15.0
+Relaxation rate  0.4605 ± 0.036 s⁻¹
+
+peak7
+-----
+Amplitude        2076.0 ± 7.6
+Relaxation rate  0.4199 ± 0.0084 s⁻¹
+
+peak8
+-----
+Amplitude        1762.0 ± 8.5
+Relaxation rate  0.3753 ± 0.011 s⁻¹
+
+peak9
+-----
+Amplitude        771.2 ± 6.0
+Relaxation rate  0.3845 ± 0.017 s⁻¹
+
+
+Reproduce:
+    reopen("out")

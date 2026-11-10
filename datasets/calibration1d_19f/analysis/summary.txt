@@ -1,0 +1,33 @@
+NMRAnalysis.jl 0.5.0
+Analysis: Nutation calibration
+Source: /Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/10/pdata/1
+Source: /Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/11/pdata/1
+Number of spectra: 32
+Arrayed variables: duration, power
+Noise position / ppm: -53.943
+
+Integration regions / ppm:
+  signal: -54.5561 to -54.5312
+
+signal
+------
+11.11 dB
+  Nutation frequency   2030.0 ± 5.3 Hz
+  90° pulse            123.1 ± 0.32 µs
+  B₁ inhomogeneity     7.955 ± 0.54 %
+  Amplitude            345.2 ± 8.5
+
+31.11 dB
+  Nutation frequency   205.0 ± 0.61 Hz
+  90° pulse            1219.0 ± 3.6 µs
+  B₁ inhomogeneity     10.04 ± 0.48 %
+  Amplitude            356.9 ± 8.9
+
+B₁ inhom. (smallest)   7.955 ± 0.54 %
+Reference power        11.11 dB
+ν₁ at reference power  2030.0 ± 5.3 Hz
+Linearity              0.9958 ± 0.0017
+
+
+Reproduce:
+    reopen("analysis")

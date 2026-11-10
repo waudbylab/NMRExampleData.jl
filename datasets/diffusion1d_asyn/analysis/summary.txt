@@ -1,0 +1,20 @@
+NMRAnalysis.jl 0.5.0
+Analysis: Diffusion
+Source: /Users/chris/git/NMRExampleData.jl/datasets/diffusion1d_asyn/pseudo2D_XSTE/pdata/1
+Number of spectra: 10
+Arrayed variables: gradient
+Noise position / ppm: 12.6978
+
+Integration regions / ppm:
+  signal: 7.7383 to 8.5396
+
+signal
+------
+Amplitude              7265.0 ± 13.0
+Diffusion coefficient  0.4534 ± 0.0024 ×10⁻¹⁰ m² s⁻¹
+η                      1.31 mPa s
+rH                     34.88 ± 0.18 Å
+
+
+Reproduce:
+    reopen("analysis")

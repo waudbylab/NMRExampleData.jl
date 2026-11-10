@@ -1,0 +1,9 @@
+# The analysis that wrote this folder, with paths relative to it.
+# reopen("<this folder>") in NMRAnalysis.jl repeats it.
+nmranalysis = "0.5.0"
+call = '''
+calibration1d(["../10", "../11"];
+              phase=:sine,
+              power=[11.110346556996628, 31.110346556996625],
+              peaklist="./peaklist.csv")
+'''

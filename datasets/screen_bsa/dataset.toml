@@ -1,0 +1,9 @@
+title = "BSA pseudo-2D 19F{1H} T2 fragment screen (600 MHz, 298 K)"
+path = "experiment.toml"
+description = "Fragment screen of BSA (0.2 mg/mL in 50 mM Tris pH 7.4, 100 mM NaCl): 15 cocktails, each with a fragment-only reference."
+credit = ["Chris Waudby <c.waudby@ucl.ac.uk>", "Nikita Harvey"]
+citation = ""
+licence = "CC BY 4.0"
+source = "NMRScreen.jl/example"
+aliases = []
+added = "2026-11-09T17:20:29Z"

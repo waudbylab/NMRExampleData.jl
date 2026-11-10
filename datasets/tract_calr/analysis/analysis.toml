@@ -1,0 +1,8 @@
+# The analysis that wrote this folder, with paths relative to it.
+# reopen("<this folder>") in NMRAnalysis.jl repeats it.
+nmranalysis = "0.5.0"
+call = '''
+tract("../12", "../13";
+      tau=[0.0001, 0.001, 0.002, 0.003, 0.005, 0.008, 0.012, 0.017, 0.023, 0.03, 0.038, 0.049, 0.059, 0.07, 0.082, 0.095],
+      peaklist="./peaklist.csv")
+'''

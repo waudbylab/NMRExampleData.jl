@@ -1,0 +1,8 @@
+# The analysis that wrote this folder, with paths relative to it.
+# reopen("<this folder>") in NMRAnalysis.jl repeats it.
+nmranalysis = "0.4.7"
+call = '''
+relaxation2d("../pseudo3D_HN_R2",;
+             cycletime=0.02809,
+             peaklist="./peaklist.csv")
+'''

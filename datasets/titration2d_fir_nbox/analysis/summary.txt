@@ -1,0 +1,40 @@
+NMRAnalysis.jl 0.5.0
+Analysis type: Titration
+Model: NMRAnalysis.GUI2D.TitrationModel
+Filename: /Users/chris/git/NMRExampleData.jl/datasets/titration2d_fir_nbox/1/pdata/1
+Number of peaks: 23
+Number of planes: 11
+Global Kd: 26.7213 ± 0.8585
+X radius / ppm: 0.04
+Y radius / ppm: 0.24
+
+Global parameters:
+  Kd: 26.721265511319633 +/- 0.8585426811621713 
+
+CSP / ppm by peak:
+  X1           0.1954 +/- Inf
+  X2           0.1073 +/- Inf
+  X3           0.1467 +/- Inf
+  X4           0.008527 +/- Inf
+  X5           0.1103 +/- Inf
+  X6           0.1807 +/- Inf
+  X7           0.1078 +/- Inf
+  X8           0.1612 +/- Inf
+  X9           0.1454 +/- Inf
+  X10          0.04302 +/- Inf
+  X11          0.1546 +/- Inf
+  X12          0.08224 +/- Inf
+  X13          0.1112 +/- Inf
+  X14          0.1451 +/- Inf
+  X15          0.1162 +/- Inf
+  X16          0.003612 +/- Inf
+  X17          0.01941 +/- Inf
+  X18          0.007309 +/- Inf
+  X19          0.04579 +/- Inf
+  X20          0.07087 +/- Inf
+  X21          0.186 +/- Inf
+  X22          0.1732 +/- Inf
+  X23          0.007438 +/- Inf
+
+Reproduce:
+    reopen("analysis")

@@ -1,0 +1,12 @@
+# The analysis that wrote this folder, with paths relative to it.
+# reopen("<this folder>") in NMRAnalysis.jl repeats it.
+nmranalysis = "0.5.0"
+call = '''
+diffusion1d("../pseudo2D_XSTE";
+            gradients=[0.05, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.9500000000000001],
+            δ=0.004,
+            Δ=0.1,
+            σ=0.9,
+            Gmax=0.55,
+            peaklist="./peaklist.csv")
+'''

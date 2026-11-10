@@ -1,0 +1,12 @@
+# NMRAnalysis.jl 0.5.0
+# Analysis: TRACT
+# Source: /Users/chris/git/NMRExampleData.jl/datasets/tract_calr/12/pdata/1
+# Source: /Users/chris/git/NMRExampleData.jl/datasets/tract_calr/13/pdata/1
+# Number of spectra: 32
+# Arrayed variables: time, which
+# Noise position / ppm: -0.8316
+label,lo (ppm),hi (ppm)
+amide,8.868655367870366,9.5
+peak2,8.008834562917029,8.405624823909383
+peak3,6.7503632337864525,7.441364726701283
+noise,-1.1771153283385836,-0.48611383542375286

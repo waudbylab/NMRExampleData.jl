@@ -1,0 +1,23 @@
+# NMRAnalysis.jl 0.5.0
+# Analysis: Relaxation
+# Source: /Users/chris/git/NMRExampleData.jl/datasets/relaxation1d_aas/pseudo2D_T2/pdata/1
+# Number of spectra: 16
+# Arrayed variables: time
+# Noise position / ppm: 12.6313
+source,label,plane,time (s),I,I_err,I_fit
+/Users/chris/git/NMRExampleData.jl/datasets/relaxation1d_aas/pseudo2D_T2/pdata/1,peak8,1,0.004,1772.0990545264017,24.76902320853775,1758.9340275028355
+/Users/chris/git/NMRExampleData.jl/datasets/relaxation1d_aas/pseudo2D_T2/pdata/1,peak8,2,0.008,1736.0371229223806,24.76902320853775,1756.2956434413097
+/Users/chris/git/NMRExampleData.jl/datasets/relaxation1d_aas/pseudo2D_T2/pdata/1,peak8,3,0.016,1803.169520745237,24.76902320853775,1751.0307420338384
+/Users/chris/git/NMRExampleData.jl/datasets/relaxation1d_aas/pseudo2D_T2/pdata/1,peak8,4,0.032,1773.8108397271756,24.76902320853775,1740.5482401765357
+/Users/chris/git/NMRExampleData.jl/datasets/relaxation1d_aas/pseudo2D_T2/pdata/1,peak8,5,0.048,1711.374273579302,24.76902320853775,1730.1284915551132
+/Users/chris/git/NMRExampleData.jl/datasets/relaxation1d_aas/pseudo2D_T2/pdata/1,peak8,6,0.064,1697.8282549966639,24.76902320853775,1719.7711204988896
+/Users/chris/git/NMRExampleData.jl/datasets/relaxation1d_aas/pseudo2D_T2/pdata/1,peak8,7,0.096,1646.9334056559555,24.76902320853775,1699.2420196305675
+/Users/chris/git/NMRExampleData.jl/datasets/relaxation1d_aas/pseudo2D_T2/pdata/1,peak8,8,0.128,1717.3614924008775,24.76902320853775,1678.9579769432082
+/Users/chris/git/NMRExampleData.jl/datasets/relaxation1d_aas/pseudo2D_T2/pdata/1,peak8,9,0.192,1610.0276681729044,24.76902320853775,1639.1133998828248
+/Users/chris/git/NMRExampleData.jl/datasets/relaxation1d_aas/pseudo2D_T2/pdata/1,peak8,10,0.256,1599.232422128965,24.76902320853775,1600.2144035593763
+/Users/chris/git/NMRExampleData.jl/datasets/relaxation1d_aas/pseudo2D_T2/pdata/1,peak8,11,0.384,1541.991422639243,24.76902320853775,1525.1639246034015
+/Users/chris/git/NMRExampleData.jl/datasets/relaxation1d_aas/pseudo2D_T2/pdata/1,peak8,12,0.512,1432.4301299268375,24.76902320853775,1453.6333329693957
+/Users/chris/git/NMRExampleData.jl/datasets/relaxation1d_aas/pseudo2D_T2/pdata/1,peak8,13,0.768,1321.831273349428,24.76902320853775,1320.4792195468503
+/Users/chris/git/NMRExampleData.jl/datasets/relaxation1d_aas/pseudo2D_T2/pdata/1,peak8,14,1.024,1207.1029253877605,24.76902320853775,1199.5221420061987
+/Users/chris/git/NMRExampleData.jl/datasets/relaxation1d_aas/pseudo2D_T2/pdata/1,peak8,15,1.28,1075.8066182687262,24.76902320853775,1089.6448409516895
+/Users/chris/git/NMRExampleData.jl/datasets/relaxation1d_aas/pseudo2D_T2/pdata/1,peak8,16,1.536,1006.4271760091764,24.76902320853775,989.8323989474947

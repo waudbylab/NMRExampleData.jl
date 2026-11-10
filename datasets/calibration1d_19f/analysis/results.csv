@@ -1,0 +1,9 @@
+# NMRAnalysis.jl 0.5.0
+# Analysis: Nutation calibration
+# Source: /Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/10/pdata/1
+# Source: /Users/chris/git/NMRExampleData.jl/datasets/calibration1d_19f/11/pdata/1
+# Number of spectra: 32
+# Arrayed variables: duration, power
+# Noise position / ppm: -53.943
+label,nu_11.11 (Hz),nu_11.11_err (Hz),pulse90_11.11 (us),pulse90_11.11_err (us),sigma_11.11 (%),sigma_11.11_err (%),A_11.11,A_11.11_err,nu_31.11 (Hz),nu_31.11_err (Hz),pulse90_31.11 (us),pulse90_31.11_err (us),sigma_31.11 (%),sigma_31.11_err (%),A_31.11,A_31.11_err,inhomogeneity (%),inhomogeneity_err (%),powerref (dB),powerref_err (dB),nu1ref (Hz),nu1ref_err (Hz),linearity,linearity_err
+signal,2030.4717234390823,5.289340417326971,123.1240982644989,0.3207359461250287,7.954584934656986,0.5376016898684627,345.2379168765227,8.543843470933105,205.03998163153702,0.6112090248461765,1219.2743971722427,3.6345668263605266,10.040061319180584,0.4776817971364191,356.87474383649305,8.865634650056785,7.954584934656986,0.5376016898684627,11.11,NA,2030.4717234390841,5.289340417326976,0.9957583915679231,0.0017192712356203384
