@@ -1,0 +1,11 @@
+# NMRAnalysis.jl 0.5.0
+# Analysis type: Heteronuclear NOE
+# Filename: /Users/chris/.julia/artifacts/289b16a056886a1662055881f12daa2194572831/21/pdata/231
+# Saturation: false, true
+# Number of peaks: 43
+# Experiment title: 13C/15N CRT CTD (no metals), 283 K, TROSY hetNOE, 5 s saturation
+# X radius / ppm: 0.02
+# Y radius / ppm: 0.22
+source,label,plane,fitstatus,saturated,amp,amp_err,amp_fit,x (ppm),x_err (ppm),y (ppm),y_err (ppm),R2x (s-1),R2x_err (s-1),R2y (s-1),R2y_err (s-1)
+/Users/chris/.julia/artifacts/289b16a056886a1662055881f12daa2194572831/21/pdata/231,X46,1,converged,false,38.34442139540155,0.11586210649825798,NA,8.002921600074854,3.471319863887178e-5,122.45443941845639,0.00032776460503899864,43.48113711562446,0.3702334682944465,9.979708483242982,0.36655934203190055
+/Users/chris/.julia/artifacts/289b16a056886a1662055881f12daa2194572831/21/pdata/232,X46,2,converged,true,16.669582701707373,0.11586210649825798,NA,8.002921600074854,3.471319863887178e-5,122.45443941845639,0.00032776460503899864,43.48113711562446,0.3702334682944465,9.979708483242982,0.36655934203190055

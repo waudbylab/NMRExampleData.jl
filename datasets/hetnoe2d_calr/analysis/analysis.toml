@@ -1,0 +1,8 @@
+# The analysis that wrote this folder, with paths relative to it.
+# reopen("<this folder>") in NMRAnalysis.jl repeats it.
+nmranalysis = "0.5.0"
+call = '''
+hetnoe2d(["../21/pdata/231", "../21/pdata/232"];
+         saturation=[false, true],
+         peaklist="./peaklist.csv")
+'''
