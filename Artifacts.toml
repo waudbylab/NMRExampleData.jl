@@ -63,12 +63,12 @@ lazy = true
     url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-10/diffusion1d_asyn.tar.gz"
 
 [hetnoe2d_calr]
-git-tree-sha1 = "289b16a056886a1662055881f12daa2194572831"
+git-tree-sha1 = "5a78a53f7b3ede1ef1475cbd3b76e170804d9558"
 lazy = true
 
     [[hetnoe2d_calr.download]]
-    sha256 = "0dc7f8255dfd5b4adf337228ea7551a611dd54aec76b28823c35e19bfe47dff4"
-    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-09/hetnoe2d_calr.tar.gz"
+    sha256 = "5427fa4c75c1eaa819723d81a8c4972f7afacd0aeb943e2491020a8aa8842853"
+    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-10.3/hetnoe2d_calr.tar.gz"
 
 [kinetics2d_cjun]
 git-tree-sha1 = "a39b93adfc3dc962f5d6cb5e82c805c84f1fec58"
