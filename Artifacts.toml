@@ -7,12 +7,12 @@ lazy = true
     url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-09/1d_19f_fragments.tar.gz"
 
 [1d_19f_titration_sh3]
-git-tree-sha1 = "d79784fa99471cbf274b0437d574d890e0d8c27c"
+git-tree-sha1 = "00f815e9f464756ff35e1880574b563d6f621dd8"
 lazy = true
 
     [[1d_19f_titration_sh3.download]]
-    sha256 = "b2012dbf287d9eb6e85c04ac0eee2de5920152cd3c793446e7b3b1326c2118e2"
-    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-09/1d_19f_titration_sh3.tar.gz"
+    sha256 = "374d7a8b67e089a4480c4c7260ba0b5bfb9e08f54e073f7b27d29ab3888dcf95"
+    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-10.2/1d_19f_titration_sh3.tar.gz"
 
 [1d_1h_ubq]
 git-tree-sha1 = "fc6e806a32ab761651c440f2dbb7637cdd85dc8c"
