@@ -1,0 +1,30 @@
+# NMRAnalysis.jl 0.5.0
+# Analysis: peak tracking (1D)
+# Title: 0 eq
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/1/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/2/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/3/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/4/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/5/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/6/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/7/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/8/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/9/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/10/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/11/fid
+# Number of spectra: 11
+# Nucleus: 19F
+# Referenced to reference, placed at 0.0 ppm
+label,reference,line,plane,shift (ppm)
+reference,true,,,NA
+peak1,false,1,1,-123.69777601034505
+peak1,false,1,2,-123.56603026727797
+peak1,false,1,3,-123.41197284554158
+peak1,false,1,4,-123.2241655224589
+peak1,false,1,5,-123.06680766868442
+peak1,false,1,6,-122.95415571305206
+peak1,false,1,7,-122.762979070503
+peak1,false,1,8,-122.65788403221704
+peak1,false,1,9,-122.52872750575379
+peak1,false,1,10,-122.4662514420847
+peak1,false,1,11,-122.4143942335271

@@ -1,0 +1,14 @@
+# The analysis that wrote this folder, with paths relative to it.
+# reopen("<this folder>") in NMRAnalysis.jl repeats it.
+nmranalysis = "0.5.0"
+call = '''
+peaktrack1d(["../1", "../2", "../3", "../4", "../5", "../6", "../7", "../8", "../9", "../10", "../11"];
+            process=true,
+            zerofill=2,
+            solvent=:auto,
+            reference="reference",
+            refshift=0.0,
+            lb=1.0,
+            phase="./processing.csv",
+            peaklist="./peaklist.csv")
+'''

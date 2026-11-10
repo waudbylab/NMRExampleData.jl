@@ -1,0 +1,29 @@
+# NMRAnalysis.jl 0.5.0
+# Analysis: peak tracking (1D)
+# Title: 0 eq
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/1/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/2/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/3/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/4/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/5/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/6/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/7/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/8/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/9/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/10/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/11/fid
+# Number of spectra: 11
+# Nucleus: 19F
+# Referenced to reference, placed at 0.0 ppm
+source,phasing,p0 (deg),p1 (deg),lb (Hz),zerofill,solvent
+/Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/1/fid,auto,-51.2023483953393,-8.326672684688675e-17,1.0,2,auto
+/Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/2/fid,auto,-53.78016756306014,-8.326672684688675e-17,1.0,2,auto
+/Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/3/fid,auto,-46.91430960956083,-8.326672684688675e-17,1.0,2,auto
+/Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/4/fid,auto,-44.294255246450305,-2.9989623852533898,1.0,2,auto
+/Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/5/fid,auto,-51.259985129949875,-6.28335439234462e-10,1.0,2,auto
+/Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/6/fid,refit,-7.622754339565958,-8.326672684688675e-17,1.0,2,auto
+/Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/7/fid,auto,-48.675537242621765,-1.256670739691046e-9,1.0,2,auto
+/Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/8/fid,auto,-56.44734253037743,-6.28335439234462e-10,1.0,2,auto
+/Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/9/fid,auto,-49.80103679822311,-8.326672684688675e-17,1.0,2,auto
+/Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/10/fid,auto,-56.45897928993123,-8.326672684688675e-17,1.0,2,auto
+/Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/11/fid,auto,-49.883573556447224,6.283352727010083e-10,1.0,2,auto

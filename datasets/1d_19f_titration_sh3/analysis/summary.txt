@@ -1,0 +1,40 @@
+NMRAnalysis.jl 0.5.0
+Analysis: peak tracking (1D)
+Title: 0 eq
+Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/1/fid
+Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/2/fid
+Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/3/fid
+Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/4/fid
+Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/5/fid
+Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/6/fid
+Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/7/fid
+Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/8/fid
+Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/9/fid
+Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/10/fid
+Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/11/fid
+Number of spectra: 11
+Nucleus: 19F
+Referenced to reference, placed at 0.0 ppm
+Date: 2026-11-10 19:17
+
+Processing: exponential line broadening 1.0 Hz, zero-filling ×2, solvent suppression auto
+Phases (degrees, p0 at the first point):
+  1/fid                           p0   -51.2  p1    -0.0  (auto)
+  2/fid                           p0   -53.8  p1    -0.0  (auto)
+  3/fid                           p0   -46.9  p1    -0.0  (auto)
+  4/fid                           p0   -44.3  p1    -3.0  (auto)
+  5/fid                           p0   -51.3  p1    -0.0  (auto)
+  6/fid                           p0    -7.6  p1    -0.0  (refit)
+  7/fid                           p0   -48.7  p1    -0.0  (auto)
+  8/fid                           p0   -56.4  p1    -0.0  (auto)
+  9/fid                           p0   -49.8  p1    -0.0  (auto)
+  10/fid                          p0   -56.5  p1    -0.0  (auto)
+  11/fid                          p0   -49.9  p1     0.0  (auto)
+
+Referenced to reference, placed at 0.0 ppm: missing in some spectra
+
+Multiplets (centres as measured, ppm):
+  peak1            1 line   11 of 11 spectra   -123.6978 to -122.4144
+
+Reproduce:
+    reopen("out-track-19f-titration")

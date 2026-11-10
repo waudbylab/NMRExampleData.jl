@@ -1,0 +1,30 @@
+# NMRAnalysis.jl 0.5.0
+# Analysis: peak tracking (1D)
+# Title: 0 eq
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/1/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/2/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/3/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/4/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/5/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/6/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/7/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/8/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/9/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/10/fid
+# Source: /Users/chris/.julia/artifacts/d79784fa99471cbf274b0437d574d890e0d8c27c/11/fid
+# Number of spectra: 11
+# Nucleus: 19F
+# Referenced to reference, placed at 0.0 ppm
+# Heights: the intensity at each line's maximum, divided by scale(spec) (ns x rg, and the concentration where recorded); heights, not integrals or fitted amplitudes
+plane,peak1
+1,5.841157950089825
+2,3.2717137132568053
+3,2.7392165224498846
+4,2.333303858964673
+5,2.43260799329734
+6,2.30195581993084
+7,2.905717690394221
+8,3.107536168541367
+9,3.6268434779254966
+10,3.712785545056403
+11,3.9941537727068783
