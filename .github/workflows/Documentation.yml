@@ -2,11 +2,17 @@ name: Documentation
 on:
   push:
     branches: [main]
-    tags: ['*']
+    tags: ['v*']
   pull_request:
-  # The Release workflow starts this once it has released new data, since the commit it pushes
-  # with the workflow's own token starts no workflows of its own.
+  # The Release workflow starts this once it has released new data, and the TagBot workflow
+  # once it has tagged a version: what they push with the workflow's own token starts no
+  # workflows of its own.
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'A version to rebuild the documentation of, such as v1.1.0'
+        required: false
+        default: ''
 
 # Every deploy pushes to gh-pages, so run them one at a time; superseded pull request builds
 # are cancelled.
@@ -22,18 +28,48 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # no LFS: the catalogue reads only dataset.toml and the parameter files
+      # No LFS: the catalogue reads only dataset.toml and the parameter files. Full history,
+      # for the tags and the main commits they were released from.
       - uses: actions/checkout@v6
         with:
           lfs: false
+          fetch-depth: 0
       - uses: julia-actions/setup-julia@v3
         with:
           version: '1'
       - uses: julia-actions/cache@v3
-      - name: Install dependencies
-        run: julia --project=docs -e 'using Pkg; Pkg.instantiate()'
       - name: Build and deploy
+        if: github.ref_type != 'tag' && inputs.tag == ''
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DOCUMENTER_KEY: ${{ secrets.DOCUMENTER_KEY }}
-        run: julia --project=docs docs/make.jl
+        run: |
+          julia --project=docs -e 'using Pkg; Pkg.instantiate()'
+          julia --project=docs docs/make.jl
+      # The documentation of a version: the tag pushed or asked for, or otherwise the newest
+      # one if it has none yet, so that every build from main catches up. A version is built
+      # from the main commit it was released from, the last parent of its commit on the
+      # release branch, which has no datasets/ for the catalogue. Documenter deploys it as
+      # that version and as stable.
+      - name: Build and deploy a version
+        if: github.event_name != 'pull_request'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOCUMENTER_KEY: ${{ secrets.DOCUMENTER_KEY }}
+          TAG: ${{ github.ref_type == 'tag' && github.ref_name || inputs.tag }}
+        run: |
+          tag="$TAG"
+          if [ -z "$tag" ]; then
+            tag=$(git tag --list 'v*' --sort=-v:refname | head -n 1)
+            [ -n "$tag" ] || exit 0
+            if git ls-tree --name-only origin/gh-pages | grep -qx "$tag"; then
+              echo "$tag already has its documentation"
+              exit 0
+            fi
+          fi
+          source=$(git rev-list --parents -n 1 "$tag^{commit}" | awk '{print $NF}')
+          echo "Building the documentation of $tag from $source"
+          git worktree add --detach ../version "$source"
+          cd ../version
+          julia --project=docs -e 'using Pkg; Pkg.instantiate()'
+          GITHUB_REF="refs/tags/$tag" GITHUB_EVENT_NAME=push julia --project=docs docs/make.jl

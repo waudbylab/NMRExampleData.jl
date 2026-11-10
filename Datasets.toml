@@ -12,7 +12,8 @@ title = "FRAGS 1D 19F 1D 19F{1H} (600 MHz, 298 K)"
 
 [1d_19f_titration_sh3]
 added = "2026-11-08T16:09:31Z"
-aliases = []
+aliases = ["peaktrack1d_sh3"]
+analysis = true
 citation = "Stadmiller SS, Aguilar JS, Waudby CA, Pielak GJ. Rapid Quantification of Protein-Ligand Binding via 19F NMR Lineshape Analysis. Biophys J. 2020 May 19;118(10):2537-2548. doi: 10.1016/j.bpj.2020.03.031"
 credit = ["Chris Waudby <c.waudby@ucl.ac.uk>", "Samantha Stadmiller", "Gary Pielak"]
 description = "Titration of SH3 T22G with SOS PepS2"

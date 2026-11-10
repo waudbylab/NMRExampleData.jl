@@ -10,6 +10,9 @@ Releases are automatic. When a push to `main` changes `datasets/`, the Release w
 4. registers the new version, from a commit on the branch `release`
 5. rebuilds this documentation
 
+Once the registry has merged the new version, TagBot tags it, and its documentation is built
+as the stable version.
+
 Each dataset is downloaded whole, raw data included, the first time it is used.
 
 ## Versions

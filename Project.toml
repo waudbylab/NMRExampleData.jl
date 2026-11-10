@@ -1,6 +1,6 @@
 name = "NMRExampleData"
 uuid = "7d9aae8f-5363-4264-a191-4b2c0b96bceb"
-version = "1.1.0"
+version = "1.2.0"
 authors = ["Chris Waudby"]
 
 [deps]
