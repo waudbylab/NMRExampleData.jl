@@ -63,6 +63,7 @@ title = "UBQ 3D 1H,15N,13C BEST-HNCA (700 MHz, 298 K)"
 [calibration1d_19f]
 added = "2026-11-08T17:49:22Z"
 aliases = []
+analysis = true
 citation = ""
 credit = ["Sophia Hazlett", "Chris Waudby <c.waudby@ucl.ac.uk>"]
 description = "100 uM 19F-ligand"
@@ -74,6 +75,7 @@ title = "LIG pseudo-2D 19F nutation calibration (700 MHz, 298 K)"
 [ccr2d_calr]
 added = "2026-11-08T23:51:55Z"
 aliases = []
+analysis = true
 citation = ""
 credit = ["Kleopatra Savvidou", "Chris Waudby <c.waudby@ucl.ac.uk>"]
 description = "15N CALR CTD"
@@ -87,6 +89,7 @@ title = "CALR 2D 1H,15N Transverse amide CCR (symmetric reconversion) (1200 MHz,
 [diffusion1d_asyn]
 added = "2026-11-08T17:26:03Z"
 aliases = []
+analysis = true
 citation = "Chan SHS, Waudby CA, Cassaignau AME, Cabrita LD, Christodoulou J. Increasing the sensitivity of NMR diffusion measurements by paramagnetic longitudinal relaxation enhancement, with application to ribosome-nascent chain complexes. J Biomol NMR. 2015 Oct;63(2):151-163. doi: 10.1007/s10858-015-9968-x"
 credit = ["Chris Waudby <c.waudby@ucl.ac.uk>", "Sammy Chan", "John Christodoulou"]
 description = "15N alpha-synuclein"
@@ -125,6 +128,7 @@ title = "CJUN pseudo-3D 1H,15N SOFAST-HMQC (950 MHz, 293 K)"
 [methylccr2d_fln5]
 added = "2026-11-08T23:57:20Z"
 aliases = []
+analysis = true
 citation = "Charles Burridge, Christopher A. Waudby, Tomasz Włodarski, Anaïs M. E. Cassaignau, Lisa D. Cabrita, John Christodoulou; Nascent chain dynamics and ribosome interactions within folded ribosome–nascent chain complexes observed by NMR spectroscopy. Chem. Sci. 2021; 12 (39): 13120–13126. https://doi.org/10.1039/d1sc04313g"
 credit = ["Chris Waudby <c.waudby@ucl.ac.uk>"]
 description = "[2H,13CH3-ILV]-FLN5"
@@ -138,6 +142,7 @@ title = "FLN5 pseudo-3D 1H,13C Methyl TQ CCR (500 MHz, 283 K)"
 [relaxation1d_aas]
 added = "2026-11-08T17:22:54Z"
 aliases = []
+analysis = true
 citation = ""
 credit = ["Chris Waudby <c.waudby@ucl.ac.uk>", "Kitty Gong"]
 description = "Amino acid mixture"
@@ -149,17 +154,30 @@ title = "AAs pseudo-2D 1H PROJECT T2, 4ms per loop (600 MHz, 298 K)"
 [relaxation2d_asyn]
 added = "2026-11-08T17:43:34Z"
 aliases = []
+analysis = true
 citation = ""
 credit = ["Chris Waudby <c.waudby@ucl.ac.uk>", "Anders Malmendal"]
-description = "70 uM 15N aSyn"
+description = "70 uM 15N aSyn, proton-decoupled CPMG for R2 measurement (28.09 ms per cycle)"
 licence = "None"
 path = "pseudo3D_HN_R2"
 source = "/Users/chris/NMR/example-data/pseudo3D_HN_R2"
 title = "ASYN pseudo-3D 1H,15N 15N PD-CPMG T2 (900 MHz, 298 K)"
 
+[screen_bsa]
+added = "2026-11-09T17:20:29Z"
+aliases = []
+citation = ""
+credit = ["Chris Waudby <c.waudby@ucl.ac.uk>", "Nikita Harvey"]
+description = "Fragment screen of BSA (0.2 mg/mL in 50 mM Tris pH 7.4, 100 mM NaCl): 15 cocktails, each with a fragment-only reference."
+licence = "CC BY 4.0"
+path = "experiment.toml"
+source = "NMRScreen.jl/example"
+title = "BSA pseudo-2D 19F{1H} T2 fragment screen (600 MHz, 298 K)"
+
 [titration2d_fir_nbox]
 added = "2026-11-07T09:30:08Z"
 aliases = []
+analysis = true
 citation = "Cukier, C., Hollingworth, D., Martin, S. et al. Molecular basis of FIR-mediated c-myc transcriptional control. Nat Struct Mol Biol 17, 1058–1064 (2010). https://doi.org/10.1038/nsmb.1883"
 credit = ["Chris Waudby <c.waudby@ucl.ac.uk>", "Andres Ramos <a.ramos@ucl.ac.uk>", "Cyprian Cukier"]
 description = "Titration of FIR RRM1-RRM2 with Nbox peptide"
@@ -171,6 +189,7 @@ title = "FIR-Nbox 2D 1H,15N SOFAST-HMQC titration (600 MHz, 315 K)"
 [tract_calr]
 added = "2026-11-08T17:36:02Z"
 aliases = []
+analysis = true
 citation = ""
 credit = ["Kleopatra Savvidou", "Chris Waudby <c.waudby@ucl.ac.uk>"]
 description = "60 uM 15N CRT lectin-GSG-C163S"

@@ -1,108 +1,59 @@
 # NMRExampleData.jl
 
-Example NMR data for [NMRTools.jl](https://waudbylab.org/NMRTools.jl/stable/),
+Example NMR datasets for [NMRTools.jl](https://waudbylab.org/NMRTools.jl/stable/),
 [NMRAnalysis.jl](https://waudbylab.org/NMRAnalysis.jl/stable/) and
-[NMRScreen.jl](https://waudbylab.org/NMRScreen.jl/stable/): real spectra, with their raw data,
-sample records and analyses, for tutorials, documentation and tests. The
-[Catalogue](@ref) lists every dataset.
+[NMRScreen.jl](https://waudbylab.org/NMRScreen.jl/stable/). Each dataset is downloaded the first
+time you use it. The [Catalogue](@ref) lists them all.
 
-Installing the package downloads no data. Each dataset is downloaded the first time you use it,
-and only that one.
+## Load a dataset
 
-## Opening a dataset
-
-`example(name)` gives what a dataset is opened with, downloading it the first time: a spectrum,
-a vector of them for a series, or the `experiment.toml` of a screen. You open it with the
-package it is for:
+[`example`](@ref) returns the path of a dataset. Pass it to the function you would use for your
+own data:
 
 ```julia
 using NMRTools
 
-spec = loadnmr(example("titration2d_fir_nbox"))   # NMRData, or a vector of them for a series
-fid = loadfid(example("titration2d_fir_nbox"))    # the raw data
-example()                                         # choose a dataset from a menu
+spec = loadnmr(example("2d_hn_ubq"))
+fid = loadfid(example("2d_hn_ubq"))
 ```
 
-With NMRAnalysis, start an analysis from a dataset's spectra, or reopen the analysis saved
-with it, with its peaks picked and its parameters set:
+A series returns a vector of paths, so `loadnmr(example("titration2d_fir_nbox"))` gives a vector
+of spectra. Where an analysis takes its data in groups, unpack them in the order the analysis
+takes them:
 
 ```julia
 using NMRAnalysis
 
-expt = relaxation2d(example("relaxation2d_ubq"))     # from the start
-expt = reopen(exampleanalysis("relaxation2d_ubq"))   # as saved, ready to refit
+decay, buildup = example("ccr2d_calr")
+ccr2d(decay, buildup; T=0.04)
 ```
 
-Where an analysis takes its data in roles, `example` returns them in that order, to unpack:
+NMRTools, NMRAnalysis and NMRScreen export these functions, so you don't need to load
+NMRExampleData yourself.
+
+## Find a dataset
+
+Call `example()` to choose a dataset from a menu, or `examples()` to list their names.
+[`exampleinfo`](@ref) describes a dataset without downloading it.
+
+You can shorten a name to the start of any part of it: `"hetnoe"` finds `hetnoe2d_calr`. If a
+shortened name matches several datasets, you get the one added first. Use full names in code
+that other people will run.
+
+## Use other formats
+
+Some datasets also hold their data as nmrPipe or UCSF (Sparky) files. Ask for a format by name:
 
 ```julia
-reference, saturated = example("hetnoe2d_calr")
-expt = hetnoe2d(reference, saturated)
+loadnmr(example("2d_hn_ubq", :nmrpipe))
+examples(:ucsf)                      # the datasets with UCSF data
 ```
-
-With NMRScreen, a screen opens from its `experiment.toml`. NMRTools and NMRAnalysis make
-these functions available; with NMRScreen, load NMRExampleData as well:
-
-```julia
-using NMRScreen, NMRExampleData
-
-screen(example("screen_bsa"))
-```
-
-The first time a dataset is used in a session, who to credit, what to cite and the licence are
-shown. `exampleinfo` gives the same information at any time, and `examples()` lists every
-dataset.
-
-## Other formats
-
-Some datasets hold the same experiment in other formats too, as nmrPipe or UCSF (Sparky)
-spectra beside the Bruker data. `example` gives the Bruker data unless asked for another
-format, and `exampleinfo` says which formats there are, and which files hold them:
-
-```julia
-loadnmr(example("3d_hnca_ubq"))             # the Bruker experiment
-loadnmr(example("3d_hnca_ubq", :nmrpipe))   # the same spectrum, from nmrPipe
-exampleinfo("3d_hnca_ubq").formats          # (bruker = "1", nmrpipe = "1/smile/test%03d.ft3", …)
-examples(:ucsf)                             # every dataset with UCSF data
-```
-
-So a test of a file format can run over every dataset that has it:
-
-```julia
-for name in examples(:ucsf)
-    @test loadnmr(example(name, :ucsf)) isa NMRData
-end
-```
-
-## Shortened names
-
-Names ignore case, and can be shortened to the start of the full name or of any part of it:
-`"titration2d"` and `"fir"` both find `titration2d_fir_nbox`. Where a shortened name matches
-several datasets, the one added first is used, so it keeps meaning the same dataset as more are
-added. In code that others will run, give the full name.
-
-## Versions
-
-Each version of the package points at a fixed set of data, so results stay reproducible.
-Depend on it as `NMRExampleData = "1"` to get new data with ordinary package updates; see
-[Releases](@ref) for how versions are numbered.
 
 ## Credit and licences
 
-Each dataset gives who to credit, a paper to cite where there is one, and the licence it is
-shared under, usually [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). A licence of
-"None" means that no licence has been granted: ask the people credited before using those data
-beyond trying out the software. The code is released under the MIT licence.
+The first time you use a dataset in a session, its credit, citation and licence are shown.
+Most datasets are shared under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). A
+licence of "None" means none has been granted: ask the people credited before you use those
+data for anything beyond trying out the software.
 
 To share your own data, see [Adding data](@ref).
-
-## The ecosystem
-
-- [NMRTools.jl](https://waudbylab.org/NMRTools.jl/stable/): loading, processing, plotting and
-  peak picking of NMR data, with pulse programme annotations and sample records.
-- [NMRAnalysis.jl](https://waudbylab.org/NMRAnalysis.jl/stable/): interactive analysis of
-  relaxation, titration, diffusion and other series of spectra.
-- [NMRScreen.jl](https://waudbylab.org/NMRScreen.jl/stable/): analysis of NMR screens.
-- [MulticomplexNumbers.jl](https://github.com/waudbylab/MulticomplexNumbers.jl): the algebra
-  NMRTools uses for multidimensional quadrature data.
-- [The Waudby lab](https://waudbylab.org) at the UCL School of Pharmacy.
