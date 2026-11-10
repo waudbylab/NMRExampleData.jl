@@ -105,6 +105,7 @@ title = "ASYN pseudo-2D 1H 15N XSTE, 5-95% gradients (500 MHz, 283 K)"
 [hetnoe2d_calr]
 added = "2026-11-08T17:53:20Z"
 aliases = []
+analysis = true
 citation = ""
 credit = ["Kleopatra Savvidou", "Chris Waudby <c.waudby@ucl.ac.uk>"]
 description = "15N CALR CTD"
