@@ -86,6 +86,14 @@ lazy = true
     sha256 = "a60f80456e0c6477ce9ac0205930ac0b40fcf2c8fd81df304e61707e71e438cb"
     url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-10/methylccr2d_fln5.tar.gz"
 
+[r1rho_pin1]
+git-tree-sha1 = "493745c47c1aad812e1420589388c7c677567f27"
+lazy = true
+
+    [[r1rho_pin1.download]]
+    sha256 = "8552e5c918f0931c5efae34631fd28c7983b04d7fe2f65c09705123ba5a57d10"
+    url = "https://github.com/waudbylab/NMRExampleData.jl/releases/download/data-2026-11-11/r1rho_pin1.tar.gz"
+
 [relaxation1d_aas]
 git-tree-sha1 = "3acd9dbc6113004c73ed0c641a19c0e49d6225fd"
 lazy = true

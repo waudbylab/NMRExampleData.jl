@@ -141,6 +141,19 @@ title = "FLN5 pseudo-3D 1H,13C Methyl TQ CCR (500 MHz, 283 K)"
 
     [methylccr2d_fln5.formats]
 
+[r1rho_pin1]
+added = "2026-11-10T23:59:55Z"
+aliases = []
+citation = ""
+credit = ["Sophia Hazlett", "Chris Waudby <c.waudby@ucl.ac.uk>"]
+description = "On-resonance R1ρ dispersion for Pin1 (100 uM) and ligand 2 (25 uM)"
+licence = "CC BY 4.0"
+path = ["11", "12"]
+source = "/Users/chris/git/NMRAnalysis.jl/examples/R1rho/11, /Users/chris/git/NMRAnalysis.jl/examples/R1rho/12"
+title = "PIN1 pseudo-3D 19F On-resonance R1ρ dispersion (600 MHz, 278 K)"
+
+    [r1rho_pin1.formats]
+
 [relaxation1d_aas]
 added = "2026-11-08T17:22:54Z"
 aliases = []
